@@ -1,0 +1,17 @@
+<div class="extendable-legend-container" [id]="containerId" fxLayoutGap="20px" fxLayoutAlign="center">
+   <div
+      class="legend-label"
+      fxLayoutAlign="center"
+      fxLayoutGap="5px"
+      *ngFor="let label of labels; let i = index"
+      [class.active]="label.active"
+      (click)="labelClicked(label)">
+      <div class="legend-sign" fxLayoutAlign="center center" fxLayout="column">
+         <span [class]="label.type" [style]="getFillStyle(label)"></span>
+      </div>
+      <div>
+         {{label.items[0].text}}
+         <span *ngIf="showAxisPosition" class="axis-position">({{ label.position | translate }})</span>
+      </div>
+   </div>
+</div>

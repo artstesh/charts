@@ -1,0 +1,5 @@
+<div *ngIf="data?.label">{{ data.label }}</div>
+<div *ngIf="data?.date">
+   <ap-localized-date [date]="data.date"></ap-localized-date>
+</div>
+<div class="value" *ngIf="data?.value">{{ data.value | number }}</div>

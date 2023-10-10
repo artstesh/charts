@@ -1,0 +1,47 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "platform-ngx-components": {
+      "projectType": "library",
+      "root": "projects/platform-ngx-components",
+      "sourceRoot": "projects/platform-ngx-components/src",
+      "prefix": "lib",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/platform-ngx-components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/platform-ngx-components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/platform-ngx-components/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-builders/custom-webpack:karma",
+          "options": {
+            "main": "projects/platform-ngx-components/src/test.ts",
+            "tsConfig": "projects/platform-ngx-components/tsconfig.spec.json",
+            "karmaConfig": "projects/platform-ngx-components/karma.conf.js",
+            "customWebpackConfig": {
+              "path": "./node_modules/@artstesh/forger/lib/webpack.config.js"
+            }
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "platform-ngx-components"
+}
