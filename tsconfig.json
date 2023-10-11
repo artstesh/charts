@@ -20,11 +20,11 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "platform-ngx-components/*": [
-        "dist/platform-ngx-components/*"
+      "charts-components/*": [
+        "dist/charts-components/*"
       ],
-      "platform-ngx-components": [
-        "dist/platform-ngx-components"
+      "charts-components": [
+        "dist/charts-components"
       ],
       "ngx-openlayers/*": [
         "dist/ngx-openlayers/*"
