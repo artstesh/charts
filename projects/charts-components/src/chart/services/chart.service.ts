@@ -39,11 +39,11 @@ export class ChartService {
 
    fillGapsInData(data: ChartDataModel[]): ChartDataModel[] {
       const day = 24 * 60 * 60 * 1000;
-      const minDate = minBy(data, (d: ChartDataModel) => d.x)?.x.getTime() || new Date().getTime();
-      const maxDate = maxBy(data, (d: ChartDataModel) => d.x)?.x.getTime() || 0;
+      const minDate = minBy(data, (d: ChartDataModel) => d.x)?.x || new Date().getTime();
+      const maxDate = maxBy(data, (d: ChartDataModel) => d.x)?.x || 0;
       for (let i = minDate; i < maxDate; i += day) {
-         if (data.filter(r => r.x.getTime() === i).length === 0) {
-            data.push({ x: new Date(i), y: Number.NaN });
+         if (data.filter(r => r.x === i).length === 0) {
+            data.push({ x: i, y: Number.NaN });
          }
       }
       return orderBy(data, (r: ChartDataModel) => r.x);

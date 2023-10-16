@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { XAxisComponent } from './x-axis.component';
-import { ChartPlateComponent } from '@cdk/chart/chart-plate/chart-plate.component';
 import { EventEmitter } from '@angular/core';
 import {Forger} from "@artstesh/forger";
-import {DateRangeModel} from "@cdk/chart/chart-plate/models/date-range.model";
 import {ReplaySubject} from "rxjs";
+import { DateRangeModel } from "../../../models";
+import { ChartPlateComponent } from "../../chart-plate.component";
 
 describe('XAxisComponent', () => {
    let component: XAxisComponent;
@@ -79,12 +79,12 @@ describe('XAxisComponent', () => {
 
    it('should add the min property', () => {
       parent.chart.options.scales = {};
-      const updateModel: DateRangeModel = {minDate: Forger.create<Date>()!, maxDate: Forger.create<Date>()!};
+      const updateModel: DateRangeModel = {minX: Forger.create<number>()!, maxX: Forger.create<number>()!};
       //
       parent.dateRange$.next(updateModel);
       fixture.detectChanges();
       //
-      expect(parent.chart.options.scales[XAxisComponent.id].min).toBe(updateModel.minDate?.getTime());
-     expect(parent.chart.options.scales[XAxisComponent.id].max).toBe(updateModel.maxDate?.getTime());
+      expect(parent.chart.options.scales[XAxisComponent.id].min).toBe(updateModel.minX);
+     expect(parent.chart.options.scales[XAxisComponent.id].max).toBe(updateModel.maxX);
    });
 });

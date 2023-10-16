@@ -25,8 +25,8 @@ export class XAxisComponent implements OnInit, OnDestroy {
    private _displayFormat: { [p: string]: string } = { month: 'MMM' };
    private _timeUnit: TimeUnit = 'month';
    private _timeStepSize = 1;
-   private _minValue?: Date;
-   private _maxValue?: Date;
+   private _minValue?: number;
+   private _maxValue?: number;
 
    @Input() set displayFormat(f: { [p: string]: string }) {
       if (f) this._displayFormat = f;
@@ -57,8 +57,8 @@ export class XAxisComponent implements OnInit, OnDestroy {
    }
 
    protected rangeUpdated(dr: DateRangeModel): void {
-      this._minValue = dr.minDate;
-      this._maxValue = dr.maxDate;
+      this._minValue = dr.minX;
+      this._maxValue = dr.maxX;
       this.setAxis();
    }
 
@@ -86,10 +86,10 @@ export class XAxisComponent implements OnInit, OnDestroy {
 
    setRange(): void {
       if (this._minValue) {
-         this.parent.chart.options.scales![XAxisComponent.id]!.min = this._minValue.getTime();
+         this.parent.chart.options.scales![XAxisComponent.id]!.min = this._minValue;
       }
       if (this._maxValue) {
-         this.parent.chart.options.scales![XAxisComponent.id]!.max = this._maxValue.getTime();
+         this.parent.chart.options.scales![XAxisComponent.id]!.max = this._maxValue;
       }
    }
 

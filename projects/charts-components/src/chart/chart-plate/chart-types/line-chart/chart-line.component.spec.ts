@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChartLineComponent } from './chart-line.component';
-import { ChartPlateComponent } from '@cdk/chart/chart-plate/chart-plate.component';
-import { ChartService } from '@cdk/chart/services/chart.service';
 import { EventEmitter } from '@angular/core';
 import { MockBuilder, MockProvider, MockRender } from "ng-mocks";
-import { ChartModule } from "@cdk";
 import { anyString, instance, mock, when } from "ts-mockito";
 import { ReplaySubject } from "rxjs";
-import { DateRangeModel } from "@cdk/chart/chart-plate/models/date-range.model";
+import { ChartService } from "../../../services";
+import { ChartPlateComponent } from "../../chart-plate.component";
+import { DateRangeModel } from "../../../models";
+import { ChartModule } from "../../../chart.module";
 
 describe('LineChartComponent', () => {
    let fixture: ComponentFixture<ChartLineComponent>;

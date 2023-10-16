@@ -4,11 +4,10 @@ import { ChartBarComponent } from './chart-bar.component';
 import { ChartPlateComponent } from '../../chart-plate.component';
 import { EventEmitter } from '@angular/core';
 import { MockBuilder, MockProvider, MockRender, ngMocks } from 'ng-mocks';
-import { ChartPointTooltipComponent } from '@cdk/chart/chart-plate/chart-elements/chart-tooltip';
-import { ChartModule } from '@cdk';
 import { instance, mock, reset, verify, when } from 'ts-mockito';
 import { Forger } from '@artstesh/forger';
 import Chart from 'chart.js';
+import { ChartModule } from "../../../chart.module";
 
 describe('ChartBarComponent', () => {
    let fixture: ComponentFixture<ChartBarComponent>;
@@ -59,7 +58,7 @@ describe('ChartBarComponent', () => {
    });
 
    it("should add the bar's data properly", () => {
-      fixture.componentInstance.data = [{ x: new Date(), y: 1 }];
+      fixture.componentInstance.data = [{ x: 0, y: 1 }];
       chart.data = { datasets: [] };
       //
       fixture.detectChanges();

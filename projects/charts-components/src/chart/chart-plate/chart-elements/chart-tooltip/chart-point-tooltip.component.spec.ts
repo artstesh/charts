@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChartPointTooltipComponent } from './chart-point-tooltip.component';
-import { ChartPlateComponent } from '@cdk/chart/chart-plate/chart-plate.component';
 import { instance, mock, reset, when } from 'ts-mockito';
 import { MockBuilder, MockProvider, MockRender, ngMocks } from 'ng-mocks';
-import { ChartModule } from '@cdk';
 import { EventEmitter } from '@angular/core';
+import { ChartPlateComponent } from "../../chart-plate.component";
+import { ChartModule } from "../../../chart.module";
 
 describe('ChartTooltipComponent', () => {
    let component: ChartPointTooltipComponent;

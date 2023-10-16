@@ -2,12 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { YAxisComponent } from './y-axis.component';
 import { ChartPlateComponent } from '../../chart-plate.component';
-import { XAxisComponent } from '@cdk/chart/chart-plate/chart-elements/x-axis/x-axis.component';
 import { EventEmitter } from '@angular/core';
 import { MockBuilder, MockProvider, MockRender, ngMocks } from 'ng-mocks';
-import { CdkModule } from '@cdk';
 import { Forger } from '@artstesh/forger';
 import { instance, mock, verify, when } from 'ts-mockito';
+import { ChartModule } from "../../../chart.module";
 
 describe('YAxisComponent', () => {
    let component: YAxisComponent;
@@ -22,7 +21,7 @@ describe('YAxisComponent', () => {
       chartInitialized = new EventEmitter();
       when(parent.chartInitialized).thenReturn(chartInitialized);
       when(parent.chart).thenReturn(chart);
-      return MockBuilder(YAxisComponent, CdkModule).provide(MockProvider(ChartPlateComponent, instance(parent)));
+      return MockBuilder(YAxisComponent, ChartModule).provide(MockProvider(ChartPlateComponent, instance(parent)));
    });
 
    beforeEach(() => {

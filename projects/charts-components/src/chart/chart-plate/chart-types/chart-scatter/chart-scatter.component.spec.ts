@@ -2,15 +2,14 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { ChartScatterComponent } from "./chart-scatter.component";
 import { EventEmitter } from "@angular/core";
-import { ChartPlateComponent } from "@cdk/chart/chart-plate/chart-plate.component";
-import { ChartService } from "@cdk/chart/services/chart.service";
 import { anyString, anything, instance, mock, reset, verify, when } from "ts-mockito";
 import { MockBuilder, MockProvider, MockRender } from "ng-mocks";
-import { ChartLegendComponent } from "@cdk/chart/chart-plate/chart-elements/chart-legend/chart-legend.component";
-import { ChartModule } from "@cdk";
 import { Forger } from "@artstesh/forger";
 import { ReplaySubject } from "rxjs";
-import { DateRangeModel } from "@cdk/chart/chart-plate/models/date-range.model";
+import { ChartService } from "../../../services";
+import { ChartPlateComponent } from "../../chart-plate.component";
+import { DateRangeModel } from "../../../models";
+import { ChartModule } from "../../../chart.module";
 
 describe("ChartScatterComponent", () => {
   let fixture: ComponentFixture<ChartScatterComponent>;
@@ -71,7 +70,7 @@ describe("ChartScatterComponent", () => {
   });
 
   it("should add the scatter's data properly", () => {
-    fixture.componentInstance.data = [{ x: Forger.create<Date>()!, y: 1 }];
+    fixture.componentInstance.data = [{ x: Forger.create<number>()!, y: 1 }];
     //
     chartInitialized.next();
     fixture.detectChanges();

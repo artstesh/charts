@@ -29,8 +29,8 @@ export class ChartBarComponent extends AbstractChartTypeComponent {
    }
 
    protected updateFilteredData(): void {
-      this._dataFiltered = this._data.filter(d => (!this.dateRange.maxDate || this.dateRange.maxDate.getTime() > d.x?.getTime())
-         && (!this.dateRange.minDate || this.dateRange.minDate.getTime() < d.x?.getTime()));
+      this._dataFiltered = this._data.filter(d => (!this.dateRange.maxX || this.dateRange.maxX > d.x)
+         && (!this.dateRange.minX || this.dateRange.minX < d.x));
    }
 
    protected addDataset(): void {

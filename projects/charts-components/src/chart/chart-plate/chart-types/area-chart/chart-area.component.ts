@@ -35,13 +35,13 @@ export class ChartAreaComponent extends AbstractChartTypeComponent {
    protected updateFilteredData(): void {
       this._lowerFiltered = this._lower.filter(
          d =>
-            (!this.dateRange.maxDate || this.dateRange.maxDate.getTime() >= d.x?.getTime()) &&
-            (!this.dateRange.minDate || this.dateRange.minDate.getTime() < d.x?.getTime())
+            (!this.dateRange.maxX || this.dateRange.maxX >= d.x) &&
+            (!this.dateRange.minX || this.dateRange.minX < d.x)
       );
       this._upperFiltered = this._upper.filter(
          d =>
-            (!this.dateRange.maxDate || this.dateRange.maxDate.getTime() >= d.x?.getTime()) &&
-            (!this.dateRange.minDate || this.dateRange.minDate.getTime() < d.x?.getTime())
+            (!this.dateRange.maxX || this.dateRange.maxX >= d.x) &&
+            (!this.dateRange.minX || this.dateRange.minX < d.x)
       );
    }
 

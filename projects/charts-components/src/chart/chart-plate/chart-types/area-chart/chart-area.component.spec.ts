@@ -1,14 +1,14 @@
 import { ComponentFixture } from "@angular/core/testing";
 import { ChartAreaComponent } from "./chart-area.component";
-import { ChartPlateComponent } from "@cdk/chart/chart-plate/chart-plate.component";
-import { ChartService } from "@cdk/chart/services/chart.service";
 import { EventEmitter } from "@angular/core";
 import { Forger } from "@artstesh/forger";
 import { anything, instance, mock, reset, when } from "ts-mockito";
 import { ReplaySubject } from "rxjs";
-import { DateRangeModel } from "@cdk/chart/chart-plate/models/date-range.model";
 import { MockBuilder, MockProvider, MockRender } from "ng-mocks";
-import { ChartModule } from "@cdk";
+import { ChartService } from "../../../services";
+import { ChartPlateComponent } from "../../chart-plate.component";
+import { DateRangeModel } from "../../../models";
+import { ChartModule } from "../../../chart.module";
 
 describe('ChartAreaComponent', () => {
    let fixture: ComponentFixture<ChartAreaComponent>;
@@ -64,8 +64,8 @@ describe('ChartAreaComponent', () => {
    });
 
    it("should add the area's data properly", () => {
-     let expectedUpper = { x: Forger.create<Date>()!, y: Forger.create<number>()! };
-     let expectedLower = { x: Forger.create<Date>()!, y: Forger.create<number>()! };
+     let expectedUpper = { x: Forger.create<number>()!, y: Forger.create<number>()! };
+     let expectedLower = { x: Forger.create<number>()!, y: Forger.create<number>()! };
      fixture.componentInstance.upper = [expectedUpper];
      fixture.componentInstance.lower = [expectedLower];
       //

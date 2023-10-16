@@ -27,8 +27,8 @@ export class ChartScatterComponent extends AbstractChartTypeComponent {
    }
 
    protected updateFilteredData(): void {
-      this._dataFiltered = this._data.filter(d => (!this.dateRange.maxDate || this.dateRange.maxDate.getTime() > d.x?.getTime())
-         && (!this.dateRange.minDate || this.dateRange.minDate.getTime() < d.x?.getTime()));
+      this._dataFiltered = this._data.filter(d => (!this.dateRange.maxX || this.dateRange.maxX > d.x)
+         && (!this.dateRange.minX || this.dateRange.minX < d.x));
    }
 
    protected addDataset(): void {
@@ -38,7 +38,7 @@ export class ChartScatterComponent extends AbstractChartTypeComponent {
          label: this._name,
          type: 'scatter',
          order: this.order,
-         data: this._dataFiltered.map(d => ({ y: d.y, x: d.x.getTime() })) as any,
+         data: this._dataFiltered.map(d => ({ y: d.y, x: d.x })) as any,
          yAxisID: this.config.yAxisId,
          backgroundColor: this.config.color,
          borderColor: this.config.color,
