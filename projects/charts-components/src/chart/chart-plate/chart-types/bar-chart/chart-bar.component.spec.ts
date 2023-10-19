@@ -9,7 +9,7 @@ import { Forger } from '@artstesh/forger';
 import Chart from 'chart.js';
 import { ChartModule } from "../../../chart.module";
 
-describe('ChartBarComponent', () => {
+describe('#chart-types ChartBarComponent', () => {
    let fixture: ComponentFixture<ChartBarComponent>;
    const parent = mock(ChartPlateComponent);
    let chartInitialized: EventEmitter<unknown>;

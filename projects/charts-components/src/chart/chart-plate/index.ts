@@ -1,6 +1,5 @@
 export * from './chart-plate.component';
 export * from './chart-elements/chart-legend/chart-legend.component';
-export * from './chart-elements/chart-tooltip/index';
 export * from './chart-elements/chart-extendable-legend/chart-extendable-legend.component';
 export * from './chart-elements/x-axis/x-axis.component';
 export * from './chart-elements/y-axis/y-axis.component';

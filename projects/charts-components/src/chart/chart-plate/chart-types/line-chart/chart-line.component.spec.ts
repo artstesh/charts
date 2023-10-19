@@ -9,7 +9,7 @@ import { ChartPlateComponent } from "../../chart-plate.component";
 import { DateRangeModel } from "../../../models";
 import { ChartModule } from "../../../chart.module";
 
-describe('LineChartComponent', () => {
+describe('#chart-types LineChartComponent', () => {
    let fixture: ComponentFixture<ChartLineComponent>;
   let service = mock(ChartService);
   const parent = mock(ChartPlateComponent);

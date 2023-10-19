@@ -13,11 +13,13 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ChartService } from '../services';
 import { ReplaySubject } from 'rxjs';
 import { ChartDataModel, DateRangeModel } from '../models';
+import { ChartAxisLimitService } from "../services/chart-axis-limit.service";
 
 @Component({
   selector: 'app-chart-plate',
   templateUrl: './chart-plate.component.html',
   styleUrls: ['./chart-plate.component.scss'],
+  providers: [ChartAxisLimitService]
 })
 export class ChartPlateComponent implements AfterViewInit {
   @ViewChild('chart')
