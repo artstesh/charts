@@ -1,6 +1,7 @@
 import { ChartAxisLimitsModel } from './chart-axis-limits.model';
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
+import { ChartDataModel } from "./chart-data.model";
 
 describe('#models ChartAxisLimitsModel', () => {
   let model: ChartAxisLimitsModel;
@@ -15,6 +16,12 @@ describe('#models ChartAxisLimitsModel', () => {
 
   afterEach(() => {
     expect().nothing();
+  });
+
+  describe("rawData", () => {
+    it("success", () => {
+      should().objects({...model}, model.rawData).equal();
+    });
   });
 
   describe('isTheSame()', () => {
@@ -63,46 +70,67 @@ describe('#models ChartAxisLimitsModel', () => {
 
   describe('contains()', () => {
     it('should true if x&y are included', () => {
-      const y = Forger.create<number>({ numberMin: model.minY! + 1, numberMax: model.maxY! - 1 })!;
-      const x = Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!;
+      const dataModel: ChartDataModel = {
+        y: Forger.create<number>({ numberMin: model.minY! + 1, numberMax: model.maxY! - 1 })!,
+        x: Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!
+      }
       //
-      should().true(model.contains(x, y));
+      should().true(model.contains(dataModel));
     });
 
     it('should true if data null', () => {
-      const y = Forger.create<number>()!;
-      const x = Forger.create<number>()!;
-      model.minY = model.minY = model.maxY = model.maxX = null;
+      const dataModel: ChartDataModel = {
+        y: Forger.create<number>()!,
+        x: Forger.create<number>()!
+      }
+      model.minX = model.minY = model.maxY = model.maxX = null;
       //
-      should().true(model.contains(x, y));
+      should().true(model.contains(dataModel));
+    });
+
+    it('should true if y is null', () => {
+      const dataModel: ChartDataModel = {
+        y: null,
+        x: Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!
+      }
+      //
+      should().true(model.contains(dataModel));
     });
 
     it('should false if x is too big', () => {
-      const y = Forger.create<number>({ numberMin: model.minY! + 1, numberMax: model.maxY! - 1 })!;
-      const x = Forger.create<number>({ numberMin: model.maxX! + 1 })!;
+      const dataModel: ChartDataModel = {
+       y: Forger.create<number>({ numberMin: model.minY! + 1, numberMax: model.maxY! - 1 })!,
+       x: Forger.create<number>({ numberMin: model.maxX! + 1 })!
+      }
       //
-      should().false(model.contains(x, y));
+      should().false(model.contains(dataModel));
     });
 
     it('should false if y is too big', () => {
-      const y = Forger.create<number>({ numberMin: model.maxY! + 1 })!;
-      const x = Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!;
+      const dataModel: ChartDataModel = {
+        y: Forger.create<number>({ numberMin: model.maxY! + 1 })!,
+        x: Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!
+      }
       //
-      should().false(model.contains(x, y));
+      should().false(model.contains(dataModel));
     });
 
     it('should false if x is too small', () => {
-      const y = Forger.create<number>({ numberMin: model.minY! + 1, numberMax: model.maxY! - 1 })!;
-      const x = Forger.create<number>({ numberMax: model.minX! - 1 })!;
+      const dataModel: ChartDataModel = {
+        y: Forger.create<number>({ numberMin: model.minY! + 1, numberMax: model.maxY! - 1 })!,
+        x: Forger.create<number>({ numberMax: model.minX! - 1 })!
+      }
       //
-      should().false(model.contains(x, y));
+      should().false(model.contains(dataModel));
     });
 
     it('should false if y is too small', () => {
-      const y = Forger.create<number>({ numberMax: model.minY! - 1 })!;
-      const x = Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!;
+      const dataModel: ChartDataModel = {
+        y: Forger.create<number>({ numberMax: model.minY! - 1 })!,
+        x: Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!
+      }
       //
-      should().false(model.contains(x, y));
+      should().false(model.contains(dataModel));
     });
   });
 });

@@ -29,13 +29,6 @@ export class ChartPlateComponent implements AfterViewInit {
   @Output() chartUpdated = new EventEmitter();
   @Input() interactionMode: InteractionMode = 'x';
   private chartInProgress: ReturnType<typeof setTimeout> | null = null;
-  private _dateRange: DateRangeModel = {};
-  dateRange$ = new ReplaySubject<DateRangeModel>();
-
-  @Input() set dateRange(ss: DateRangeModel) {
-    this._dateRange = ss;
-    this.dateRange$.next(this._dateRange);
-  }
 
   constructor(private chartService: ChartService) {}
 

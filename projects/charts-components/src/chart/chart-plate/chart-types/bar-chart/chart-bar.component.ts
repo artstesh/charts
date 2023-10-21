@@ -4,6 +4,8 @@ import { AbstractChartTypeComponent } from '../abstract-chart-type.component';
 import { ChartDataset } from 'chart.js';
 import { Options } from 'chartjs-plugin-datalabels/types/options';
 import { ChartDataModel } from "../../../models";
+import { ChartAxisLimitService } from "../../../services/chart-axis-limit.service";
+import { ChartService } from "../../../services";
 
 @Component({
    selector: 'chart-bar',
@@ -24,13 +26,14 @@ export class ChartBarComponent extends AbstractChartTypeComponent {
    @Input() thickness?: number;
    @Input() dataLabels: Options = {};
 
-   constructor(protected parent: ChartPlateComponent) {
-      super(parent);
+   constructor(protected parent: ChartPlateComponent,
+               private service: ChartService,
+               protected limitService: ChartAxisLimitService) {
+      super(parent, service, limitService);
    }
 
    protected updateFilteredData(): void {
-      this._dataFiltered = this._data.filter(d => (!this.dateRange.maxX || this.dateRange.maxX > d.x)
-         && (!this.dateRange.minX || this.dateRange.minX < d.x));
+      this._dataFiltered = this.limitService.examine(this._data);
    }
 
    protected addDataset(): void {

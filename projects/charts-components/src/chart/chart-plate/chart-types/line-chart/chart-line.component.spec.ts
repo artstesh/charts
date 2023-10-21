@@ -23,7 +23,6 @@ describe('#chart-types LineChartComponent', () => {
      chart = { options: { plugins: {} }, data: {datasets: []} };
      chartInitialized = new EventEmitter();
      when(parent.chart).thenReturn(chart);
-     when(parent.dateRange$).thenReturn(dateRange$);
      when(parent.chartInitialized).thenReturn(chartInitialized);
      return MockBuilder(ChartLineComponent, ChartModule)
        .provide(MockProvider(ChartPlateComponent, instance(parent)))
@@ -35,7 +34,6 @@ describe('#chart-types LineChartComponent', () => {
      chart = { options: { plugins: {} }, data: {datasets: []} };
      chartInitialized = new EventEmitter();
      when(parent.chart).thenReturn(chart);
-     when(parent.dateRange$).thenReturn(dateRange$);
      when(parent.chartInitialized).thenReturn(chartInitialized);
       when(service.getRandomColor(anyString())).thenReturn(color);
      fixture = MockRender(ChartLineComponent);

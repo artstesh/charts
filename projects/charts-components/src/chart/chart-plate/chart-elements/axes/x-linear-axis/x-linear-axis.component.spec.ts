@@ -7,23 +7,24 @@ import { DateRangeModel } from "../../../../models";
 import { ChartPlateComponent } from "../../../chart-plate.component";
 import { MockBuilder, MockProvider, MockRender } from "ng-mocks";
 import { ChartModule } from "../../../../chart.module";
+import { instance, mock, reset, when } from "ts-mockito";
+import { ChartAxisLimitService } from "../../../../services/chart-axis-limit.service";
+import { should } from "@artstesh/it-should";
 
 describe('#chart-elements XLinearAxisComponent', () => {
   let fixture: ComponentFixture<XLinearAxisComponent>;
-  let parent: any;
-  let dateRange$: ReplaySubject<DateRangeModel>;
+  const limitService = mock(ChartAxisLimitService);
+  const chartPlate = mock(ChartPlateComponent);
+  let chartInitialized$: EventEmitter<any>;
 
   beforeEach(async () => {
+    chartInitialized$ = new EventEmitter();
     const chartStub = jasmine.createSpyObj(['update', 'data', 'options']);
-    dateRange$ = new ReplaySubject<DateRangeModel>();
-    parent = {
-      chart: chartStub,
-      chartInitialized: new EventEmitter(),
-      updateChart: jasmine.createSpy('updateChart'),
-      dateRange$: dateRange$
-    };
+    when(chartPlate.chartInitialized).thenReturn(chartInitialized$);
+    when(chartPlate.chart).thenReturn(chartStub);
     return MockBuilder(XLinearAxisComponent, ChartModule)
-      .provide(MockProvider(ChartPlateComponent, parent));
+      .provide(MockProvider(ChartAxisLimitService, instance(limitService)))
+      .provide(MockProvider(ChartPlateComponent, instance(chartPlate)));
   });
 
   beforeEach(() => {
@@ -31,57 +32,60 @@ describe('#chart-elements XLinearAxisComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    reset(limitService);
+    expect().nothing();
+  })
+
   it('should create', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('should add the axis on chartInitialized', () => {
-    parent.chart.options.scales = {};
+    instance(chartPlate).chart.options.scales = {};
     //
-    parent.chartInitialized.next();
+    instance(chartPlate).chartInitialized.next();
     fixture.detectChanges();
     //
-    expect(parent.chart.options.scales[XLinearAxisComponent.id]).toBeTruthy();
+    expect(instance(chartPlate).chart?.options?.scales?.[XLinearAxisComponent.id]).toBeTruthy();
   });
 
   it('should update chart on chartInitialized', () => {
-    parent.chart.options.scales = {};
+    instance(chartPlate).chart.options.scales = {};
     //
-    parent.chartInitialized.next();
+    instance(chartPlate).chartInitialized.next();
     fixture.detectChanges();
     //
-    expect(parent.updateChart).toHaveBeenCalledTimes(1);
+    expect(instance(chartPlate).updateChart).toHaveBeenCalledTimes(1);
   });
 
   it('should add the grid display property', () => {
-    parent.chart.options.scales = {};
+    instance(chartPlate).chart.options.scales = {};
     //
-    fixture.componentInstance.displayGrid = true;
-    parent.chartInitialized.next();
+    fixture.componentInstance._settings.displayGrid = true;
+    instance(chartPlate).chartInitialized.next();
     fixture.detectChanges();
     //
-    const gridProp = parent.chart.options.scales[XLinearAxisComponent.id].grid;
-    expect(gridProp.display).toBe(fixture.componentInstance.displayGrid);
+    const gridProp = instance(chartPlate).chart?.options?.scales?.[XLinearAxisComponent.id]?.grid;
+    expect(gridProp?.display).toBe(fixture.componentInstance._settings.displayGrid);
   });
 
   it('no min & max restrictions by default', () => {
-    parent.chart.options.scales = {};
+    instance(chartPlate).chart.options.scales = {};
     //
-    parent.chartInitialized.next();
+    chartInitialized$.next();
     fixture.detectChanges();
     //
-    expect(parent.chart.options.scales[XLinearAxisComponent.id].min).not.toBeTruthy();
-    expect(parent.chart.options.scales[XLinearAxisComponent.id].max).not.toBeTruthy();
+    expect(instance(chartPlate).chart.options.scales?.[XLinearAxisComponent.id]?.min).not.toBeTruthy();
+    expect(instance(chartPlate).chart.options.scales?.[XLinearAxisComponent.id]?.max).not.toBeTruthy();
   });
 
   it('should add the min property', () => {
-    parent.chart.options.scales = {};
+    instance(chartPlate).chart.options.scales = {};
     const updateModel: DateRangeModel = {minX: Forger.create<number>()!, maxX: Forger.create<number>()!};
     //
-    parent.dateRange$.next(updateModel);
     fixture.detectChanges();
     //
-    expect(parent.chart.options.scales[XLinearAxisComponent.id].min).toBe(updateModel.minX);
-    expect(parent.chart.options.scales[XLinearAxisComponent.id].max).toBe(updateModel.maxX);
+    should().true(false);
   });
 });

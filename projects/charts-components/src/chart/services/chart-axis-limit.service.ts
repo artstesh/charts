@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ChartAxisLimitsModel } from "../models/chart-axis-limits.model";
+import { ChartAxisLimitsModel, IChartAxisLimitsModel } from "../models/chart-axis-limits.model";
 import { ReplaySubject } from "rxjs";
 import { auditTime, distinctUntilChanged, map } from "rxjs/operators";
+import { ChartDataModel } from "../models";
 
 @Injectable()
 export class ChartAxisLimitService {
@@ -11,25 +12,34 @@ export class ChartAxisLimitService {
     distinctUntilChanged((x,y) => x?.isTheSame(y) ?? false),
     map(() => undefined)
   );
-  private readonly model: ChartAxisLimitsModel;
+  private readonly _model: ChartAxisLimitsModel;
 
   constructor(model: ChartAxisLimitsModel | null = null) {
-    this.model = model ?? new ChartAxisLimitsModel();
+    this._model = model ?? new ChartAxisLimitsModel();
+  }
+
+  public get model(): IChartAxisLimitsModel {
+    return this._model.rawData;
   }
 
   public setHorizontalLimits(minX: number | null, maxX: number | null): void {
-    this.model.minX = minX;
-    this.model.maxX = maxX;
-    this._limitsChanged.next(this.model);
+    this._model.minX = minX;
+    this._model.maxX = maxX;
+    this._limitsChanged.next(this._model);
   }
 
   public setMainVerticalLimits(min: number | null, max: number | null): void {
-    this.model.minY = min;
-    this.model.maxY = max;
-    this._limitsChanged.next(this.model);
+    this._model.minY = min;
+    this._model.maxY = max;
+    this._limitsChanged.next(this._model);
   }
 
-  public examine(x: number, y: number): boolean {
-    return this.model.contains(x, y);
+  public examine(data: ChartDataModel[]): ChartDataModel[] {
+    const result: ChartDataModel[] = [];
+    for (let datum of data) {
+      if (!this._model.contains(datum)) continue;
+      result.push(datum);
+    }
+    return result;
   }
 }

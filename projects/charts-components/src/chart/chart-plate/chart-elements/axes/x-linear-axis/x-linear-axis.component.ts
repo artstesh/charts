@@ -1,39 +1,31 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { Subscription } from "rxjs";
-import { ChartPlateComponent } from "../../../chart-plate.component";
-import { DateRangeModel } from "../../../../models"
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ChartPlateComponent } from '../../../chart-plate.component';
+import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
+import { LinearAxisSettings } from './linear-axis.settings';
 
 @Component({
   selector: 'lib-x-linear-axis',
   template: '',
   styleUrls: [],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class XLinearAxisComponent implements OnInit, OnDestroy {
-  @Input() _displayGrid = false;
-  private _minValue?: number;
-  private _maxValue?: number;
+  static id = 'x';
+  _settings: LinearAxisSettings = new LinearAxisSettings();
+  private subs: Subscription[] = [];
 
-  @Input() set displayGrid(f: boolean) {
-    if (this._displayGrid === f) return;
-    this._displayGrid = f;
+  @Input() set settings(value: LinearAxisSettings | undefined) {
+    if (!value || this._settings.isSame(value)) return;
+    this._settings = value;
+    this.limitService.setHorizontalLimits(this._settings.limits[0], this._settings.limits[1]);
     this.setAxis();
   }
 
-  static id = 'x';
-  private subs: Subscription[] = [];
-
-  constructor(private parent: ChartPlateComponent) {}
+  constructor(private parent: ChartPlateComponent, private limitService: ChartAxisLimitService) {}
 
   ngOnInit(): void {
     this.subs.push(this.parent.chartInitialized.subscribe(() => this.setAxis()));
-    this.subs.push(this.parent.dateRange$.subscribe(dr => this.rangeUpdated(dr)));
-  }
-
-  protected rangeUpdated(dr: DateRangeModel): void {
-    this._minValue = dr.minX;
-    this._maxValue = dr.maxX;
-    this.setAxis();
   }
 
   setAxis(): void {
@@ -41,26 +33,26 @@ export class XLinearAxisComponent implements OnInit, OnDestroy {
     this.parent.chart.options.scales[XLinearAxisComponent.id] = {
       type: 'linear',
       grid: {
-        display: this._displayGrid
+        display: this._settings.displayGrid,
       },
-      display: 'auto'
+      display: 'auto',
     };
     this.setRange();
     this.parent.updateChart();
   }
 
   setRange(): void {
-    if (this._minValue) {
-      this.parent.chart.options.scales![XLinearAxisComponent.id]!.min = this._minValue;
+    if (this._settings.limits[0]) {
+      this.parent.chart.options.scales![XLinearAxisComponent.id]!.min = this._settings.limits[0];
     }
-    if (this._maxValue) {
-      this.parent.chart.options.scales![XLinearAxisComponent.id]!.max = this._maxValue;
+    if (this._settings.limits[1]) {
+      this.parent.chart.options.scales![XLinearAxisComponent.id]!.max = this._settings.limits[1];
     }
   }
 
   ngOnDestroy(): void {
     this.resetAxis();
-    this.subs.forEach(s => s.unsubscribe());
+    this.subs.forEach((s) => s.unsubscribe());
   }
 
   private resetAxis(): void {
