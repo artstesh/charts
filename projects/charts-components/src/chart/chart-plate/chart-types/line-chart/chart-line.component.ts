@@ -7,6 +7,9 @@ import { ChartDataModel } from '../../../models';
 import { ChartService } from '../../../services';
 import { ChartAxisLimitService } from '../../../services/chart-axis-limit.service';
 import { ChartLineSettings } from './chart-line.settings';
+import { ChartPlateDatasetModel } from '../../models/chart-plate-dataset.model';
+import { ChartLineDatasetModel } from '../../models/chart-line-dataset.model';
+import { ChartPlateService } from '../../services/chart-plate.service';
 
 @Component({
   selector: 'chart-line',
@@ -22,12 +25,13 @@ export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSett
     this._data = aw;
     this.dataUpdated();
   }
-  @Input() yAxisId = 'y';
-  @Input() enableSegments = true;
-  @Input() tooltipShift?: number = 0;
 
-  constructor(parent: ChartPlateComponent, service: ChartService, limitService: ChartAxisLimitService) {
-    super(parent, service, limitService, new ChartLineSettings());
+  constructor(
+    chartService: ChartService,
+    limitService: ChartAxisLimitService,
+    service: ChartPlateService,
+  ) {
+    super(chartService, limitService, service, new ChartLineSettings());
   }
 
   protected updateFilteredData(): void {
@@ -35,21 +39,11 @@ export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSett
   }
 
   protected addDataset(): void {
-    if (!this.parent.chart?.data) return;
-    this.parent.chart.data.datasets.push({
-      label: this._settings.name,
-      type: 'line',
-      order: this._settings.order,
-      data: this._dataFiltered as any,
-      fill: false,
-      yAxisID: this.yAxisId,
-      backgroundColor: this._settings.color,
-      pointRadius: this._settings.pointRadius,
-      pointHitRadius: 5,
-      borderColor: this._settings.color,
-      legendStyle: 'line',
-      tooltipShift: this.tooltipShift,
-    } as ChartDataset);
-    this.updateChart();
+    const model = new ChartLineDatasetModel(this._settings.name, this._dataFiltered)
+      .backColor(this._settings.color)
+      .order(this._settings.order)
+      .pointRadius(this._settings.pointRadius)
+      .borderColor(this._settings.color);
+    this.service.addDataset(model.build());
   }
 }

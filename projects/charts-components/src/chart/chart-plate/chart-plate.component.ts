@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-moment';
 import {
@@ -11,29 +11,36 @@ import {
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ChartService } from '../services';
-import { ReplaySubject } from 'rxjs';
-import { ChartDataModel, DateRangeModel } from '../models';
-import { ChartAxisLimitService } from "../services/chart-axis-limit.service";
+import { Subscription } from 'rxjs';
+import { ChartDataModel } from '../models';
+import { ChartAxisLimitService } from '../services/chart-axis-limit.service';
+import { ChartPlateService } from './services/chart-plate.service';
 
 @Component({
   selector: 'app-chart-plate',
   templateUrl: './chart-plate.component.html',
   styleUrls: ['./chart-plate.component.scss'],
-  providers: [ChartAxisLimitService]
+  providers: [ChartAxisLimitService, ChartPlateService],
 })
-export class ChartPlateComponent implements AfterViewInit {
+export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
+  private subs: Subscription[] = [];
   @ViewChild('chart')
   chartRef!: ElementRef;
   chart!: Chart;
-  @Output() chartInitialized = new EventEmitter();
-  @Output() chartUpdated = new EventEmitter();
   @Input() interactionMode: InteractionMode = 'x';
-  private chartInProgress: ReturnType<typeof setTimeout> | null = null;
 
-  constructor(private chartService: ChartService) {}
+  constructor(private chartService: ChartService, private service: ChartPlateService) {}
+
+  ngOnInit(): void {
+    this.service.updateTrigger$.subscribe((force) => this.updateChart(force));
+  }
 
   ngAfterViewInit(): void {
     this.setChart();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
   }
 
   setChart(): void {
@@ -78,29 +85,18 @@ export class ChartPlateComponent implements AfterViewInit {
         },
       },
     });
-    this.chartInitialized.emit();
+    this.service.setChart(this.chart);
+    this.service.chartInitialized.emit();
   }
 
   updateChart(force = false): void {
-    if (force && !this.chartInProgress) {
+    try {
+      (this.chart as any)._metasets = (this.chart as any)._metasets.filter((d: any) => !!d.controller);
       this.chart?.update();
-      this.chartUpdated.next();
-      return;
+    } catch {
+      this.service.updateChart();
     }
-    if (this.chartInProgress != null) {
-      clearTimeout(this.chartInProgress);
-    }
-    this.chartInProgress = setTimeout(() => {
-      this.chartInProgress = null;
-      try {
-        (this.chart as any)._metasets = (this.chart as any)._metasets.filter((d: any) => !!d.controller);
-        this.chart?.update();
-      } catch {
-        this.updateChart();
-      }
-      this.chartUpdated.next();
-      console.log(this.chart);
-    }, 250);
+    this.service.chartUpdated.next();
   }
 
   private handleChartClick(

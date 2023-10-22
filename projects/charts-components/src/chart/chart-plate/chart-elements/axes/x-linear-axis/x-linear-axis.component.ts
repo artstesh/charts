@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ChartPlateComponent } from '../../../chart-plate.component';
 import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
 import { LinearAxisSettings } from './linear-axis.settings';
+import { ChartPlateService } from '../../../services/chart-plate.service';
 
 @Component({
   selector: 'lib-x-linear-axis',
@@ -22,10 +23,14 @@ export class XLinearAxisComponent implements OnInit, OnDestroy {
     this.setAxis();
   }
 
-  constructor(private parent: ChartPlateComponent, private limitService: ChartAxisLimitService) {}
+  constructor(
+    private parent: ChartPlateComponent,
+    private limitService: ChartAxisLimitService,
+    private service: ChartPlateService
+  ) {}
 
   ngOnInit(): void {
-    this.subs.push(this.parent.chartInitialized.subscribe(() => this.setAxis()));
+    this.subs.push(this.service.chartInitialized.subscribe(() => this.setAxis()));
   }
 
   setAxis(): void {
@@ -36,18 +41,10 @@ export class XLinearAxisComponent implements OnInit, OnDestroy {
         display: this._settings.displayGrid,
       },
       display: 'auto',
+      min: this._settings.limits[0] ?? undefined,
+      max: this._settings.limits[1] ?? undefined,
     };
-    this.setRange();
     this.parent.updateChart();
-  }
-
-  setRange(): void {
-    if (this._settings.limits[0]) {
-      this.parent.chart.options.scales![XLinearAxisComponent.id]!.min = this._settings.limits[0];
-    }
-    if (this._settings.limits[1]) {
-      this.parent.chart.options.scales![XLinearAxisComponent.id]!.max = this._settings.limits[1];
-    }
   }
 
   ngOnDestroy(): void {

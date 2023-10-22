@@ -4,23 +4,36 @@ import { ChartBarComponent } from './chart-bar.component';
 import { ChartPlateComponent } from '../../chart-plate.component';
 import { EventEmitter } from '@angular/core';
 import { MockBuilder, MockProvider, MockRender, ngMocks } from 'ng-mocks';
-import { instance, mock, reset, verify, when } from 'ts-mockito';
+import { anyString, instance, mock, reset, verify, when } from "ts-mockito";
 import { Forger } from '@artstesh/forger';
 import Chart from 'chart.js';
 import { ChartModule } from "../../../chart.module";
+import { ChartService } from "../../../services";
+import { ChartAxisLimitService } from "../../../services/chart-axis-limit.service";
+import { Subject } from "rxjs";
 
 describe('#chart-types ChartBarComponent', () => {
    let fixture: ComponentFixture<ChartBarComponent>;
-   const parent = mock(ChartPlateComponent);
-   let chartInitialized: EventEmitter<unknown>;
-   let chart: any;
+  let service = mock(ChartService);
+  const parent = mock(ChartPlateComponent);
+  const limitService = mock(ChartAxisLimitService);
+  let limitServiceChanged$: Subject<undefined>;
+  let chartInitialized: EventEmitter<unknown>;
+  let chart: any;
+  const color = '#000';
 
    beforeEach(async () => {
-      chart = { data: { datasets: [] } };
-      chartInitialized = new EventEmitter();
-      when(parent.chartInitialized).thenReturn(chartInitialized);
-      when(parent.chart).thenReturn(chart);
-      return MockBuilder(ChartBarComponent, ChartModule).provide(MockProvider(ChartPlateComponent, instance(parent)));
+     limitServiceChanged$ = new Subject<undefined>();
+     chart = { options: { plugins: {} }, data: {datasets: []} };
+     chartInitialized = new EventEmitter();
+     when(parent.chart).thenReturn(chart);
+     when(parent.chartInitialized).thenReturn(chartInitialized);
+     when(limitService.changed).thenReturn(limitServiceChanged$.asObservable());
+     when(service.getRandomColor(anyString())).thenReturn(color);
+      return MockBuilder(ChartBarComponent, ChartModule)
+        .provide(MockProvider(ChartPlateComponent, instance(parent)))
+        .provide(MockProvider(ChartAxisLimitService, instance(limitService)))
+        .provide(MockProvider(ChartService, instance(service)));
    });
 
    beforeEach(() => {
@@ -28,6 +41,8 @@ describe('#chart-types ChartBarComponent', () => {
    });
 
    afterEach(() => {
+     reset(parent);
+     reset(limitService);
       reset(parent);
    });
 
@@ -68,23 +83,23 @@ describe('#chart-types ChartBarComponent', () => {
    });
 
    it("should add the bar's name properly", () => {
-      fixture.componentInstance.name = Math.floor(Math.random() * 16777215).toString(16);
+      fixture.componentInstance._settings.name = Math.floor(Math.random() * 16777215).toString(16);
       chart.data = { datasets: [] };
       //
       fixture.detectChanges();
       //
       const added = chart.data.datasets[0];
-      expect(added.label).toBe(fixture.componentInstance.name);
+      expect(added.label).toBe(fixture.componentInstance._settings.name);
    });
 
    it("should add the bar's color properly", () => {
-      fixture.componentInstance.color = Math.floor(Math.random() * 16777215).toString(16);
+      fixture.componentInstance._settings.color = Math.floor(Math.random() * 16777215).toString(16);
       chart.data = { datasets: [] };
       //
       fixture.detectChanges();
       //
       const added = chart.data.datasets[0];
-      expect(added.backgroundColor).toBe(fixture.componentInstance.color);
+      expect(added.backgroundColor).toBe(fixture.componentInstance._settings.color);
    });
 
    it("should add the bar's yAxisId properly", () => {
@@ -98,20 +113,20 @@ describe('#chart-types ChartBarComponent', () => {
    });
 
    it("should add the bar's order properly", () => {
-      fixture.componentInstance.order = Math.floor(Math.random() * 16777215);
+      fixture.componentInstance._settings.order = Math.floor(Math.random() * 16777215);
       chart.data = { datasets: [] };
       //
       fixture.detectChanges();
       //
       const added = chart.data.datasets[0];
-      expect(added.order).toBe(fixture.componentInstance.order);
+      expect(added.order).toBe(fixture.componentInstance._settings.order);
    });
 
    it('should not duplicate bars', () => {
-      fixture.componentInstance.name = 'Some name';
-      fixture.componentInstance.order = 0;
+      fixture.componentInstance._settings.name = 'Some name';
+      fixture.componentInstance._settings.order = 0;
       chart.data = {
-         datasets: [{ label: fixture.componentInstance.name, order: fixture.componentInstance.order } as any]
+         datasets: [{ label: fixture.componentInstance._settings.name, order: fixture.componentInstance._settings.order } as any]
       };
       //
       fixture.detectChanges();
@@ -120,9 +135,9 @@ describe('#chart-types ChartBarComponent', () => {
    });
 
    it('should not delete other bars by order', () => {
-      fixture.componentInstance.name = 'Some name';
-      fixture.componentInstance.order = 0;
-      chart.data = { datasets: [{ label: fixture.componentInstance.name, order: Forger.create<number>()! } as any] };
+      fixture.componentInstance._settings.name = 'Some name';
+      fixture.componentInstance._settings.order = 0;
+      chart.data = { datasets: [{ label: fixture.componentInstance._settings.name, order: Forger.create<number>()! } as any] };
       //
       fixture.detectChanges();
       //
@@ -130,9 +145,9 @@ describe('#chart-types ChartBarComponent', () => {
    });
 
    it('should not delete other bars by name', () => {
-      fixture.componentInstance.name = 'Some name';
-      fixture.componentInstance.order = 0;
-      chart.data = { datasets: [{ label: 'Other name', order: fixture.componentInstance.order } as any] };
+      fixture.componentInstance._settings.name = 'Some name';
+      fixture.componentInstance._settings.order = 0;
+      chart.data = { datasets: [{ label: 'Other name', order: fixture.componentInstance._settings.order } as any] };
       //
       fixture.detectChanges();
       //

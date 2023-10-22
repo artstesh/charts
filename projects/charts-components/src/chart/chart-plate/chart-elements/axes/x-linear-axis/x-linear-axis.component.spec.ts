@@ -10,17 +10,19 @@ import { ChartModule } from "../../../../chart.module";
 import { instance, mock, reset, when } from "ts-mockito";
 import { ChartAxisLimitService } from "../../../../services/chart-axis-limit.service";
 import { should } from "@artstesh/it-should";
+import { ChartPlateService } from "../../../services/chart-plate.service";
 
 describe('#chart-elements XLinearAxisComponent', () => {
   let fixture: ComponentFixture<XLinearAxisComponent>;
   const limitService = mock(ChartAxisLimitService);
   const chartPlate = mock(ChartPlateComponent);
+  const plateService = mock(ChartPlateService);
   let chartInitialized$: EventEmitter<any>;
 
   beforeEach(async () => {
     chartInitialized$ = new EventEmitter();
     const chartStub = jasmine.createSpyObj(['update', 'data', 'options']);
-    when(chartPlate.chartInitialized).thenReturn(chartInitialized$);
+    when(plateService.chartInitialized).thenReturn(chartInitialized$);
     when(chartPlate.chart).thenReturn(chartStub);
     return MockBuilder(XLinearAxisComponent, ChartModule)
       .provide(MockProvider(ChartAxisLimitService, instance(limitService)))
@@ -34,6 +36,7 @@ describe('#chart-elements XLinearAxisComponent', () => {
 
   afterEach(() => {
     reset(limitService);
+    reset(plateService);
     expect().nothing();
   })
 
@@ -44,7 +47,7 @@ describe('#chart-elements XLinearAxisComponent', () => {
   it('should add the axis on chartInitialized', () => {
     instance(chartPlate).chart.options.scales = {};
     //
-    instance(chartPlate).chartInitialized.next();
+    chartInitialized$.next();
     fixture.detectChanges();
     //
     expect(instance(chartPlate).chart?.options?.scales?.[XLinearAxisComponent.id]).toBeTruthy();
@@ -53,7 +56,7 @@ describe('#chart-elements XLinearAxisComponent', () => {
   it('should update chart on chartInitialized', () => {
     instance(chartPlate).chart.options.scales = {};
     //
-    instance(chartPlate).chartInitialized.next();
+    chartInitialized$.next();
     fixture.detectChanges();
     //
     expect(instance(chartPlate).updateChart).toHaveBeenCalledTimes(1);
@@ -63,7 +66,7 @@ describe('#chart-elements XLinearAxisComponent', () => {
     instance(chartPlate).chart.options.scales = {};
     //
     fixture.componentInstance._settings.displayGrid = true;
-    instance(chartPlate).chartInitialized.next();
+    chartInitialized$.next();
     fixture.detectChanges();
     //
     const gridProp = instance(chartPlate).chart?.options?.scales?.[XLinearAxisComponent.id]?.grid;

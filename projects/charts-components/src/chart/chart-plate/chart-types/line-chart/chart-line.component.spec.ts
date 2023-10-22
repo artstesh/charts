@@ -1,151 +1,146 @@
+// noinspection JSVoidFunctionReturnValueUsed
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChartLineComponent } from './chart-line.component';
 import { EventEmitter } from '@angular/core';
 import { MockBuilder, MockProvider, MockRender } from "ng-mocks";
-import { anyString, instance, mock, when } from "ts-mockito";
-import { ReplaySubject } from "rxjs";
+import { anyString, anything, capture, instance, mock, reset, verify, when } from "ts-mockito";
+import { ReplaySubject, Subject } from "rxjs";
 import { ChartService } from "../../../services";
 import { ChartPlateComponent } from "../../chart-plate.component";
 import { DateRangeModel } from "../../../models";
 import { ChartModule } from "../../../chart.module";
+import { ChartAxisLimitService } from "../../../services/chart-axis-limit.service";
+import { ChartPlateService } from "../../services/chart-plate.service";
+import { should } from "@artstesh/it-should";
+import { ChartDataset } from "chart.js";
+import { ChartLineSettings } from "./chart-line.settings";
+import { Forger } from "@artstesh/forger";
 
 describe('#chart-types LineChartComponent', () => {
    let fixture: ComponentFixture<ChartLineComponent>;
   let service = mock(ChartService);
-  const parent = mock(ChartPlateComponent);
+  const plateService = mock(ChartPlateService);
+  const limitService = mock(ChartAxisLimitService);
+  let limitServiceChanged$: Subject<undefined>;
   let chartInitialized: EventEmitter<unknown>;
-  let chart: any;
-  let dateRange$: ReplaySubject<DateRangeModel>;
-   const color = '#000';
+  let settings: ChartLineSettings;
 
    beforeEach(async () => {
-     dateRange$ = new ReplaySubject<DateRangeModel>();
-     chart = { options: { plugins: {} }, data: {datasets: []} };
+     settings = new ChartLineSettings().copy(Forger.create<ChartLineSettings>()!);
+     limitServiceChanged$ = new Subject<undefined>();
      chartInitialized = new EventEmitter();
-     when(parent.chart).thenReturn(chart);
-     when(parent.chartInitialized).thenReturn(chartInitialized);
+     when(plateService.chartInitialized).thenReturn(chartInitialized);
+     when(limitService.changed).thenReturn(limitServiceChanged$.asObservable());
+     when(service.getRandomColor(anyString())).thenReturn(color);
      return MockBuilder(ChartLineComponent, ChartModule)
-       .provide(MockProvider(ChartPlateComponent, instance(parent)))
+       .provide(MockProvider(ChartPlateService, instance(plateService)))
+       .provide(MockProvider(ChartAxisLimitService, instance(limitService)))
        .provide(MockProvider(ChartService, instance(service)));
    });
 
    beforeEach(() => {
-     dateRange$ = new ReplaySubject<DateRangeModel>();
-     chart = { options: { plugins: {} }, data: {datasets: []} };
-     chartInitialized = new EventEmitter();
-     when(parent.chart).thenReturn(chart);
-     when(parent.chartInitialized).thenReturn(chartInitialized);
-      when(service.getRandomColor(anyString())).thenReturn(color);
      fixture = MockRender(ChartLineComponent);
+     fixture.componentInstance.settings = settings;
    });
+
+   afterEach(() => {
+     reset(plateService);
+     reset(limitService);
+     expect().nothing();
+   })
 
    it('should create', () => {
       expect(fixture.componentInstance).toBeTruthy();
    });
 
-   it('should define color if not defined', () => {
-      parent.chartInitialized.next();
+  it('should add line on chartInitialized', () => {
+    chartInitialized.next();
+    //
+    verify(plateService.addDataset(anything())).once();
+  });
+
+   it('should define backgroundColor', () => {
+      chartInitialized.next();
       //
-      expect(fixture.componentInstance.color).toBe(color);
+     const [dataset] = capture(plateService.addDataset).last();
+      should().string((dataset as ChartDataset<'line'>).backgroundColor as string).equals(settings.color);
    });
 
-   it('should add line on ngOnChanges', () => {
-      parent.chart.data = { datasets: [] };
+   it('should define borderColor', () => {
+      chartInitialized.next();
       //
-      fixture.detectChanges();
-      //
-      expect(parent.chart.data.datasets.length).toBe(1);
-      expect(parent.updateChart).toHaveBeenCalledTimes(1);
+     const [dataset] = capture(plateService.addDataset).last();
+      should().string((dataset as ChartDataset<'line'>).borderColor as string).equals(settings.color);
    });
 
-   it("should add line's type properly", () => {
-      parent.chart.data = { datasets: [] };
+   it('should define pointRadius', () => {
+      chartInitialized.next();
       //
-      fixture.detectChanges();
-      //
-      const added = parent.chart.data.datasets[0];
-      expect(added.type).toBe('line');
-   });
-/*
-   it("should add the line's data properly", () => {
-      fixture.componentInstance.data = [{ x: new Date(), y: 1 }];
-      parent.chart.data = { datasets: [] };
-      //
-      fixture.detectChanges();
-      //
-      const added = parent.chart.data.datasets[0];
-      expect(added.data).toBe(fixture.componentInstance.data);
-   });
-*/
-   it("should add the line's name properly", () => {
-      fixture.componentInstance.name = Math.floor(Math.random() * 16777215).toString(16);
-      parent.chart.data = { datasets: [] };
-      //
-      fixture.detectChanges();
-      //
-      const added = parent.chart.data.datasets[0];
-      expect(added.label).toBe(fixture.componentInstance.name);
+     const [dataset] = capture(plateService.addDataset).last();
+      should().number((dataset as ChartDataset<'line'>).pointRadius as number).equals(settings.pointRadius as number);
    });
 
-   it("should add the line's color properly", () => {
-      fixture.componentInstance.color = Math.floor(Math.random() * 16777215).toString(16);
-      parent.chart.data = { datasets: [] };
+   it('should define type', () => {
+      chartInitialized.next();
       //
-      fixture.detectChanges();
-      //
-      const added = parent.chart.data.datasets[0];
-      expect(added.backgroundColor).toBe(fixture.componentInstance.color);
-      expect(added.borderColor).toBe(fixture.componentInstance.color);
+     const [dataset] = capture(plateService.addDataset).last();
+      should().string((dataset as ChartDataset<'line'>).type).equals('line');
    });
-/*
-   it("should add the line's yAxisId properly", () => {
-      fixture.componentInstance.yAxisId = Math.floor(Math.random() * 16777215).toString(16);
-      parent.chart.data = { datasets: [] };
+
+   it('should define name', () => {
+      chartInitialized.next();
       //
-      fixture.detectChanges();
-      //
-      const added = parent.chart.data.datasets[0];
-      expect(added.yAxisID).toBe(fixture.componentInstance.yAxisId);
+     const [dataset] = capture(plateService.addDataset).last();
+      should().string((dataset as ChartDataset<'line'>).label).equals(settings.name);
    });
-*/
-   it("should add the line's order properly", () => {
-      fixture.componentInstance.order = Math.floor(Math.random() * 100);
-      parent.chart.data = { datasets: [] };
-      //
-      fixture.detectChanges();
-      //
-      const added = parent.chart.data.datasets[0];
-      expect(added.order).toBe(fixture.componentInstance.order);
-   });
+
+  it('should define order', () => {
+    chartInitialized.next();
+    //
+    const [dataset] = capture(plateService.addDataset).last();
+    should().number((dataset as ChartDataset<'line'>).order).equals(settings.order);
+  });
+  /*
+     it("should add the line's data properly", () => {
+        fixture.componentInstance.data = [{ x: new Date(), y: 1 }];
+        plateService.chart.data = { datasets: [] };
+        //
+        fixture.detectChanges();
+        //
+        const added = plateService.chart.data.datasets[0];
+        expect(added.data).toBe(fixture.componentInstance.data);
+     });
+  */
 /*
    it('should add line do not duplicate lines', () => {
       fixture.componentInstance.name = 'Some name';
       fixture.componentInstance.order = 0;
-      parent.chart.data = { datasets: [{ label: fixture.componentInstance.name, order: fixture.componentInstance.order }] };
+      plateService.chart.data = { datasets: [{ label: fixture.componentInstance.name, order: fixture.componentInstance.order }] };
       //
       fixture.detectChanges();
       //
-      expect(parent.chart.data.datasets.length).toBe(1);
+      expect(plateService.chart.data.datasets.length).toBe(1);
    });
 
    it('should add line do not delete other lines by order', () => {
       fixture.componentInstance.name = 'Some name';
       fixture.componentInstance.order = 0;
-      parent.chart.data = { datasets: [{ label: fixture.componentInstance.name, order: Math.floor(Math.random() * 10) }] };
+      plateService.chart.data = { datasets: [{ label: fixture.componentInstance.name, order: Math.floor(Math.random() * 10) }] };
       //
       fixture.detectChanges();
       //
-      expect(parent.chart.data.datasets.length).toBe(2);
+      expect(plateService.chart.data.datasets.length).toBe(2);
    });
 
    it('should add line do not delete other lines by name', () => {
       fixture.componentInstance.name = 'Some name';
       fixture.componentInstance.order = 0;
-      parent.chart.data = { datasets: [{ label: 'Other name', order: fixture.componentInstance.order }] };
+      plateService.chart.data = { datasets: [{ label: 'Other name', order: fixture.componentInstance.order }] };
       //
       fixture.detectChanges();
       //
-      expect(parent.chart.data.datasets.length).toBe(2);
+      expect(plateService.chart.data.datasets.length).toBe(2);
    });
  */
 });
