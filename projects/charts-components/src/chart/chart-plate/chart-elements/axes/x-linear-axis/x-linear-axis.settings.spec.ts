@@ -1,12 +1,12 @@
-import { LinearAxisSettings } from "./linear-axis.settings";
+import { XLinearAxisSettings } from "./x-linear-axis.settings";
 import { Forger } from "@artstesh/forger";
 import { should } from "@artstesh/it-should";
 
-describe("#chart-elements LinearAxisSettings", () => {
-  let model: LinearAxisSettings;
+describe("#chart-elements XLinearAxisSettings", () => {
+  let model: XLinearAxisSettings;
 
   beforeEach(() => {
-    model = new LinearAxisSettings();
+    model = new XLinearAxisSettings();
     model.limits = Forger.create<[number, number | null]>()!;
     model.displayGrid = Forger.create<boolean>()!;
   })
@@ -17,7 +17,7 @@ describe("#chart-elements LinearAxisSettings", () => {
 
   describe("isSame()", () => {
     it("are same", () => {
-      const other = new LinearAxisSettings();
+      const other = new XLinearAxisSettings();
       other.limits = [...model.limits];
       other.displayGrid = model.displayGrid;
       //
@@ -25,7 +25,7 @@ describe("#chart-elements LinearAxisSettings", () => {
     });
 
     it("different displayGrid", () => {
-      const other = new LinearAxisSettings();
+      const other = new XLinearAxisSettings();
       other.limits = [...model.limits];
       other.displayGrid = !model.displayGrid;
       //
@@ -33,7 +33,7 @@ describe("#chart-elements LinearAxisSettings", () => {
     });
 
     it("different displayGrid", () => {
-      const other = new LinearAxisSettings();
+      const other = new XLinearAxisSettings();
       other.limits = [...model.limits];
       other.displayGrid = !model.displayGrid;
       //
@@ -41,7 +41,7 @@ describe("#chart-elements LinearAxisSettings", () => {
     });
 
     it("different limits", () => {
-      const other = new LinearAxisSettings();
+      const other = new XLinearAxisSettings();
       other.limits = Forger.create<[number | null, number | null]>()!;
       other.displayGrid = model.displayGrid;
       //

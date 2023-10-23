@@ -32,7 +32,6 @@ describe('#chart-types LineChartComponent', () => {
      chartInitialized = new EventEmitter();
      when(plateService.chartInitialized).thenReturn(chartInitialized);
      when(limitService.changed).thenReturn(limitServiceChanged$.asObservable());
-     when(service.getRandomColor(anyString())).thenReturn(color);
      return MockBuilder(ChartLineComponent, ChartModule)
        .provide(MockProvider(ChartPlateService, instance(plateService)))
        .provide(MockProvider(ChartAxisLimitService, instance(limitService)))

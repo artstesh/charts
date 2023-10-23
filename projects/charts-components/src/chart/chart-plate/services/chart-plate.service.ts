@@ -2,7 +2,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { auditTime } from 'rxjs/operators';
 import Chart from 'chart.js/auto';
-import { ChartDataset } from 'chart.js';
+import { CartesianScaleTypeRegistry, ChartDataset, ScaleOptionsByType } from 'chart.js';
 
 @Injectable()
 export class ChartPlateService {
@@ -36,5 +36,17 @@ export class ChartPlateService {
       this.chart.data.datasets = this.chart.data.datasets.filter((d) => d.label !== requiredToDelete);
     }
     this.updateChart(true);
+  }
+
+  public setScale(id: string,scale:  ScaleOptionsByType): void {
+    if (!this.chart?.options?.scales) return;
+    this.chart.options.scales[id] = scale;
+    this.updateChart();
+  }
+
+  public resetScale(id: string): void {
+    if (!this.chart?.options?.scales) return;
+    this.chart.options.scales[id] = {};
+    this.updateChart();
   }
 }

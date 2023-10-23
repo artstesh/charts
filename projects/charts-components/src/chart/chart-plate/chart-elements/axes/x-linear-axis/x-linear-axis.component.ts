@@ -2,8 +2,10 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@a
 import { Subscription } from 'rxjs';
 import { ChartPlateComponent } from '../../../chart-plate.component';
 import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
-import { LinearAxisSettings } from './linear-axis.settings';
+import { XLinearAxisSettings } from './x-linear-axis.settings';
 import { ChartPlateService } from '../../../services/chart-plate.service';
+import { ScaleOptionsByType } from "chart.js";
+import { SettingsMapService } from "../../../../services/settings-map.service";
 
 @Component({
   selector: 'lib-x-linear-axis',
@@ -13,10 +15,10 @@ import { ChartPlateService } from '../../../services/chart-plate.service';
 })
 export class XLinearAxisComponent implements OnInit, OnDestroy {
   static id = 'x';
-  _settings: LinearAxisSettings = new LinearAxisSettings();
+  _settings: XLinearAxisSettings = new XLinearAxisSettings();
   private subs: Subscription[] = [];
 
-  @Input() set settings(value: LinearAxisSettings | undefined) {
+  @Input() set settings(value: XLinearAxisSettings | undefined) {
     if (!value || this._settings.isSame(value)) return;
     this._settings = value;
     this.limitService.setHorizontalLimits(this._settings.limits[0], this._settings.limits[1]);
@@ -24,9 +26,9 @@ export class XLinearAxisComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private parent: ChartPlateComponent,
     private limitService: ChartAxisLimitService,
-    private service: ChartPlateService
+    private service: ChartPlateService,
+    private mapService: SettingsMapService
   ) {}
 
   ngOnInit(): void {
@@ -34,17 +36,7 @@ export class XLinearAxisComponent implements OnInit, OnDestroy {
   }
 
   setAxis(): void {
-    if (!this.parent.chart?.options?.scales) return;
-    this.parent.chart.options.scales[XLinearAxisComponent.id] = {
-      type: 'linear',
-      grid: {
-        display: this._settings.displayGrid,
-      },
-      display: 'auto',
-      min: this._settings.limits[0] ?? undefined,
-      max: this._settings.limits[1] ?? undefined,
-    };
-    this.parent.updateChart();
+    this.service.setScale(XLinearAxisComponent.id, this.mapService.xLinearAxis(this._settings));
   }
 
   ngOnDestroy(): void {
@@ -53,9 +45,6 @@ export class XLinearAxisComponent implements OnInit, OnDestroy {
   }
 
   private resetAxis(): void {
-    if (!this.parent?.chart?.data?.datasets) return;
-    if (!this.parent?.chart?.options?.scales) return;
-    this.parent.chart.options.scales[XLinearAxisComponent.id] = {};
-    this.parent.updateChart(true);
+    this.service.resetScale(XLinearAxisComponent.id);
   }
 }
