@@ -4,6 +4,7 @@ import { ChartAxisLimitService } from '../../services/chart-axis-limit.service';
 import { ChartTypeSettings } from './models/chart-type.settings';
 import { ChartService } from '../../services';
 import { ChartPlateService } from '../services/chart-plate.service';
+import { SettingsMapService } from "../../services/settings-map.service";
 
 @Component({
    selector: '',
@@ -22,6 +23,7 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
 
    protected constructor(private chartService: ChartService,protected limitService: ChartAxisLimitService,
                          protected service: ChartPlateService,
+                         private mapService: SettingsMapService,
                          settings: T) {
      this._settings = settings;
    }

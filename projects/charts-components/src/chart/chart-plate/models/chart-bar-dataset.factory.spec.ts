@@ -3,7 +3,7 @@ import { ChartDataModel } from "../../models";
 import { should } from "@artstesh/it-should";
 import { ChartDataset } from "chart.js";
 import { ChartConstants } from "../../models/chart-constants";
-import { ChartBarDatasetModel } from "./chart-bar-dataset.model";
+import { ChartBarDatasetFactory } from "./chart-bar-dataset.factory";
 
 describe("ChartBarDatasetModel", () => {
   describe("being created successfully", () => {
@@ -14,7 +14,7 @@ describe("ChartBarDatasetModel", () => {
     beforeEach(() => {
       label = Forger.create<string>()!;
       data = Forger.create<ChartDataModel[]>()!;
-      model = new ChartBarDatasetModel(label, data).build() as ChartDataset<'bar'>;
+      model = new ChartBarDatasetFactory(label, data).build() as ChartDataset<'bar'>;
     });
 
     it("type is correct", () => {
@@ -34,12 +34,12 @@ describe("ChartBarDatasetModel", () => {
 
     it("xAxisID is correct", () => {
       //
-      should().string(model.xAxisID).equals(ChartConstants.BottomAxisName);
+      should().string(model.xAxisID).equals(ChartConstants.BottomAxisId);
     });
 
     it("yAxisID is correct", () => {
       //
-      should().string(model.yAxisID).equals(ChartConstants.LeftAxisName);
+      should().string(model.yAxisID).equals(ChartConstants.LeftAxisId);
     });
   });
 
@@ -48,10 +48,10 @@ describe("ChartBarDatasetModel", () => {
   });
 
   describe("additional properties", () => {
-    let model: ChartBarDatasetModel;
+    let model: ChartBarDatasetFactory;
 
     beforeEach(() => {
-      model = new ChartBarDatasetModel(Forger.create<string>()!, Forger.create<ChartDataModel[]>()!);
+      model = new ChartBarDatasetFactory(Forger.create<string>()!, Forger.create<ChartDataModel[]>()!);
     });
 
     it("order()", () => {
@@ -81,7 +81,7 @@ describe("ChartBarDatasetModel", () => {
     it("rightAxis()", () => {
       const result = model.rightAxis().build() as ChartDataset<'bar'>;
       //
-      should().string(result.yAxisID).equals(ChartConstants.RightAxisName);
+      should().string(result.yAxisID).equals(ChartConstants.RightAxisId);
     });
   });
 });

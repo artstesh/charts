@@ -7,9 +7,10 @@ import { ChartDataModel } from '../../../models';
 import { ChartService } from '../../../services';
 import { ChartAxisLimitService } from '../../../services/chart-axis-limit.service';
 import { ChartLineSettings } from './chart-line.settings';
-import { ChartPlateDatasetModel } from '../../models/chart-plate-dataset.model';
-import { ChartLineDatasetModel } from '../../models/chart-line-dataset.model';
+import { ChartPlateDatasetFactory } from '../../models/chart-plate-dataset.factory';
+import { ChartLineDatasetFactory } from '../../models/chart-line-dataset.factory';
 import { ChartPlateService } from '../../services/chart-plate.service';
+import { SettingsMapService } from "../../../services/settings-map.service";
 
 @Component({
   selector: 'chart-line',
@@ -30,8 +31,9 @@ export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSett
     chartService: ChartService,
     limitService: ChartAxisLimitService,
     service: ChartPlateService,
+    mapService: SettingsMapService
   ) {
-    super(chartService, limitService, service, new ChartLineSettings());
+    super(chartService, limitService, service, mapService, new ChartLineSettings());
   }
 
   protected updateFilteredData(): void {
@@ -39,7 +41,7 @@ export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSett
   }
 
   protected addDataset(): void {
-    const model = new ChartLineDatasetModel(this._settings.name, this._dataFiltered)
+    const model = new ChartLineDatasetFactory(this._settings.name, this._dataFiltered)
       .backColor(this._settings.color)
       .order(this._settings.order)
       .pointRadius(this._settings.pointRadius)

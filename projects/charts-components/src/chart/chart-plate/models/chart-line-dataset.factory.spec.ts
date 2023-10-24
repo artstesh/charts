@@ -1,4 +1,4 @@
-import { ChartLineDatasetModel } from "./chart-line-dataset.model";
+import { ChartLineDatasetFactory } from "./chart-line-dataset.factory";
 import { Forger } from "@artstesh/forger";
 import { ChartDataModel } from "../../models";
 import { should } from "@artstesh/it-should";
@@ -14,7 +14,7 @@ describe("ChartLineDatasetModel", () => {
     beforeEach(() => {
       label = Forger.create<string>()!;
       data = Forger.create<ChartDataModel[]>()!;
-      model = new ChartLineDatasetModel(label, data).build() as ChartDataset<'line'>;
+      model = new ChartLineDatasetFactory(label, data).build() as ChartDataset<'line'>;
     });
 
     it("type is correct", () => {
@@ -34,12 +34,12 @@ describe("ChartLineDatasetModel", () => {
 
     it("xAxisID is correct", () => {
       //
-      should().string(model.xAxisID).equals(ChartConstants.BottomAxisName);
+      should().string(model.xAxisID).equals(ChartConstants.BottomAxisId);
     });
 
     it("yAxisID is correct", () => {
       //
-      should().string(model.yAxisID).equals(ChartConstants.LeftAxisName);
+      should().string(model.yAxisID).equals(ChartConstants.LeftAxisId);
     });
   });
 
@@ -48,10 +48,10 @@ describe("ChartLineDatasetModel", () => {
   });
 
   describe("additional properties", () => {
-    let model: ChartLineDatasetModel;
+    let model: ChartLineDatasetFactory;
 
     beforeEach(() => {
-      model = new ChartLineDatasetModel(Forger.create<string>()!, Forger.create<ChartDataModel[]>()!);
+      model = new ChartLineDatasetFactory(Forger.create<string>()!, Forger.create<ChartDataModel[]>()!);
     });
 
     it("order()", () => {
@@ -81,7 +81,7 @@ describe("ChartLineDatasetModel", () => {
     it("rightAxis()", () => {
       const result = model.rightAxis().build() as ChartDataset<'line'>;
       //
-      should().string(result.yAxisID).equals(ChartConstants.RightAxisName);
+      should().string(result.yAxisID).equals(ChartConstants.RightAxisId);
     });
   });
 });

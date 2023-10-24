@@ -3,7 +3,7 @@ import { ChartDataModel } from "../../models";
 
 export type ChartElementType = 'line' | 'bar';
 
-export abstract class ChartPlateDatasetModel {
+export abstract class ChartPlateDatasetFactory {
   protected dataset: ChartDataset = {data: []};
 
   public constructor(type: ChartElementType, label: string, data: ChartDataModel[]) {

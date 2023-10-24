@@ -8,8 +8,9 @@ import { ChartAxisLimitService } from '../../../services/chart-axis-limit.servic
 import { ChartService } from '../../../services';
 import { ChartLineSettings } from '../line-chart/chart-line.settings';
 import { ChartBarSettings } from './chart-bar.settings';
-import { ChartBarDatasetModel } from '../../models/chart-bar-dataset.model';
+import { ChartBarDatasetFactory } from '../../models/chart-bar-dataset.factory';
 import { ChartPlateService } from '../../services/chart-plate.service';
+import { SettingsMapService } from "../../../services/settings-map.service";
 
 @Component({
   selector: 'chart-bar',
@@ -32,8 +33,9 @@ export class ChartBarComponent extends AbstractChartTypeComponent<ChartBarSettin
     chartService: ChartService,
     limitService: ChartAxisLimitService,
     service: ChartPlateService,
+    mapService: SettingsMapService
   ) {
-    super(chartService, limitService, service, new ChartBarSettings());
+    super(chartService, limitService, service, mapService, new ChartBarSettings());
   }
 
   protected updateFilteredData(): void {
@@ -41,7 +43,7 @@ export class ChartBarComponent extends AbstractChartTypeComponent<ChartBarSettin
   }
 
   protected addDataset(): void {
-    const model = new ChartBarDatasetModel(this._settings.name, this._dataFiltered)
+    const model = new ChartBarDatasetFactory(this._settings.name, this._dataFiltered)
       .order(this._settings.order)
       .backColor(this._settings.color)
       .thickness(this._settings.thickness);
