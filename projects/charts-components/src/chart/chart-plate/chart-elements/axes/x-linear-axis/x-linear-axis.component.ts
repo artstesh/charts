@@ -36,7 +36,7 @@ export class XLinearAxisComponent implements OnInit, OnDestroy {
   }
 
   setAxis(): void {
-    this.service.setScale(XLinearAxisComponent.id, this.mapService.xLinearAxis(this._settings));
+    this.service.setScale(XLinearAxisComponent.id, this.mapService.xLinearScale(this._settings));
   }
 
   ngOnDestroy(): void {

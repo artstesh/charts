@@ -11,6 +11,7 @@ import { ChartBarSettings } from './chart-bar.settings';
 import { ChartBarDatasetFactory } from '../../models/chart-bar-dataset.factory';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from "../../../services/settings-map.service";
+import { ChartLineDatasetFactory } from "../../models/chart-line-dataset.factory";
 
 @Component({
   selector: 'chart-bar',
@@ -27,8 +28,6 @@ export class ChartBarComponent extends AbstractChartTypeComponent<ChartBarSettin
     this.dataUpdated();
   }
 
-  yAxisId = 'y';
-
   constructor(
     chartService: ChartService,
     limitService: ChartAxisLimitService,
@@ -42,11 +41,5 @@ export class ChartBarComponent extends AbstractChartTypeComponent<ChartBarSettin
     this._dataFiltered = this.limitService.examine(this._data);
   }
 
-  protected addDataset(): void {
-    const model = new ChartBarDatasetFactory(this._settings.name, this._dataFiltered)
-      .order(this._settings.order)
-      .backColor(this._settings.color)
-      .thickness(this._settings.thickness);
-    this.service.addDataset(model.build());
-  }
+  protected getDataset = () => this.mapService.batDataset(this._settings, this._dataFiltered);
 }

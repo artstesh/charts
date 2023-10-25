@@ -8,7 +8,7 @@ import { anyString, anything, capture, instance, mock, reset, verify, when } fro
 import { ReplaySubject, Subject } from "rxjs";
 import { ChartService } from "../../../services";
 import { ChartPlateComponent } from "../../chart-plate.component";
-import { DateRangeModel } from "../../../models";
+import { ChartDataModel, DateRangeModel } from "../../../models";
 import { ChartModule } from "../../../chart.module";
 import { ChartAxisLimitService } from "../../../services/chart-axis-limit.service";
 import { ChartPlateService } from "../../services/chart-plate.service";
@@ -16,12 +16,14 @@ import { should } from "@artstesh/it-should";
 import { ChartDataset } from "chart.js";
 import { ChartLineSettings } from "./chart-line.settings";
 import { Forger } from "@artstesh/forger";
+import { SettingsMapService } from "../../../services/settings-map.service";
 
 describe('#chart-types LineChartComponent', () => {
    let fixture: ComponentFixture<ChartLineComponent>;
   let service = mock(ChartService);
   const plateService = mock(ChartPlateService);
   const limitService = mock(ChartAxisLimitService);
+  const mapService = mock(SettingsMapService);
   let limitServiceChanged$: Subject<undefined>;
   let chartInitialized: EventEmitter<unknown>;
   let settings: ChartLineSettings;
@@ -34,6 +36,7 @@ describe('#chart-types LineChartComponent', () => {
      when(limitService.changed).thenReturn(limitServiceChanged$.asObservable());
      return MockBuilder(ChartLineComponent, ChartModule)
        .provide(MockProvider(ChartPlateService, instance(plateService)))
+       .provide(MockProvider(SettingsMapService, instance(mapService)))
        .provide(MockProvider(ChartAxisLimitService, instance(limitService)))
        .provide(MockProvider(ChartService, instance(service)));
    });
@@ -44,6 +47,7 @@ describe('#chart-types LineChartComponent', () => {
    });
 
    afterEach(() => {
+     reset(mapService);
      reset(plateService);
      reset(limitService);
      expect().nothing();
@@ -54,9 +58,12 @@ describe('#chart-types LineChartComponent', () => {
    });
 
   it('should add line on chartInitialized', () => {
+    const dataset = Forger.create<number>()! as any; // a trick
+    when(mapService.lineDataset(anything(), anything())).thenReturn(dataset);
+    //
     chartInitialized.next();
     //
-    verify(plateService.addDataset(anything())).once();
+    verify(plateService.addDataset(dataset)).once();
   });
 
    it('should define backgroundColor', () => {

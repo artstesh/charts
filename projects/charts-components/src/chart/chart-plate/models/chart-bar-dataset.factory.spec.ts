@@ -1,87 +1,73 @@
+import { ChartLineDatasetFactory } from "./chart-line-dataset.factory";
 import { Forger } from "@artstesh/forger";
 import { ChartDataModel } from "../../models";
 import { should } from "@artstesh/it-should";
-import { ChartDataset } from "chart.js";
+import { ChartDataset, ScaleOptionsByType } from "chart.js";
 import { ChartConstants } from "../../models/chart-constants";
+import { XLinearAxisSettings } from "../chart-elements/axes/x-linear-axis/x-linear-axis.settings";
+import { XLinearAxisScaleFactory } from "../chart-elements/axes/x-linear-axis/x-linear-axis-scale.factory";
+import { ChartLineSettings } from "../chart-types/line-chart/chart-line.settings";
+import { ChartBarSettings } from "../chart-types/bar-chart/chart-bar.settings";
 import { ChartBarDatasetFactory } from "./chart-bar-dataset.factory";
 
-describe("ChartBarDatasetModel", () => {
-  describe("being created successfully", () => {
-    let model: ChartDataset<'bar'>;
-    let label: string;
-    let data: ChartDataModel[];
+describe("ChartLineDatasetModel", () => {
+  let settings: ChartBarSettings;
+  let scale: ChartDataset<'bar', ChartDataModel[]>;
+  let data: ChartDataModel[];
 
-    beforeEach(() => {
-      label = Forger.create<string>()!;
-      data = Forger.create<ChartDataModel[]>()!;
-      model = new ChartBarDatasetFactory(label, data).build() as ChartDataset<'bar'>;
-    });
-
-    it("type is correct", () => {
-      //
-      should().string(model.type).equals('bar');
-    });
-
-    it("label is correct", () => {
-      //
-      should().string(model.label).equals(label);
-    });
-
-    it("data is correct", () => {
-      //
-      should().array(model.data as any).equal(data);
-    });
-
-    it("xAxisID is correct", () => {
-      //
-      should().string(model.xAxisID).equals(ChartConstants.BottomAxisId);
-    });
-
-    it("yAxisID is correct", () => {
-      //
-      should().string(model.yAxisID).equals(ChartConstants.LeftAxisId);
-    });
+  beforeEach(() => {
+    data = Forger.create<ChartDataModel[]>()!;
+    settings = new ChartBarSettings().copy(Forger.create<ChartBarSettings>()!);
+    scale = ChartBarDatasetFactory.build(settings, data);
   });
 
   afterEach(() => {
     expect().nothing();
   });
 
-  describe("additional properties", () => {
-    let model: ChartBarDatasetFactory;
+  it("should have defined scale", () => {
+    should().true(scale);
+  });
 
-    beforeEach(() => {
-      model = new ChartBarDatasetFactory(Forger.create<string>()!, Forger.create<ChartDataModel[]>()!);
-    });
+  it("type is correct", () => {
+    should().string(scale.type).equals('bar');
+  });
 
-    it("order()", () => {
-      const order = Forger.create<number>()!;
-      //
-      const result = model.order(order).build() as ChartDataset<'bar'>;
-      //
-      should().number(result.order).equals(order);
-    });
+  it("label is correct", () => {
+    should().string(scale.label).equals(settings.name);
+  });
 
-    it("backColor()", () => {
-      const color = Forger.create<string>()!;
-      //
-      const result = model.backColor(color).build() as ChartDataset<'bar'>;
-      //
-      should().string(result.backgroundColor as string).equals(color);
-    });
+  it("backgroundColor is correct", () => {
+    should().string(scale.backgroundColor as string).equals(settings.color);
+  });
 
-    it("thickness()", () => {
-      const color = Forger.create<number>()!;
-      //
-      const result = model.thickness(color).build() as ChartDataset<'bar'>;
-      //
-      should().number(result.barThickness as number).equals(color);
-    });
+  it("data is correct", () => {
+    should().array(scale.data).equal(data);
+  });
 
-    it("rightAxis()", () => {
-      const result = model.rightAxis().build() as ChartDataset<'bar'>;
-      //
-      should().string(result.yAxisID).equals(ChartConstants.RightAxisId);
-    });
+  it("xAxisID is correct", () => {
+    should().string(scale.xAxisID).equals(ChartConstants.BottomAxisId);
+  });
+
+  it("order is correct", () => {
+    should().number(scale.order).equals(settings.order);
+  });
+
+  it("barThickness is correct", () => {
+    should().number(scale.barThickness as number).equals(settings.thickness!);
+  });
+
+  it("left yAxisID is correct", () => {
+    settings.yLeft = true;
+    scale = ChartBarDatasetFactory.build(settings, data);
+    //
+    should().string(scale.yAxisID).equals(ChartConstants.LeftAxisId);
+  });
+
+  it("right yAxisID is correct", () => {
+    settings.yLeft = false;
+    scale = ChartBarDatasetFactory.build(settings, data);
+    //
+    should().string(scale.yAxisID).equals(ChartConstants.RightAxisId);
   });
 });

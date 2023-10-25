@@ -2,86 +2,74 @@ import { ChartLineDatasetFactory } from "./chart-line-dataset.factory";
 import { Forger } from "@artstesh/forger";
 import { ChartDataModel } from "../../models";
 import { should } from "@artstesh/it-should";
-import { ChartDataset } from "chart.js";
+import { ChartDataset, ScaleOptionsByType } from "chart.js";
 import { ChartConstants } from "../../models/chart-constants";
+import { XLinearAxisSettings } from "../chart-elements/axes/x-linear-axis/x-linear-axis.settings";
+import { XLinearAxisScaleFactory } from "../chart-elements/axes/x-linear-axis/x-linear-axis-scale.factory";
+import { ChartLineSettings } from "../chart-types/line-chart/chart-line.settings";
 
 describe("ChartLineDatasetModel", () => {
-  describe("being created successfully", () => {
-    let model: ChartDataset<'line'>;
-    let label: string;
-    let data: ChartDataModel[];
+  let settings: ChartLineSettings;
+  let scale: ChartDataset<'line', ChartDataModel[]>;
+  let data: ChartDataModel[];
 
-    beforeEach(() => {
-      label = Forger.create<string>()!;
-      data = Forger.create<ChartDataModel[]>()!;
-      model = new ChartLineDatasetFactory(label, data).build() as ChartDataset<'line'>;
-    });
-
-    it("type is correct", () => {
-      //
-      should().string(model.type).equals('line');
-    });
-
-    it("label is correct", () => {
-      //
-      should().string(model.label).equals(label);
-    });
-
-    it("data is correct", () => {
-      //
-      should().array(model.data as any).equal(data);
-    });
-
-    it("xAxisID is correct", () => {
-      //
-      should().string(model.xAxisID).equals(ChartConstants.BottomAxisId);
-    });
-
-    it("yAxisID is correct", () => {
-      //
-      should().string(model.yAxisID).equals(ChartConstants.LeftAxisId);
-    });
+  beforeEach(() => {
+    data = Forger.create<ChartDataModel[]>()!;
+    settings = new ChartLineSettings().copy(Forger.create<ChartLineSettings>()!);
+    scale = ChartLineDatasetFactory.build(settings, data);
   });
 
   afterEach(() => {
     expect().nothing();
   });
 
-  describe("additional properties", () => {
-    let model: ChartLineDatasetFactory;
+  it("should have defined scale", () => {
+    should().true(scale);
+  });
 
-    beforeEach(() => {
-      model = new ChartLineDatasetFactory(Forger.create<string>()!, Forger.create<ChartDataModel[]>()!);
-    });
+  it("type is correct", () => {
+    should().string(scale.type).equals('line');
+  });
 
-    it("order()", () => {
-      const order = Forger.create<number>()!;
-      //
-      const result = model.order(order).build() as ChartDataset<'line'>;
-      //
-      should().number(result.order).equals(order);
-    });
+  it("label is correct", () => {
+    should().string(scale.label).equals(settings.name);
+  });
 
-    it("pointRadius()", () => {
-      const radius = Forger.create<number>()!;
-      //
-      const result = model.pointRadius(radius).build() as ChartDataset<'line'>;
-      //
-      should().number(result.pointRadius as number).equals(radius);
-    });
+  it("backgroundColor is correct", () => {
+    should().string(scale.backgroundColor as string).equals(settings.color);
+  });
 
-    it("backColor()", () => {
-      const color = Forger.create<string>()!;
-      //
-      const result = model.backColor(color).build() as ChartDataset<'line'>;
-      //
-      should().string(result.backgroundColor as string).equals(color);
-    });
+  it("borderColor is correct", () => {
+    should().string(scale.borderColor as string).equals(settings.color);
+  });
 
-    it("rightAxis()", () => {
-      const result = model.rightAxis().build() as ChartDataset<'line'>;
-      //
-      should().string(result.yAxisID).equals(ChartConstants.RightAxisId);
-    });
+  it("data is correct", () => {
+    should().array(scale.data).equal(data);
+  });
+
+  it("xAxisID is correct", () => {
+    should().string(scale.xAxisID).equals(ChartConstants.BottomAxisId);
+  });
+
+  it("order is correct", () => {
+    should().number(scale.order).equals(settings.order);
+  });
+
+  it("pointRadius is correct", () => {
+    should().number(scale.pointRadius as number).equals(settings.pointRadius as number);
+  });
+
+  it("left yAxisID is correct", () => {
+    settings.yLeft = true;
+    scale = ChartLineDatasetFactory.build(settings, data);
+    //
+    should().string(scale.yAxisID).equals(ChartConstants.LeftAxisId);
+  });
+
+  it("right yAxisID is correct", () => {
+    settings.yLeft = false;
+    scale = ChartLineDatasetFactory.build(settings, data);
+    //
+    should().string(scale.yAxisID).equals(ChartConstants.RightAxisId);
   });
 });

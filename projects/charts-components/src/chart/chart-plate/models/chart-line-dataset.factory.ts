@@ -7,7 +7,7 @@ import { XLinearAxisSettings } from "../chart-elements/axes/x-linear-axis/x-line
 import { ChartLineSettings } from "../chart-types/line-chart/chart-line.settings";
 
 // noinspection JSSuspiciousNameCombination
-export class ChartLineDatasetFactory extends ChartPlateDatasetFactory{
+export class ChartLineDatasetFactory{
   public static build(settings: ChartLineSettings, data: ChartDataModel[]): ChartDataset<'line', ChartDataModel[]> {
     return {
       type: 'line',

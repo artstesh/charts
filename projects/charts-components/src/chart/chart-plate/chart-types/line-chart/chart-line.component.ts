@@ -40,12 +40,5 @@ export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSett
     this._dataFiltered = this.limitService.examine(this._data);
   }
 
-  protected addDataset(): void {
-    const model = new ChartLineDatasetFactory(this._settings.name, this._dataFiltered)
-      .backColor(this._settings.color)
-      .order(this._settings.order)
-      .pointRadius(this._settings.pointRadius)
-      .borderColor(this._settings.color);
-    this.service.addDataset(model.build());
-  }
+  protected getDataset = () => this.mapService.lineDataset(this._settings, this._dataFiltered);
 }
