@@ -35,6 +35,7 @@
             "main": "projects/charts-components/src/test.ts",
             "tsConfig": "projects/charts-components/tsconfig.spec.json",
             "karmaConfig": "projects/charts-components/karma.conf.js",
+            "codeCoverage": true,
             "customWebpackConfig": {
               "path": "./node_modules/@artstesh/forger/lib/webpack.config.js"
             }

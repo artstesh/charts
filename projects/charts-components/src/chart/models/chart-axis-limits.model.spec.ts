@@ -44,25 +44,25 @@ describe('#models ChartAxisLimitsModel', () => {
     });
 
     it('minX is different', () => {
-      other.minX = Forger.create<number>({numberMin: model.minX!})!;
+      other.minX = Forger.create<number>({numberMin: model.minX!++})!;
       //
       should().false(model.isTheSame(other));
     });
 
     it('maxX is different', () => {
-      other.maxX = Forger.create<number>({numberMin: model.maxX!})!;
+      other.maxX = Forger.create<number>({numberMin: model.maxX!++})!;
       //
       should().false(model.isTheSame(other));
     });
 
     it('minY is different', () => {
-      other.minY = Forger.create<number>({numberMin: model.minY!})!;
+      other.minY = Forger.create<number>({numberMin: model.minY!++})!;
       //
       should().false(model.isTheSame(other));
     });
 
     it('maxY is different', () => {
-      other.maxY = Forger.create<number>({numberMin: model.maxY!})!;
+      other.maxY = Forger.create<number>({numberMin: model.maxY!++})!;
       //
       should().false(model.isTheSame(other));
     });

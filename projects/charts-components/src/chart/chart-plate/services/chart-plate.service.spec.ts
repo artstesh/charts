@@ -6,8 +6,7 @@ describe('ChartPlateService', () => {
   let service: ChartPlateService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ChartPlateService);
+    service = new ChartPlateService();
   });
 
   it('should be created', () => {

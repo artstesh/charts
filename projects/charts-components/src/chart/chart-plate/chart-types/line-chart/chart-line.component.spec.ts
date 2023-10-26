@@ -26,10 +26,8 @@ describe('#chart-types LineChartComponent', () => {
   const mapService = mock(SettingsMapService);
   let limitServiceChanged$: Subject<undefined>;
   let chartInitialized: EventEmitter<unknown>;
-  let settings: ChartLineSettings;
 
    beforeEach(async () => {
-     settings = new ChartLineSettings().copy(Forger.create<ChartLineSettings>()!);
      limitServiceChanged$ = new Subject<undefined>();
      chartInitialized = new EventEmitter();
      when(plateService.chartInitialized).thenReturn(chartInitialized);
@@ -43,7 +41,6 @@ describe('#chart-types LineChartComponent', () => {
 
    beforeEach(() => {
      fixture = MockRender(ChartLineComponent);
-     fixture.componentInstance.settings = settings;
    });
 
    afterEach(() => {
@@ -65,88 +62,4 @@ describe('#chart-types LineChartComponent', () => {
     //
     verify(plateService.addDataset(dataset)).once();
   });
-
-   it('should define backgroundColor', () => {
-      chartInitialized.next();
-      //
-     const [dataset] = capture(plateService.addDataset).last();
-      should().string((dataset as ChartDataset<'line'>).backgroundColor as string).equals(settings.color);
-   });
-
-   it('should define borderColor', () => {
-      chartInitialized.next();
-      //
-     const [dataset] = capture(plateService.addDataset).last();
-      should().string((dataset as ChartDataset<'line'>).borderColor as string).equals(settings.color);
-   });
-
-   it('should define pointRadius', () => {
-      chartInitialized.next();
-      //
-     const [dataset] = capture(plateService.addDataset).last();
-      should().number((dataset as ChartDataset<'line'>).pointRadius as number).equals(settings.pointRadius as number);
-   });
-
-   it('should define type', () => {
-      chartInitialized.next();
-      //
-     const [dataset] = capture(plateService.addDataset).last();
-      should().string((dataset as ChartDataset<'line'>).type).equals('line');
-   });
-
-   it('should define name', () => {
-      chartInitialized.next();
-      //
-     const [dataset] = capture(plateService.addDataset).last();
-      should().string((dataset as ChartDataset<'line'>).label).equals(settings.name);
-   });
-
-  it('should define order', () => {
-    chartInitialized.next();
-    //
-    const [dataset] = capture(plateService.addDataset).last();
-    should().number((dataset as ChartDataset<'line'>).order).equals(settings.order);
-  });
-  /*
-     it("should add the line's data properly", () => {
-        fixture.componentInstance.data = [{ x: new Date(), y: 1 }];
-        plateService.chart.data = { datasets: [] };
-        //
-        fixture.detectChanges();
-        //
-        const added = plateService.chart.data.datasets[0];
-        expect(added.data).toBe(fixture.componentInstance.data);
-     });
-  */
-/*
-   it('should add line do not duplicate lines', () => {
-      fixture.componentInstance.name = 'Some name';
-      fixture.componentInstance.order = 0;
-      plateService.chart.data = { datasets: [{ label: fixture.componentInstance.name, order: fixture.componentInstance.order }] };
-      //
-      fixture.detectChanges();
-      //
-      expect(plateService.chart.data.datasets.length).toBe(1);
-   });
-
-   it('should add line do not delete other lines by order', () => {
-      fixture.componentInstance.name = 'Some name';
-      fixture.componentInstance.order = 0;
-      plateService.chart.data = { datasets: [{ label: fixture.componentInstance.name, order: Math.floor(Math.random() * 10) }] };
-      //
-      fixture.detectChanges();
-      //
-      expect(plateService.chart.data.datasets.length).toBe(2);
-   });
-
-   it('should add line do not delete other lines by name', () => {
-      fixture.componentInstance.name = 'Some name';
-      fixture.componentInstance.order = 0;
-      plateService.chart.data = { datasets: [{ label: 'Other name', order: fixture.componentInstance.order }] };
-      //
-      fixture.detectChanges();
-      //
-      expect(plateService.chart.data.datasets.length).toBe(2);
-   });
- */
 });

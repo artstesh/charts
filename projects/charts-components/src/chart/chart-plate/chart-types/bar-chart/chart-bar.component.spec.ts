@@ -1,3 +1,5 @@
+// noinspection JSVoidFunctionReturnValueUsed
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChartBarComponent } from './chart-bar.component';
@@ -14,6 +16,7 @@ import { Subject } from "rxjs";
 import { ChartPlateService } from "../../services/chart-plate.service";
 import { ChartLineSettings } from "../line-chart/chart-line.settings";
 import { ChartBarSettings } from "./chart-bar.settings";
+import { SettingsMapService } from "../../../services/settings-map.service";
 
 describe('#chart-types ChartBarComponent', () => {
    let fixture: ComponentFixture<ChartBarComponent>;
@@ -22,16 +25,16 @@ describe('#chart-types ChartBarComponent', () => {
   const limitService = mock(ChartAxisLimitService);
   let limitServiceChanged$: Subject<undefined>;
   let chartInitialized: EventEmitter<unknown>;
-  let settings: ChartBarSettings;
+  const mapService = mock(SettingsMapService);
 
    beforeEach(async () => {
-     settings = new ChartBarSettings().copy(Forger.create<ChartBarSettings>()!);
      limitServiceChanged$ = new Subject<undefined>();
      chartInitialized = new EventEmitter();
      when(plateService.chartInitialized).thenReturn(chartInitialized);
      when(limitService.changed).thenReturn(limitServiceChanged$.asObservable());
       return MockBuilder(ChartBarComponent, ChartModule)
         .provide(MockProvider(ChartPlateService, instance(plateService)))
+        .provide(MockProvider(SettingsMapService, instance(mapService)))
         .provide(MockProvider(ChartAxisLimitService, instance(limitService)))
         .provide(MockProvider(ChartService, instance(service)));
    });
@@ -41,9 +44,9 @@ describe('#chart-types ChartBarComponent', () => {
    });
 
    afterEach(() => {
+     reset(mapService);
      reset(plateService);
      reset(limitService);
-      reset(parent);
    });
 
   it('should create', () => {
@@ -51,8 +54,11 @@ describe('#chart-types ChartBarComponent', () => {
   });
 
   it('should add line on chartInitialized', () => {
+    const dataset = Forger.create<number>()! as any; // a trick
+    when(mapService.batDataset(anything(), anything())).thenReturn(dataset);
+    //
     chartInitialized.next();
     //
-    verify(plateService.addDataset(anything())).once();
+    verify(plateService.addDataset(dataset)).once();
   });
 });

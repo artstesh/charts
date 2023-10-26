@@ -27,21 +27,11 @@ export class ChartService {
       return this.colorCache[name];
    }
 
-   getGradient(ref: ElementRef): CanvasGradient {
-      const gradient: CanvasGradient = ref.nativeElement
-         .getContext('2d')
-         .createLinearGradient(0, 0, ref.nativeElement.width, 0);
-      gradient.addColorStop(0, 'rgba(255, 222, 45, 0.4)');
-      gradient.addColorStop(0.5, 'rgba(108, 186, 47, 0.5)');
-      gradient.addColorStop(1, 'rgba(255, 222, 45, 0.4)');
-      return gradient;
-   }
-
    fillGapsInData(data: ChartDataModel[]): ChartDataModel[] {
       const day = 24 * 60 * 60 * 1000;
-      const minDate = minBy(data, (d: ChartDataModel) => d.x)?.x || new Date().getTime();
-      const maxDate = maxBy(data, (d: ChartDataModel) => d.x)?.x || 0;
-      for (let i = minDate; i < maxDate; i += day) {
+      const min = minBy(data, (d: ChartDataModel) => d.x)?.x || 0;
+      const max = maxBy(data, (d: ChartDataModel) => d.x)?.x || 1;
+      for (let i = min; i < max; i += day) {
          if (data.filter(r => r.x === i).length === 0) {
             data.push({ x: i, y: Number.NaN });
          }

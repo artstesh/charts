@@ -5,18 +5,11 @@ import { ChartBarComponent } from './chart-plate/chart-types/bar-chart/chart-bar
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
-import { LocalizedDateComponent } from './common/localized-date/localized-date.component';
 import { XLinearAxisComponent } from './chart-plate/chart-elements/axes/x-linear-axis/x-linear-axis.component';
 
 @NgModule({
   imports: [CommonModule, FlexLayoutModule, TranslateModule],
-  declarations: [
-    LocalizedDateComponent,
-    ChartPlateComponent,
-    ChartLineComponent,
-    ChartBarComponent,
-    XLinearAxisComponent,
-  ],
+  declarations: [ChartPlateComponent, ChartLineComponent, ChartBarComponent, XLinearAxisComponent],
   exports: [ChartPlateComponent, ChartLineComponent, ChartBarComponent],
 })
 export class ChartModule {}
