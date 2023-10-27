@@ -12,8 +12,6 @@ export class ChartPlateService {
   public updateTrigger$ = this._updateTrigger$.pipe(auditTime(250));
   private chart?: Chart;
 
-  constructor() {}
-
   public setChart(chart: Chart): void {
     this.chart = chart;
   }

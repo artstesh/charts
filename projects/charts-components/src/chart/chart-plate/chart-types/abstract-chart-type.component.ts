@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from 'rxjs';
 import { ChartAxisLimitService } from '../../services/chart-axis-limit.service';
 import { ChartTypeSettings } from './models/chart-type.settings';
-import { ChartService } from '../../services';
+import { ColorCollector } from "../../services";
 import { ChartPlateService } from '../services/chart-plate.service';
 import { SettingsMapService } from '../../services/settings-map.service';
 import { ChartDataset } from 'chart.js';
@@ -17,14 +17,13 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
   @Input() set settings(value: T | undefined) {
     if (!value || this._settings.isSame(value)) return;
     this._settings = value;
-    this._settings.color = this._settings.color || this.chartService.getRandomColor(this._settings.name);
+    this._settings.color = this._settings.color || ColorCollector.getColor(this._settings.order);
     this.dataUpdated();
   }
 
   private subs: Subscription[] = [];
 
   protected constructor(
-    private chartService: ChartService,
     protected limitService: ChartAxisLimitService,
     protected service: ChartPlateService,
     protected mapService: SettingsMapService,

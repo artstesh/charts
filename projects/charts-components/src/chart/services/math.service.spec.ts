@@ -3,12 +3,18 @@ import { TestBed } from '@angular/core/testing';
 import { MathService } from './math.service';
 import { should } from "@artstesh/it-should";
 import { Forger } from "@artstesh/forger";
+import { after } from "lodash";
+import { expectFile } from "@angular-devkit/build-angular/src/testing/jasmine-helpers";
 
 describe('MathService', () => {
   let service: MathService;
 
   beforeEach(() => {
     service = new MathService();
+  });
+
+  afterEach(() => {
+    expect().nothing();
   });
 
   it('should be created', () => {

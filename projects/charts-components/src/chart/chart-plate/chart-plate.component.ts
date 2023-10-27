@@ -1,18 +1,9 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-moment';
-import {
-  ActiveElement,
-  BubbleDataPoint,
-  ChartEvent,
-  ChartTypeRegistry,
-  InteractionMode,
-  ScatterDataPoint,
-} from 'chart.js';
+import { InteractionMode } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { ChartService } from '../services';
 import { Subscription } from 'rxjs';
-import { ChartDataModel } from '../models';
 import { ChartAxisLimitService } from '../services/chart-axis-limit.service';
 import { ChartPlateService } from './services/chart-plate.service';
 
@@ -29,7 +20,7 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
   chart!: Chart;
   @Input() interactionMode: InteractionMode = 'x';
 
-  constructor(private chartService: ChartService, private service: ChartPlateService) {}
+  constructor(private service: ChartPlateService) {}
 
   ngOnInit(): void {
     this.service.updateTrigger$.subscribe((force) => this.updateChart(force));
@@ -51,7 +42,6 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
       },
       plugins: [ChartDataLabels],
       options: {
-        onClick: this.handleChartClick.bind(this),
         interaction: {
           intersect: true,
           mode: this.interactionMode,
@@ -97,18 +87,5 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
       this.service.updateChart();
     }
     this.service.chartUpdated.next();
-  }
-
-  private handleChartClick(
-    event: ChartEvent,
-    elements: ActiveElement[],
-    chart: Chart<keyof ChartTypeRegistry, (number | ScatterDataPoint | BubbleDataPoint | null)[], unknown>,
-  ): void {
-    const result: { [datasetLabel: string]: ChartDataModel } = {};
-    elements.forEach((element) => {
-      const label = chart.data.datasets[element.datasetIndex].label!;
-      result[label] = (element.element as any).parsed as ChartDataModel;
-    });
-    this.chartService.setClickedElement({ data: result, event: event });
   }
 }

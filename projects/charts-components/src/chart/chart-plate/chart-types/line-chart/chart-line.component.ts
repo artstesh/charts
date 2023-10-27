@@ -1,16 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ChartPlateComponent } from '../../chart-plate.component';
 
 import { AbstractChartTypeComponent } from '../abstract-chart-type.component';
-import { ChartDataset } from 'chart.js';
 import { ChartDataModel } from '../../../models';
-import { ChartService } from '../../../services';
 import { ChartAxisLimitService } from '../../../services/chart-axis-limit.service';
 import { ChartLineSettings } from './chart-line.settings';
-import { ChartPlateDatasetFactory } from '../../models/chart-plate-dataset.factory';
-import { ChartLineDatasetFactory } from '../../models/chart-line-dataset.factory';
 import { ChartPlateService } from '../../services/chart-plate.service';
-import { SettingsMapService } from "../../../services/settings-map.service";
+import { SettingsMapService } from '../../../services/settings-map.service';
 
 @Component({
   selector: 'chart-line',
@@ -27,13 +22,8 @@ export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSett
     this.dataUpdated();
   }
 
-  constructor(
-    chartService: ChartService,
-    limitService: ChartAxisLimitService,
-    service: ChartPlateService,
-    mapService: SettingsMapService
-  ) {
-    super(chartService, limitService, service, mapService, new ChartLineSettings());
+  constructor(limitService: ChartAxisLimitService, service: ChartPlateService, mapService: SettingsMapService) {
+    super(limitService, service, mapService, new ChartLineSettings());
   }
 
   protected updateFilteredData(): void {

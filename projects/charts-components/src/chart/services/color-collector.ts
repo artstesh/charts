@@ -1,9 +1,18 @@
+export class ColorCollector {
+
+  public static getColor(index = 0): string {
+    if (index < 0) index = 0;
+    if (index >= colors.length) index = colors.length - 1;
+    return colors[index];
+  }
+}
+
 const colors = [
-  '#84649c',
+  '#9bce00',
   '#f4362d',
+  '#84649c',
   '#006ab4',
   '#ffe179',
-  '#9bce00',
   '#76d3d0',
   '#ce595a',
   '#a98700',
@@ -46,14 +55,5 @@ const colors = [
   '#a09a8c',
   '#c5e178',
   '#ffce00',
-  '#a540a0',
+  '#a540a0'
 ];
-
-export class ColorCollector {
-  private static index = 0;
-
-  public static getColor(): string {
-    if (++this.index >= colors.length) this.index = 0;
-    return colors[this.index];
-  }
-}

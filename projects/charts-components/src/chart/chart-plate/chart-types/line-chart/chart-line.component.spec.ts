@@ -1,26 +1,19 @@
 // noinspection JSVoidFunctionReturnValueUsed
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { ChartLineComponent } from './chart-line.component';
 import { EventEmitter } from '@angular/core';
-import { MockBuilder, MockProvider, MockRender } from "ng-mocks";
-import { anyString, anything, capture, instance, mock, reset, verify, when } from "ts-mockito";
-import { ReplaySubject, Subject } from "rxjs";
-import { ChartService } from "../../../services";
-import { ChartPlateComponent } from "../../chart-plate.component";
-import { ChartDataModel, DateRangeModel } from "../../../models";
-import { ChartModule } from "../../../chart.module";
-import { ChartAxisLimitService } from "../../../services/chart-axis-limit.service";
-import { ChartPlateService } from "../../services/chart-plate.service";
-import { should } from "@artstesh/it-should";
-import { ChartDataset } from "chart.js";
-import { ChartLineSettings } from "./chart-line.settings";
-import { Forger } from "@artstesh/forger";
-import { SettingsMapService } from "../../../services/settings-map.service";
+import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { anything, instance, mock, reset, verify, when } from 'ts-mockito';
+import { Subject } from 'rxjs';
+import { ChartModule } from '../../../chart.module';
+import { ChartAxisLimitService } from '../../../services/chart-axis-limit.service';
+import { ChartPlateService } from '../../services/chart-plate.service';
+import { Forger } from '@artstesh/forger';
+import { SettingsMapService } from '../../../services/settings-map.service';
 
 describe('#chart-types LineChartComponent', () => {
    let fixture: ComponentFixture<ChartLineComponent>;
-  let service = mock(ChartService);
   const plateService = mock(ChartPlateService);
   const limitService = mock(ChartAxisLimitService);
   const mapService = mock(SettingsMapService);
@@ -35,8 +28,7 @@ describe('#chart-types LineChartComponent', () => {
      return MockBuilder(ChartLineComponent, ChartModule)
        .provide(MockProvider(ChartPlateService, instance(plateService)))
        .provide(MockProvider(SettingsMapService, instance(mapService)))
-       .provide(MockProvider(ChartAxisLimitService, instance(limitService)))
-       .provide(MockProvider(ChartService, instance(service)));
+       .provide(MockProvider(ChartAxisLimitService, instance(limitService)));
    });
 
    beforeEach(() => {

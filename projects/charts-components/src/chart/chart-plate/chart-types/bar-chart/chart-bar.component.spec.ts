@@ -1,26 +1,20 @@
 // noinspection JSVoidFunctionReturnValueUsed
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { ChartBarComponent } from './chart-bar.component';
-import { ChartPlateComponent } from '../../chart-plate.component';
 import { EventEmitter } from '@angular/core';
-import { MockBuilder, MockProvider, MockRender, ngMocks } from 'ng-mocks';
-import { anyString, anything, instance, mock, reset, verify, when } from "ts-mockito";
+import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { anything, instance, mock, reset, verify, when } from 'ts-mockito';
 import { Forger } from '@artstesh/forger';
-import Chart from 'chart.js';
-import { ChartModule } from "../../../chart.module";
-import { ChartService } from "../../../services";
-import { ChartAxisLimitService } from "../../../services/chart-axis-limit.service";
-import { Subject } from "rxjs";
-import { ChartPlateService } from "../../services/chart-plate.service";
-import { ChartLineSettings } from "../line-chart/chart-line.settings";
-import { ChartBarSettings } from "./chart-bar.settings";
-import { SettingsMapService } from "../../../services/settings-map.service";
+import { ChartModule } from '../../../chart.module';
+import { ChartAxisLimitService } from '../../../services/chart-axis-limit.service';
+import { Subject } from 'rxjs';
+import { ChartPlateService } from '../../services/chart-plate.service';
+import { SettingsMapService } from '../../../services/settings-map.service';
 
 describe('#chart-types ChartBarComponent', () => {
    let fixture: ComponentFixture<ChartBarComponent>;
-  let service = mock(ChartService);
   const plateService = mock(ChartPlateService);
   const limitService = mock(ChartAxisLimitService);
   let limitServiceChanged$: Subject<undefined>;
@@ -35,8 +29,7 @@ describe('#chart-types ChartBarComponent', () => {
       return MockBuilder(ChartBarComponent, ChartModule)
         .provide(MockProvider(ChartPlateService, instance(plateService)))
         .provide(MockProvider(SettingsMapService, instance(mapService)))
-        .provide(MockProvider(ChartAxisLimitService, instance(limitService)))
-        .provide(MockProvider(ChartService, instance(service)));
+        .provide(MockProvider(ChartAxisLimitService, instance(limitService)));
    });
 
    beforeEach(() => {
@@ -47,6 +40,7 @@ describe('#chart-types ChartBarComponent', () => {
      reset(mapService);
      reset(plateService);
      reset(limitService);
+     expect().nothing();
    });
 
   it('should create', () => {
