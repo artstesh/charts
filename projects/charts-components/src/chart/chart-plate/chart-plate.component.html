@@ -1,4 +1,6 @@
-<div fxLayout="column" fxFill>
-   <div fxFlex="100%"><canvas #chart id="chart-plate"></canvas></div>
-   <ng-content></ng-content>
+<div fxLayout="column" fxFill class="chart-plate-wrapper" data-test="chart-plate-wrapper">
+  <div fxFlex="100%">
+    <canvas #chart class="chart-plate" data-test="chart-plate"></canvas>
+  </div>
+  <ng-content></ng-content>
 </div>

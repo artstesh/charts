@@ -6,6 +6,9 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Subscription } from 'rxjs';
 import { ChartAxisLimitService } from '../services/chart-axis-limit.service';
 import { ChartPlateService } from './services/chart-plate.service';
+import { SettingsMapService } from "../services/settings-map.service";
+import { ColorCollector } from "../services";
+import { ChartPlateSettings } from "./models/chart-plate.settings";
 
 @Component({
   selector: 'app-chart-plate',
@@ -18,12 +21,18 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('chart')
   chartRef!: ElementRef;
   chart!: Chart;
-  @Input() interactionMode: InteractionMode = 'x';
+  private _settings: ChartPlateSettings = new ChartPlateSettings();
 
-  constructor(private service: ChartPlateService) {}
+  @Input() set settings(value: ChartPlateSettings | undefined) {
+    if (!value || this._settings.isSame(value)) return;
+    this._settings = value;
+    this.setChart();
+  }
+
+  constructor(private service: ChartPlateService, private mapService: SettingsMapService) {}
 
   ngOnInit(): void {
-    this.service.updateTrigger$.subscribe((force) => this.updateChart(force));
+    this.subs.push(this.service.updateTrigger$.subscribe((force) => this.updateChart(force)));
   }
 
   ngAfterViewInit(): void {
@@ -35,57 +44,18 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   setChart(): void {
-    this.chart = new Chart(this.chartRef.nativeElement, {
-      type: 'line',
-      data: {
-        datasets: [],
-      },
-      plugins: [ChartDataLabels],
-      options: {
-        interaction: {
-          intersect: true,
-          mode: this.interactionMode,
-        },
-        animation: {
-          duration: 300,
-        },
-        responsive: true,
-        plugins: {
-          datalabels: {
-            display: false,
-          },
-        },
-        maintainAspectRatio: false,
-        scales: {
-          x: {
-            type: 'linear',
-            grid: {
-              display: false,
-            },
-            ticks: {
-              maxRotation: 0,
-            },
-          },
-        },
-        elements: {
-          point: {
-            backgroundColor: 'transparent',
-            borderColor: 'transparent',
-          },
-        },
-      },
-    });
+    this.chart = new Chart(this.chartRef.nativeElement, this.mapService.chartPlateConfig(this._settings));
     this.service.setChart(this.chart);
     this.service.chartInitialized.emit();
   }
 
   updateChart(force = false): void {
     try {
-      (this.chart as any)._metasets = (this.chart as any)._metasets.filter((d: any) => !!d.controller);
-      this.chart?.update();
+      if (!!(this.chart as any)._metasets)
+        (this.chart as any)._metasets = (this.chart as any)._metasets.filter((d: any) => !!d.controller);
+      this.chart.update();
     } catch {
-      this.service.updateChart();
+      // ignore
     }
-    this.service.chartUpdated.next();
   }
 }

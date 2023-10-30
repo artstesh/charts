@@ -13,6 +13,14 @@ describe('#chart-elements ChartLineSettings', () => {
     expect().nothing();
   });
 
+  it("setThickness()", () => {
+    const radius = Forger.create<number>()!;
+    //
+    model.setPointRadius(radius);
+    //
+    should().number(model.pointRadius as number).equals(radius);
+  });
+
   describe('isSame()', () => {
     it('are same', () => {
       const other = new ChartLineSettings().copy(model);

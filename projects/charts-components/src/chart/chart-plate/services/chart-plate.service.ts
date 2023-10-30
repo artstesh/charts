@@ -1,13 +1,12 @@
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { auditTime } from 'rxjs/operators';
 import Chart from 'chart.js/auto';
-import { CartesianScaleTypeRegistry, ChartDataset, ScaleOptionsByType } from 'chart.js';
+import { ChartDataset, ScaleOptionsByType } from 'chart.js';
 
 @Injectable()
 export class ChartPlateService {
   chartInitialized = new EventEmitter();
-  chartUpdated = new EventEmitter();
   private _updateTrigger$ = new Subject<boolean>();
   public updateTrigger$ = this._updateTrigger$.pipe(auditTime(250));
   private chart?: Chart;
@@ -26,17 +25,17 @@ export class ChartPlateService {
     this.updateChart();
   }
 
-  removeDataset(name: string, order: number, requiredToDelete?: string): void {
+  removeDataset(name: string, order: number, alsoDelete?: string): void {
     if (!this.chart?.data?.datasets?.length) return;
-
+    const initialLength = this.chart.data.datasets.length;
     this.chart.data.datasets = this.chart.data.datasets.filter((d) => d.label != name || d.order !== order);
-    if (requiredToDelete) {
-      this.chart.data.datasets = this.chart.data.datasets.filter((d) => d.label !== requiredToDelete);
+    if (alsoDelete) {
+      this.chart.data.datasets = this.chart.data.datasets.filter((d) => d.label !== alsoDelete);
     }
-    this.updateChart(true);
+    if (this.chart.data.datasets.length !== initialLength) this.updateChart(true);
   }
 
-  public setScale(id: string,scale:  ScaleOptionsByType): void {
+  public setScale(id: string, scale: ScaleOptionsByType): void {
     if (!this.chart?.options?.scales) return;
     this.chart.options.scales[id] = scale;
     this.updateChart();

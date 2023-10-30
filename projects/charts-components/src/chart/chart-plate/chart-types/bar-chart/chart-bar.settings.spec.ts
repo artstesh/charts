@@ -13,6 +13,14 @@ describe('#chart-elements ChartBarSettings', () => {
     expect().nothing();
   });
 
+  it("setThickness()", () => {
+    const thickness = Forger.create<number>()!;
+    //
+    model.setThickness(thickness);
+    //
+    should().number(model.thickness).equals(thickness);
+  });
+
   describe('isSame()', () => {
     it('are same', () => {
       const other = new ChartBarSettings().copy(model);

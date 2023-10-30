@@ -1,12 +1,11 @@
-import { ChartElementType, ChartPlateDatasetFactory } from "./chart-plate-dataset.factory";
-import { ChartDataModel } from "../../models";
-import { ChartDataset, ScaleOptionsByType, ScriptableContext } from "chart.js";
-import { AnyObject } from "chart.js/types/basic";
-import { ChartConstants } from "../../models/chart-constants";
-import { XLinearAxisSettings } from "../chart-elements/axes/x-linear-axis/x-linear-axis.settings";
-import { ChartLineSettings } from "../chart-types/line-chart/chart-line.settings";
+
 
 // noinspection JSSuspiciousNameCombination
+import { ChartConstants } from "../../../models/chart-constants";
+import { ChartDataset } from "chart.js";
+import { ChartLineSettings } from "../line-chart/chart-line.settings";
+import { ChartDataModel } from "../../../models";
+
 export class ChartLineDatasetFactory{
   public static build(settings: ChartLineSettings, data: ChartDataModel[]): ChartDataset<'line', ChartDataModel[]> {
     return {

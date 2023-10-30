@@ -1,4 +1,6 @@
-export abstract class ChartTypeSettings<T extends ChartTypeSettings<T>> {
+import { IChartElementSettings } from '../../../models/i-chart-element.settings';
+
+export abstract class ChartTypeSettings<T extends ChartTypeSettings<T>> implements IChartElementSettings<T> {
   public order: number = 0;
   public name: string = '';
   public color: string = '';
@@ -22,5 +24,6 @@ export abstract class ChartTypeSettings<T extends ChartTypeSettings<T>> {
   }
 
   protected abstract _isSame(model: T): boolean;
+
   protected abstract _copy(model: T): T;
 }

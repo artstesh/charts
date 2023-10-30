@@ -1,7 +1,7 @@
 import { ChartAxisLimitsModel } from './chart-axis-limits.model';
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
-import { ChartDataModel } from "./chart-data.model";
+import { ChartDataModel } from './chart-data.model';
 
 describe('#models ChartAxisLimitsModel', () => {
   let model: ChartAxisLimitsModel;
@@ -18,9 +18,11 @@ describe('#models ChartAxisLimitsModel', () => {
     expect().nothing();
   });
 
-  describe("rawData", () => {
-    it("success", () => {
-      should().objects({...model}, model.rawData).equal();
+  describe('rawData', () => {
+    it('success', () => {
+      should()
+        .objects({ ...model }, model.rawData)
+        .equal();
     });
   });
 
@@ -44,25 +46,25 @@ describe('#models ChartAxisLimitsModel', () => {
     });
 
     it('minX is different', () => {
-      other.minX = Forger.create<number>({numberMin: model.minX!++})!;
+      other.minX = model.minX! + Forger.create<number>()!;
       //
       should().false(model.isTheSame(other));
     });
 
     it('maxX is different', () => {
-      other.maxX = Forger.create<number>({numberMin: model.maxX!++})!;
+      other.maxX = model.maxX! + Forger.create<number>()!;
       //
       should().false(model.isTheSame(other));
     });
 
     it('minY is different', () => {
-      other.minY = Forger.create<number>({numberMin: model.minY!++})!;
+      other.minY = model.minY! + Forger.create<number>()!;
       //
       should().false(model.isTheSame(other));
     });
 
     it('maxY is different', () => {
-      other.maxY = Forger.create<number>({numberMin: model.maxY!++})!;
+      other.maxY = model.maxY! + Forger.create<number>()!;
       //
       should().false(model.isTheSame(other));
     });
@@ -72,8 +74,8 @@ describe('#models ChartAxisLimitsModel', () => {
     it('should true if x&y are included', () => {
       const dataModel: ChartDataModel = {
         y: Forger.create<number>({ numberMin: model.minY! + 1, numberMax: model.maxY! - 1 })!,
-        x: Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!
-      }
+        x: Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!,
+      };
       //
       should().true(model.contains(dataModel));
     });
@@ -81,8 +83,8 @@ describe('#models ChartAxisLimitsModel', () => {
     it('should true if data null', () => {
       const dataModel: ChartDataModel = {
         y: Forger.create<number>()!,
-        x: Forger.create<number>()!
-      }
+        x: Forger.create<number>()!,
+      };
       model.minX = model.minY = model.maxY = model.maxX = null;
       //
       should().true(model.contains(dataModel));
@@ -91,17 +93,17 @@ describe('#models ChartAxisLimitsModel', () => {
     it('should true if y is null', () => {
       const dataModel: ChartDataModel = {
         y: null,
-        x: Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!
-      }
+        x: Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!,
+      };
       //
       should().true(model.contains(dataModel));
     });
 
     it('should false if x is too big', () => {
       const dataModel: ChartDataModel = {
-       y: Forger.create<number>({ numberMin: model.minY! + 1, numberMax: model.maxY! - 1 })!,
-       x: Forger.create<number>({ numberMin: model.maxX! + 1 })!
-      }
+        y: Forger.create<number>({ numberMin: model.minY! + 1, numberMax: model.maxY! - 1 })!,
+        x: Forger.create<number>({ numberMin: model.maxX! + 1 })!,
+      };
       //
       should().false(model.contains(dataModel));
     });
@@ -109,8 +111,8 @@ describe('#models ChartAxisLimitsModel', () => {
     it('should false if y is too big', () => {
       const dataModel: ChartDataModel = {
         y: Forger.create<number>({ numberMin: model.maxY! + 1 })!,
-        x: Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!
-      }
+        x: Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!,
+      };
       //
       should().false(model.contains(dataModel));
     });
@@ -118,8 +120,8 @@ describe('#models ChartAxisLimitsModel', () => {
     it('should false if x is too small', () => {
       const dataModel: ChartDataModel = {
         y: Forger.create<number>({ numberMin: model.minY! + 1, numberMax: model.maxY! - 1 })!,
-        x: Forger.create<number>({ numberMax: model.minX! - 1 })!
-      }
+        x: Forger.create<number>({ numberMax: model.minX! - 1 })!,
+      };
       //
       should().false(model.contains(dataModel));
     });
@@ -127,8 +129,8 @@ describe('#models ChartAxisLimitsModel', () => {
     it('should false if y is too small', () => {
       const dataModel: ChartDataModel = {
         y: Forger.create<number>({ numberMax: model.minY! - 1 })!,
-        x: Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!
-      }
+        x: Forger.create<number>({ numberMin: model.minX! + 1, numberMax: model.maxX! - 1 })!,
+      };
       //
       should().false(model.contains(dataModel));
     });

@@ -1,14 +1,12 @@
 import { ChartLineDatasetFactory } from "./chart-line-dataset.factory";
 import { Forger } from "@artstesh/forger";
-import { ChartDataModel } from "../../models";
 import { should } from "@artstesh/it-should";
 import { ChartDataset, ScaleOptionsByType } from "chart.js";
-import { ChartConstants } from "../../models/chart-constants";
-import { XLinearAxisSettings } from "../chart-elements/axes/x-linear-axis/x-linear-axis.settings";
-import { XLinearAxisScaleFactory } from "../chart-elements/axes/x-linear-axis/x-linear-axis-scale.factory";
-import { ChartLineSettings } from "../chart-types/line-chart/chart-line.settings";
+import { ChartLineSettings } from "../line-chart/chart-line.settings";
+import { ChartDataModel } from "../../../models";
+import { ChartConstants } from "../../../models/chart-constants";
 
-describe("ChartLineDatasetModel", () => {
+describe("#chart-types ChartLineDatasetModel", () => {
   let settings: ChartLineSettings;
   let scale: ChartDataset<'line', ChartDataModel[]>;
   let data: ChartDataModel[];

@@ -1,8 +1,7 @@
-import { ChartPlateDatasetFactory } from "./chart-plate-dataset.factory";
-import { ChartDataModel } from "../../models";
 import { ChartDataset } from "chart.js";
-import { ChartConstants } from "../../models/chart-constants";
-import { ChartBarSettings } from "../chart-types/bar-chart/chart-bar.settings";
+import { ChartBarSettings } from "../bar-chart/chart-bar.settings";
+import { ChartDataModel } from "../../../models";
+import { ChartConstants } from "../../../models/chart-constants";
 
 // noinspection JSSuspiciousNameCombination
 export class ChartBarDatasetFactory{
