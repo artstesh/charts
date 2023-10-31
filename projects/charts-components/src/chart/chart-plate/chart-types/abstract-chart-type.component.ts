@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Component, Inject, Input, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from 'rxjs';
 import { ChartAxisLimitService } from '../../services/chart-axis-limit.service';
 import { ChartTypeSettings } from './models/chart-type.settings';
@@ -27,9 +27,10 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
     protected limitService: ChartAxisLimitService,
     protected service: ChartPlateService,
     protected mapService: SettingsMapService,
-    settings: T,
+    @Inject(ChartTypeSettings) settings: T,
   ) {
     this._settings = settings;
+    if (!this._settings.color) this._settings.color = ColorCollector.getColor(this._settings.order);
   }
 
   ngOnInit(): void {

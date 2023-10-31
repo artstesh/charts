@@ -1,4 +1,14 @@
-.chart-plate {
-  display: inline-block;
-  position: relative;
+@import "../themes/flex-layout";
+
+.chart-plate-wrapper {
+  @include flex-layout(column);
+
+  .canvas-wrapper {
+    @include flex();
+
+    .chart-plate {
+      display: inline-block;
+      position: relative;
+    }
+  }
 }

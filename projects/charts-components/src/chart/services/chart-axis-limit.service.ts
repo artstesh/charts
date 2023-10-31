@@ -12,9 +12,12 @@ export class ChartAxisLimitService {
     distinctUntilChanged((x,y) => x?.isTheSame(y) ?? false),
     map(() => undefined)
   );
-  private readonly _model: ChartAxisLimitsModel;
+  private _model: ChartAxisLimitsModel = new ChartAxisLimitsModel();
 
-  constructor(model: ChartAxisLimitsModel | null = null) {
+  constructor() {
+  }
+
+  public setModel(model: ChartAxisLimitsModel | null) {
     this._model = model ?? new ChartAxisLimitsModel();
   }
 

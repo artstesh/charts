@@ -25,12 +25,6 @@
       ],
       "charts-components": [
         "dist/charts-components"
-      ],
-      "ngx-openlayers/*": [
-        "dist/ngx-openlayers/*"
-      ],
-      "ngx-openlayers": [
-        "dist/ngx-openlayers"
       ]
     },
     "lib": [

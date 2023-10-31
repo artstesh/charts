@@ -16,5 +16,20 @@
   "exclude": [
     "src/test.ts",
     "**/*.spec.ts"
+  ],
+  "paths": {
+    "@root/*": [
+      "./*"
+    ],
+    "@themes/*": [
+      "src/chart/themes/*"
+    ],
+    "@chart-plate/*": [
+      "chart/chart-plate/*"
+    ]
+  },
+  "lib": [
+    "es2018",
+    "dom"
   ]
 }

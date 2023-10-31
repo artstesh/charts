@@ -12,7 +12,8 @@ describe('ChartAxisLimitService', () => {
   const model = mock(ChartAxisLimitsModel);
 
   beforeEach(() => {
-    service = new ChartAxisLimitService(instance(model));
+    service = new ChartAxisLimitService();
+    service.setModel(instance(model));
   });
 
   afterEach(() => {
