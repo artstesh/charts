@@ -1,12 +1,10 @@
 import { ChartTypeSettings } from "../models/chart-type.settings";
-import { ScriptableContext } from "chart.js";
-import { AnyObject } from "chart.js/types/basic";
 
 export class ChartLineSettings extends ChartTypeSettings<ChartLineSettings> {
-  pointRadius: number | ((ctx: ScriptableContext<'line'>, options: AnyObject) => number) = 0;
+  pointRadius: number = 0;
 
   public setPointRadius(
-    pointRadius: number | ((ctx: ScriptableContext<'line'>, options: AnyObject) => number),
+    pointRadius: number,
   ): ChartLineSettings {
     this.pointRadius = pointRadius;
     return this;

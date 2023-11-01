@@ -1,7 +1,6 @@
 export class ColorCollector {
 
   public static getColor(index = 0): string {
-    console.log(index);
     if (index < 0) index = 0;
     if (index >= colors.length) index = colors.length - 1;
     return colors[index];

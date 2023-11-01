@@ -10,7 +10,6 @@ describe('ChartPlateFactory', () => {
 
   beforeEach(() => {
     settings = new ChartPlateSettings().copy(Forger.create<ChartPlateSettings>()!);
-    console.log(settings);
     configuration = ChartPlateFactory.build(settings);
   });
 
