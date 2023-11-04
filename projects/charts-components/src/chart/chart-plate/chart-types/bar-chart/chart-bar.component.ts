@@ -5,6 +5,7 @@ import { ChartAxisLimitService } from '../../../services/chart-axis-limit.servic
 import { ChartBarSettings } from './chart-bar.settings';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
+import { ChartLineSettings } from "../line-chart/chart-line.settings";
 
 @Component({
   selector: 'chart-bar',
@@ -15,6 +16,7 @@ import { SettingsMapService } from '../../../services/settings-map.service';
 export class ChartBarComponent extends AbstractChartTypeComponent<ChartBarSettings> {
   private _data!: ChartDataModel[];
   private _dataFiltered!: ChartDataModel[];
+  protected _settings: ChartBarSettings = new ChartBarSettings();
 
   @Input() set data(aw: ChartDataModel[]) {
     this._data = aw;
@@ -22,7 +24,7 @@ export class ChartBarComponent extends AbstractChartTypeComponent<ChartBarSettin
   }
 
   constructor(limitService: ChartAxisLimitService, service: ChartPlateService, mapService: SettingsMapService) {
-    super(limitService, service, mapService, new ChartBarSettings());
+    super(limitService, service, mapService);
   }
 
   protected updateFilteredData(): void {

@@ -29,6 +29,15 @@
           },
           "defaultConfiguration": "production"
         },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/**/*.ts",
+              "projects/**/*.component.html"
+            ]
+          }
+        },
         "test": {
           "builder": "@angular-builders/custom-webpack:karma",
           "options": {

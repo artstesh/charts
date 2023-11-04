@@ -16,6 +16,7 @@ import { SettingsMapService } from '../../../services/settings-map.service';
 export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSettings> {
   private _data!: ChartDataModel[];
   private _dataFiltered!: ChartDataModel[];
+  protected _settings: ChartLineSettings = new ChartLineSettings();
 
   @Input() set data(aw: ChartDataModel[]) {
     this._data = aw;
@@ -23,7 +24,7 @@ export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSett
   }
 
   constructor(limitService: ChartAxisLimitService, service: ChartPlateService, mapService: SettingsMapService) {
-    super(limitService, service, mapService, new ChartLineSettings());
+    super(limitService, service, mapService);
   }
 
   protected updateFilteredData(): void {

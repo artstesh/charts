@@ -1,14 +1,10 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
-import 'chartjs-adapter-moment';
-import { InteractionMode } from 'chart.js';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Subscription } from 'rxjs';
 import { ChartAxisLimitService } from '../services/chart-axis-limit.service';
 import { ChartPlateService } from './services/chart-plate.service';
-import { SettingsMapService } from "../services/settings-map.service";
-import { ColorCollector } from "../services";
-import { ChartPlateSettings } from "./models/chart-plate.settings";
+import { SettingsMapService } from '../services/settings-map.service';
+import { ChartPlateSettings } from './models/chart-plate.settings';
 
 @Component({
   selector: 'app-chart-plate',

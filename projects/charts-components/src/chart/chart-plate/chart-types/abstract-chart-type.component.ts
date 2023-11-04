@@ -8,11 +8,10 @@ import { SettingsMapService } from '../../services/settings-map.service';
 import { ChartDataset } from 'chart.js';
 
 @Component({
-  selector: '',
   template: '',
 })
 export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>> implements OnInit,OnDestroy {
-  _settings: T;
+  protected abstract _settings: T;
 
   @Input() set settings(value: T | undefined) {
     if (!value || this._settings.isSame(value)) return;
@@ -26,14 +25,12 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
   protected constructor(
     protected limitService: ChartAxisLimitService,
     protected service: ChartPlateService,
-    protected mapService: SettingsMapService,
-    @Inject(ChartTypeSettings) settings: T,
+    protected mapService: SettingsMapService
   ) {
-    this._settings = settings;
-    if (!this._settings.color) this._settings.color = ColorCollector.getColor(this._settings.order);
   }
 
   ngOnInit(): void {
+    if (!this._settings.color) this._settings.color = ColorCollector.getColor(this._settings.order);
     this.subs.push(this.service.chartInitialized.subscribe(() => this.service.addDataset(this.getDataset())));
     this.subs.push(this.limitService.changed.subscribe(() => this.rangeUpdated()));
   }
