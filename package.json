@@ -1,6 +1,6 @@
 {
   "name": "@artstesh/charts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "artstesh",
   "license": "MIT",
   "homepage": "https://charts.artstesh.ru",
@@ -11,6 +11,7 @@
     "prepare": "npm run build",
     "preversion": "npm test",
     "version": "npm run format && git add -A src",
+    "format": "prettier --write \"src/**/*.ts\"",
     "postversion": "git push && git push --tags",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
