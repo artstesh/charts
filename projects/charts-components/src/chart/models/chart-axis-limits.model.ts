@@ -1,4 +1,4 @@
-import { ChartDataModel } from "./chart-data.model";
+import { ChartDataModel } from './chart-data.model';
 
 export interface IChartAxisLimitsModel {
   minX?: number | null;
@@ -7,7 +7,7 @@ export interface IChartAxisLimitsModel {
   maxY?: number | null;
 }
 
-export class ChartAxisLimitsModel implements IChartAxisLimitsModel{
+export class ChartAxisLimitsModel implements IChartAxisLimitsModel {
   public constructor(
     public minX?: number | null,
     public maxX?: number | null,
@@ -21,12 +21,12 @@ export class ChartAxisLimitsModel implements IChartAxisLimitsModel{
   }
 
   public get rawData(): IChartAxisLimitsModel {
-    return {...this};
+    return { ...this };
   }
 
   public contains(model: ChartDataModel): boolean {
-    if ((this.maxX != null && model.x > this.maxX)) return false;
-    if ((this.minX != null && model.x < this.minX)) return false;
+    if (this.maxX != null && model.x > this.maxX) return false;
+    if (this.minX != null && model.x < this.minX) return false;
     if (this.maxY != null && model.y != null && model.y > this.maxY) return false;
     if (this.minY != null && model.y != null && model.y < this.minY) return false;
     return true;

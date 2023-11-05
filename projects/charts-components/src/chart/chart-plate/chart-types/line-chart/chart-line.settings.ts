@@ -1,11 +1,9 @@
-import { ChartTypeSettings } from "../models/chart-type.settings";
+import { ChartTypeSettings } from '../models/chart-type.settings';
 
 export class ChartLineSettings extends ChartTypeSettings<ChartLineSettings> {
   pointRadius: number = 0;
 
-  public setPointRadius(
-    pointRadius: number,
-  ): ChartLineSettings {
+  public setPointRadius(pointRadius: number): ChartLineSettings {
     this.pointRadius = pointRadius;
     return this;
   }

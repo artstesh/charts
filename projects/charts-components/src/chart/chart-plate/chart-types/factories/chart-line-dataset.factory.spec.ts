@@ -1,12 +1,12 @@
-import { ChartLineDatasetFactory } from "./chart-line-dataset.factory";
-import { Forger } from "@artstesh/forger";
-import { should } from "@artstesh/it-should";
-import { ChartDataset, ScaleOptionsByType } from "chart.js";
-import { ChartLineSettings } from "../line-chart/chart-line.settings";
-import { ChartDataModel } from "../../../models";
-import { ChartConstants } from "../../../models/chart-constants";
+import { ChartLineDatasetFactory } from './chart-line-dataset.factory';
+import { Forger } from '@artstesh/forger';
+import { should } from '@artstesh/it-should';
+import { ChartDataset, ScaleOptionsByType } from 'chart.js';
+import { ChartLineSettings } from '../line-chart/chart-line.settings';
+import { ChartDataModel } from '../../../models';
+import { ChartConstants } from '../../../models/chart-constants';
 
-describe("#chart-types ChartLineDatasetModel", () => {
+describe('#chart-types ChartLineDatasetModel', () => {
   let settings: ChartLineSettings;
   let scale: ChartDataset<'line', ChartDataModel[]>;
   let data: ChartDataModel[];
@@ -21,50 +21,56 @@ describe("#chart-types ChartLineDatasetModel", () => {
     expect().nothing();
   });
 
-  it("should have defined scale", () => {
+  it('should have defined scale', () => {
     should().true(scale);
   });
 
-  it("type is correct", () => {
+  it('type is correct', () => {
     should().string(scale.type).equals('line');
   });
 
-  it("label is correct", () => {
+  it('label is correct', () => {
     should().string(scale.label).equals(settings.name);
   });
 
-  it("backgroundColor is correct", () => {
-    should().string(scale.backgroundColor as string).equals(settings.color);
+  it('backgroundColor is correct', () => {
+    should()
+      .string(scale.backgroundColor as string)
+      .equals(settings.color);
   });
 
-  it("borderColor is correct", () => {
-    should().string(scale.borderColor as string).equals(settings.color);
+  it('borderColor is correct', () => {
+    should()
+      .string(scale.borderColor as string)
+      .equals(settings.color);
   });
 
-  it("data is correct", () => {
+  it('data is correct', () => {
     should().array(scale.data).equal(data);
   });
 
-  it("xAxisID is correct", () => {
+  it('xAxisID is correct', () => {
     should().string(scale.xAxisID).equals(ChartConstants.BottomAxisId);
   });
 
-  it("order is correct", () => {
+  it('order is correct', () => {
     should().number(scale.order).equals(settings.order);
   });
 
-  it("pointRadius is correct", () => {
-    should().number(scale.pointRadius as number).equals(settings.pointRadius as number);
+  it('pointRadius is correct', () => {
+    should()
+      .number(scale.pointRadius as number)
+      .equals(settings.pointRadius as number);
   });
 
-  it("left yAxisID is correct", () => {
+  it('left yAxisID is correct', () => {
     settings.yLeft = true;
     scale = ChartLineDatasetFactory.build(settings, data);
     //
     should().string(scale.yAxisID).equals(ChartConstants.LeftAxisId);
   });
 
-  it("right yAxisID is correct", () => {
+  it('right yAxisID is correct', () => {
     settings.yLeft = false;
     scale = ChartLineDatasetFactory.build(settings, data);
     //

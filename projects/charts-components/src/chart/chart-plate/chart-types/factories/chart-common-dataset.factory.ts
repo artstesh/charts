@@ -1,10 +1,10 @@
-import { ChartDataset } from "chart.js";
-import { ChartDataModel } from "../../../models";
+import { ChartDataset } from 'chart.js';
+import { ChartDataModel } from '../../../models';
 
 export type ChartElementType = 'line' | 'bar';
 
 export abstract class ChartCommonDatasetFactory {
-  protected dataset: ChartDataset = {data: []};
+  protected dataset: ChartDataset = { data: [] };
 
   public constructor(type: ChartElementType, label: string, data: ChartDataModel[]) {
     this.dataset.type = type;

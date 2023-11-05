@@ -5,7 +5,7 @@ import { ChartAxisLimitService } from '../../../services/chart-axis-limit.servic
 import { ChartBarSettings } from './chart-bar.settings';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
-import { ChartLineSettings } from "../line-chart/chart-line.settings";
+import { ChartLineSettings } from '../line-chart/chart-line.settings';
 
 @Component({
   selector: 'chart-bar',

@@ -1,4 +1,4 @@
 export interface DateRangeModel {
-	minX?: number;
-	maxX?: number;
+  minX?: number;
+  maxX?: number;
 }

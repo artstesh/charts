@@ -1,7 +1,7 @@
 import { ChartConfiguration } from 'chart.js';
 import { ChartPlateSettings } from './chart-plate.settings';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { noop } from "rxjs";
+import { noop } from 'rxjs';
 
 export class ChartPlateFactory {
   public static build(settings: ChartPlateSettings): ChartConfiguration {
@@ -25,8 +25,8 @@ export class ChartPlateFactory {
             display: false,
           },
           legend: {
-            display: false
-          }
+            display: false,
+          },
         },
         maintainAspectRatio: false,
         scales: {

@@ -1,4 +1,4 @@
 export interface SelectedAreaModel {
-   left: number;
-   width: number;
+  left: number;
+  width: number;
 }

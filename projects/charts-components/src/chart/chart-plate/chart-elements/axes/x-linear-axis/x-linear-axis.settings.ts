@@ -1,6 +1,6 @@
-import { GridLineOptions, ScaleOptionsByType } from "chart.js";
+import { GridLineOptions, ScaleOptionsByType } from 'chart.js';
 
-export class XLinearAxisSettings{
+export class XLinearAxisSettings {
   limits: [number | null, number | null] = [null, null];
   displayGrid: boolean = false;
 
@@ -14,7 +14,7 @@ export class XLinearAxisSettings{
     return this;
   }
 
-  public setLimits(value:  [number | null, number | null]): this {
+  public setLimits(value: [number | null, number | null]): this {
     this.limits = value;
     return this;
   }

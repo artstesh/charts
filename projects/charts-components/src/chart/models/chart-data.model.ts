@@ -1,4 +1,4 @@
 export interface ChartDataModel {
-   x: number;
-   y: number | null;
+  x: number;
+  y: number | null;
 }

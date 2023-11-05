@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EventEmitter } from '@angular/core';
-import {Forger} from "@artstesh/forger";
-import {ReplaySubject} from "rxjs";
-import { XLinearAxisComponent } from "./x-linear-axis.component";
-import { DateRangeModel } from "../../../../models";
-import { ChartPlateComponent } from "../../../chart-plate.component";
-import { MockBuilder, MockProvider, MockRender } from "ng-mocks";
-import { ChartModule } from "../../../../chart.module";
-import { anything, capture, instance, mock, reset, when } from "ts-mockito";
-import { ChartAxisLimitService } from "../../../../services/chart-axis-limit.service";
-import { should } from "@artstesh/it-should";
-import { ChartPlateService } from "../../../services/chart-plate.service";
-import { SettingsMapService } from "../../../../services/settings-map.service";
+import { Forger } from '@artstesh/forger';
+import { ReplaySubject } from 'rxjs';
+import { XLinearAxisComponent } from './x-linear-axis.component';
+import { DateRangeModel } from '../../../../models';
+import { ChartPlateComponent } from '../../../chart-plate.component';
+import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { ChartModule } from '../../../../chart.module';
+import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
+import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
+import { should } from '@artstesh/it-should';
+import { ChartPlateService } from '../../../services/chart-plate.service';
+import { SettingsMapService } from '../../../../services/settings-map.service';
 
 describe('#chart-elements XLinearAxisComponent', () => {
   let fixture: ComponentFixture<XLinearAxisComponent>;
@@ -39,7 +39,7 @@ describe('#chart-elements XLinearAxisComponent', () => {
     reset(mapService);
     reset(plateService);
     expect().nothing();
-  })
+  });
 
   it('should create', () => {
     expect(fixture.componentInstance).toBeTruthy();

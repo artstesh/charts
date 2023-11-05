@@ -4,8 +4,8 @@ import { ChartPlateComponent } from '../../../chart-plate.component';
 import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
 import { XLinearAxisSettings } from './x-linear-axis.settings';
 import { ChartPlateService } from '../../../services/chart-plate.service';
-import { ScaleOptionsByType } from "chart.js";
-import { SettingsMapService } from "../../../../services/settings-map.service";
+import { ScaleOptionsByType } from 'chart.js';
+import { SettingsMapService } from '../../../../services/settings-map.service';
 
 @Component({
   selector: 'lib-x-linear-axis',
@@ -28,7 +28,7 @@ export class XLinearAxisComponent implements OnInit, OnDestroy {
   constructor(
     private limitService: ChartAxisLimitService,
     private service: ChartPlateService,
-    private mapService: SettingsMapService
+    private mapService: SettingsMapService,
   ) {}
 
   ngOnInit(): void {

@@ -12,7 +12,7 @@ describe('ChartPlateService', () => {
   beforeEach(() => {
     service = new ChartPlateService();
     updated = false;
-    chart = { };
+    chart = {};
     service.updateTrigger$.subscribe(() => (updated = true));
     service.setChart(chart);
   });
@@ -27,7 +27,7 @@ describe('ChartPlateService', () => {
 
   describe('datasets', () => {
     beforeEach(() => {
-      chart.data = {datasets: []};
+      chart.data = { datasets: [] };
     });
 
     describe('addDataset()', () => {
@@ -122,11 +122,10 @@ describe('ChartPlateService', () => {
 
     beforeEach(() => {
       id = Forger.create<string>()!;
-      chart.options = {scales: {}};
+      chart.options = { scales: {} };
     });
 
     describe('setScale()', () => {
-
       it('nothing if no data', fakeAsync(() => {
         chart.options = undefined;
         const scale = Forger.create<number>()! as any;
@@ -157,7 +156,6 @@ describe('ChartPlateService', () => {
     });
 
     describe('resetScale()', () => {
-
       it('nothing if no data', fakeAsync(() => {
         chart.options = undefined;
         const scale = Forger.create<number>()! as any;

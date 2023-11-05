@@ -1,5 +1,4 @@
 export class ColorCollector {
-
   public static getColor(index = 0): string {
     if (index < 0) index = 0;
     if (index >= colors.length) index = colors.length - 1;
@@ -55,5 +54,5 @@ const colors = [
   '#a09a8c',
   '#c5e178',
   '#ffce00',
-  '#a540a0'
+  '#a540a0',
 ];

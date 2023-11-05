@@ -6,7 +6,7 @@ import { should } from '@artstesh/it-should';
 import { ChartPlateComponent } from './chart-plate.component';
 import { ChartModule } from '../chart.module';
 import { ChartPlateService } from './services/chart-plate.service';
-import { SettingsMapService } from "../services/settings-map.service";
+import { SettingsMapService } from '../services/settings-map.service';
 
 describe('ChartPlateComponent', () => {
   let fixture: ComponentFixture<ChartPlateComponent>;
@@ -30,21 +30,20 @@ describe('ChartPlateComponent', () => {
   afterEach(() => {
     reset(plateService);
     expect().nothing();
-  })
+  });
 
   it('should create', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  describe("UI state", () => {
-
+  describe('UI state', () => {
     it('wrapper is shown', () => {
       should().array(ngMocks.findAll('[data-test=chart-plate-wrapper]')).length(1);
-    })
+    });
 
     it('canvas is shown', () => {
       should().array(ngMocks.findAll('[data-test=chart-plate]')).length(1);
-    })
+    });
   });
 
   // it('should add the axis on chartInitialized', () => {

@@ -1,6 +1,6 @@
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
-import { ChartBarSettings } from "./chart-bar.settings";
+import { ChartBarSettings } from './chart-bar.settings';
 
 describe('#chart-elements ChartBarSettings', () => {
   let model: ChartBarSettings;
@@ -13,7 +13,7 @@ describe('#chart-elements ChartBarSettings', () => {
     expect().nothing();
   });
 
-  it("setThickness()", () => {
+  it('setThickness()', () => {
     const thickness = Forger.create<number>()!;
     //
     model.setThickness(thickness);

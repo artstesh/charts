@@ -13,38 +13,38 @@ import { Forger } from '@artstesh/forger';
 import { SettingsMapService } from '../../../services/settings-map.service';
 
 describe('#chart-types LineChartComponent', () => {
-   let fixture: ComponentFixture<ChartLineComponent>;
+  let fixture: ComponentFixture<ChartLineComponent>;
   const plateService = mock(ChartPlateService);
   const limitService = mock(ChartAxisLimitService);
   const mapService = mock(SettingsMapService);
   let limitServiceChanged$: Subject<undefined>;
   let chartInitialized: EventEmitter<unknown>;
 
-   beforeEach(async () => {
-     limitServiceChanged$ = new Subject<undefined>();
-     chartInitialized = new EventEmitter();
-     when(plateService.chartInitialized).thenReturn(chartInitialized);
-     when(limitService.changed).thenReturn(limitServiceChanged$.asObservable());
-     return MockBuilder(ChartLineComponent, ChartModule)
-       .provide(MockProvider(ChartPlateService, instance(plateService)))
-       .provide(MockProvider(SettingsMapService, instance(mapService)))
-       .provide(MockProvider(ChartAxisLimitService, instance(limitService)));
-   });
+  beforeEach(async () => {
+    limitServiceChanged$ = new Subject<undefined>();
+    chartInitialized = new EventEmitter();
+    when(plateService.chartInitialized).thenReturn(chartInitialized);
+    when(limitService.changed).thenReturn(limitServiceChanged$.asObservable());
+    return MockBuilder(ChartLineComponent, ChartModule)
+      .provide(MockProvider(ChartPlateService, instance(plateService)))
+      .provide(MockProvider(SettingsMapService, instance(mapService)))
+      .provide(MockProvider(ChartAxisLimitService, instance(limitService)));
+  });
 
-   beforeEach(() => {
-     fixture = MockRender(ChartLineComponent);
-   });
+  beforeEach(() => {
+    fixture = MockRender(ChartLineComponent);
+  });
 
-   afterEach(() => {
-     reset(mapService);
-     reset(plateService);
-     reset(limitService);
-     expect().nothing();
-   })
+  afterEach(() => {
+    reset(mapService);
+    reset(plateService);
+    reset(limitService);
+    expect().nothing();
+  });
 
-   it('should create', () => {
-      expect(fixture.componentInstance).toBeTruthy();
-   });
+  it('should create', () => {
+    expect(fixture.componentInstance).toBeTruthy();
+  });
 
   it('should add line on chartInitialized', () => {
     const dataset = Forger.create<number>()! as any; // a trick

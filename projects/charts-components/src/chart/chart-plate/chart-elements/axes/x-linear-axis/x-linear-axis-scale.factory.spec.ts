@@ -1,10 +1,10 @@
-import { XLinearAxisScaleFactory } from "./x-linear-axis-scale.factory";
-import { should } from "@artstesh/it-should";
-import { Forger } from "@artstesh/forger";
-import { XLinearAxisSettings } from "./x-linear-axis.settings";
-import { ScaleOptionsByType } from "chart.js";
+import { XLinearAxisScaleFactory } from './x-linear-axis-scale.factory';
+import { should } from '@artstesh/it-should';
+import { Forger } from '@artstesh/forger';
+import { XLinearAxisSettings } from './x-linear-axis.settings';
+import { ScaleOptionsByType } from 'chart.js';
 
-describe("#chart-elements XLinearAxisScaleFactory", () => {
+describe('#chart-elements XLinearAxisScaleFactory', () => {
   let settings: XLinearAxisSettings;
   let scale: ScaleOptionsByType<'linear'>;
 
@@ -17,15 +17,15 @@ describe("#chart-elements XLinearAxisScaleFactory", () => {
     expect().nothing();
   });
 
-  it("should have defined scale", () => {
+  it('should have defined scale', () => {
     should().true(scale);
   });
 
-  it("setDisplayGrid() success", () => {
+  it('setDisplayGrid() success', () => {
     should().true(scale.grid.display === settings.displayGrid);
   });
 
-  it("limits() defined success", () => {
+  it('limits() defined success', () => {
     should().number(scale.min).equals(settings.limits[0]!);
     should().number(scale.max).equals(settings.limits[1]!);
   });

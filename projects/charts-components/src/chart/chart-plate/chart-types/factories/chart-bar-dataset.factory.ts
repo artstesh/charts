@@ -1,10 +1,10 @@
-import { ChartDataset } from "chart.js";
-import { ChartBarSettings } from "../bar-chart/chart-bar.settings";
-import { ChartDataModel } from "../../../models";
-import { ChartConstants } from "../../../models/chart-constants";
+import { ChartDataset } from 'chart.js';
+import { ChartBarSettings } from '../bar-chart/chart-bar.settings';
+import { ChartDataModel } from '../../../models';
+import { ChartConstants } from '../../../models/chart-constants';
 
 // noinspection JSSuspiciousNameCombination
-export class ChartBarDatasetFactory{
+export class ChartBarDatasetFactory {
   public static build(settings: ChartBarSettings, data: ChartDataModel[]): ChartDataset<'bar', ChartDataModel[]> {
     return {
       type: 'bar',
@@ -14,7 +14,7 @@ export class ChartBarDatasetFactory{
       label: settings.name,
       backgroundColor: settings.color,
       barThickness: settings.thickness,
-      order: settings.order
+      order: settings.order,
     } as ChartDataset<'bar', ChartDataModel[]>;
   }
 }

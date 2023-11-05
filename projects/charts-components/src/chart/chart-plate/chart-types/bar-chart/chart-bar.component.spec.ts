@@ -14,34 +14,34 @@ import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
 
 describe('#chart-types ChartBarComponent', () => {
-   let fixture: ComponentFixture<ChartBarComponent>;
+  let fixture: ComponentFixture<ChartBarComponent>;
   const plateService = mock(ChartPlateService);
   const limitService = mock(ChartAxisLimitService);
   let limitServiceChanged$: Subject<undefined>;
   let chartInitialized: EventEmitter<unknown>;
   const mapService = mock(SettingsMapService);
 
-   beforeEach(async () => {
-     limitServiceChanged$ = new Subject<undefined>();
-     chartInitialized = new EventEmitter();
-     when(plateService.chartInitialized).thenReturn(chartInitialized);
-     when(limitService.changed).thenReturn(limitServiceChanged$.asObservable());
-      return MockBuilder(ChartBarComponent, ChartModule)
-        .provide(MockProvider(ChartPlateService, instance(plateService)))
-        .provide(MockProvider(SettingsMapService, instance(mapService)))
-        .provide(MockProvider(ChartAxisLimitService, instance(limitService)));
-   });
+  beforeEach(async () => {
+    limitServiceChanged$ = new Subject<undefined>();
+    chartInitialized = new EventEmitter();
+    when(plateService.chartInitialized).thenReturn(chartInitialized);
+    when(limitService.changed).thenReturn(limitServiceChanged$.asObservable());
+    return MockBuilder(ChartBarComponent, ChartModule)
+      .provide(MockProvider(ChartPlateService, instance(plateService)))
+      .provide(MockProvider(SettingsMapService, instance(mapService)))
+      .provide(MockProvider(ChartAxisLimitService, instance(limitService)));
+  });
 
-   beforeEach(() => {
-      fixture = MockRender(ChartBarComponent);
-   });
+  beforeEach(() => {
+    fixture = MockRender(ChartBarComponent);
+  });
 
-   afterEach(() => {
-     reset(mapService);
-     reset(plateService);
-     reset(limitService);
-     expect().nothing();
-   });
+  afterEach(() => {
+    reset(mapService);
+    reset(plateService);
+    reset(limitService);
+    expect().nothing();
+  });
 
   it('should create', () => {
     expect(fixture.componentInstance).toBeTruthy();

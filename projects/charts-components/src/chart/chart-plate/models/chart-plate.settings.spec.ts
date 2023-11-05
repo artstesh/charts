@@ -1,9 +1,9 @@
-import { ChartBarSettings } from "../chart-types/bar-chart/chart-bar.settings";
-import { Forger } from "@artstesh/forger";
-import { should } from "@artstesh/it-should";
-import { ChartPlateSettings, InteractMode } from "./chart-plate.settings";
+import { ChartBarSettings } from '../chart-types/bar-chart/chart-bar.settings';
+import { Forger } from '@artstesh/forger';
+import { should } from '@artstesh/it-should';
+import { ChartPlateSettings, InteractMode } from './chart-plate.settings';
 
-describe("ChartPlateSettings", () => {
+describe('ChartPlateSettings', () => {
   let model: ChartPlateSettings;
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe("ChartPlateSettings", () => {
     expect().nothing();
   });
 
-  it("setMode()", () => {
+  it('setMode()', () => {
     const mode = Forger.create<'x' | 'y'>()!;
     //
     model.setMode(mode);
