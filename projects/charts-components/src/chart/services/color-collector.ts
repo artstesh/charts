@@ -1,6 +1,7 @@
 export class ColorCollector {
   public static getColor(index = 0): string {
     if (index < 0) index = 0;
+    if (index === 0) return colors.sort(c => Math.random() - 0.5)[0];
     if (index >= colors.length) index = colors.length - 1;
     return colors[index];
   }
