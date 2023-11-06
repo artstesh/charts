@@ -10,7 +10,7 @@ import { ChartPlateSettings } from './models/chart-plate.settings';
   selector: 'app-chart-plate',
   templateUrl: './chart-plate.component.html',
   styleUrls: ['./chart-plate.component.scss'],
-  providers: [ChartAxisLimitService, ChartPlateService]
+  providers: [ChartAxisLimitService, ChartPlateService],
 })
 export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
   private subs: Subscription[] = [];
