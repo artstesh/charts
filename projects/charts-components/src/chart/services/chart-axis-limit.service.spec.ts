@@ -1,7 +1,7 @@
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, tick } from '@angular/core/testing';
 
 import { ChartAxisLimitService } from './chart-axis-limit.service';
-import { anyNumber, anything, instance, mock, reset, verify, when } from 'ts-mockito';
+import { anything, instance, mock, reset, when } from 'ts-mockito';
 import { ChartAxisLimitsModel, IChartAxisLimitsModel } from '../models/chart-axis-limits.model';
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';

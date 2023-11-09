@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ChartAxisLimitService } from '../../services/chart-axis-limit.service';
 import { ChartTypeSettings } from './models/chart-type.settings';

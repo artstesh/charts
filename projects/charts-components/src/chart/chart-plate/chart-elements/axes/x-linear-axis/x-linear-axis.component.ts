@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ChartPlateComponent } from '../../../chart-plate.component';
 import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
 import { XLinearAxisSettings } from './x-linear-axis.settings';
 import { ChartPlateService } from '../../../services/chart-plate.service';
-import { ScaleOptionsByType } from 'chart.js';
 import { SettingsMapService } from '../../../../services/settings-map.service';
 
 @Component({

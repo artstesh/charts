@@ -5,7 +5,7 @@ export abstract class ChartTypeSettings<T extends ChartTypeSettings<T>> implemen
   public name: string = '';
   public color: string = '';
   public yLeft: boolean = false;
-  public id: string = `id-${Math.floor(Math.random()*9999 + 1)}`;
+  public id: string = `id-${Math.floor(Math.random() * 9999 + 1)}`;
 
   public isSame(model: T): boolean {
     if (this.order !== model.order) return false;

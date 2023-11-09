@@ -1,11 +1,10 @@
 import { ChartBarSettings } from '../bar-chart/chart-bar.settings';
-import { ChartDataset } from 'chart.js';
 import { ChartDataModel } from '../../../models';
 import { Forger } from '@artstesh/forger';
 import { ChartBarDatasetFactory } from './chart-bar-dataset.factory';
 import { should } from '@artstesh/it-should';
 import { ChartConstants } from '../../../models/chart-constants';
-import { IChartDataset } from "../models/i-chart-dataset";
+import { IChartDataset } from '../models/i-chart-dataset';
 
 describe('#chart-types ChartLineDatasetModel', () => {
   let settings: ChartBarSettings;

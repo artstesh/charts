@@ -1,7 +1,6 @@
-import { ChartBarSettings } from '../chart-types/bar-chart/chart-bar.settings';
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
-import { ChartPlateSettings, InteractMode } from './chart-plate.settings';
+import { ChartPlateSettings } from './chart-plate.settings';
 
 describe('ChartPlateSettings', () => {
   let model: ChartPlateSettings;

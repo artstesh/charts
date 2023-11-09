@@ -1,7 +1,6 @@
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
 import { ChartBarSettings } from './chart-bar.settings';
-import { ChartLineSettings } from "../line-chart/chart-line.settings";
 
 describe('#chart-elements ChartBarSettings', () => {
   let model: ChartBarSettings;

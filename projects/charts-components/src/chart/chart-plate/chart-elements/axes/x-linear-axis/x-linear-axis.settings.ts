@@ -1,5 +1,3 @@
-import { GridLineOptions, ScaleOptionsByType } from 'chart.js';
-
 export class XLinearAxisSettings {
   limits: [number | null, number | null] = [null, null];
   displayGrid: boolean = false;

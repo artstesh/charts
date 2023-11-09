@@ -1,11 +1,10 @@
 import { ChartLineDatasetFactory } from './chart-line-dataset.factory';
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
-import { ChartDataset, ScaleOptionsByType } from 'chart.js';
 import { ChartLineSettings } from '../line-chart/chart-line.settings';
 import { ChartDataModel } from '../../../models';
 import { ChartConstants } from '../../../models/chart-constants';
-import { IChartDataset } from "../models/i-chart-dataset";
+import { IChartDataset } from '../models/i-chart-dataset';
 
 describe('#chart-types ChartLineDatasetModel', () => {
   let settings: ChartLineSettings;

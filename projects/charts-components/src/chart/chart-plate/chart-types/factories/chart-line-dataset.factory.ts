@@ -1,9 +1,7 @@
 // noinspection JSSuspiciousNameCombination
 import { ChartConstants } from "../../../models/chart-constants";
-import { ChartDataset } from "chart.js";
 import { ChartLineSettings } from "../line-chart/chart-line.settings";
 import { ChartDataModel } from "../../../models";
-import { ChartType, DefaultDataPoint } from "chart.js/dist/types";
 import { IChartDataset } from "../models/i-chart-dataset";
 
 export class ChartLineDatasetFactory {

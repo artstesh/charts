@@ -1,10 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { EventEmitter } from '@angular/core';
 import { Forger } from '@artstesh/forger';
-import { ReplaySubject } from 'rxjs';
 import { XLinearAxisComponent } from './x-linear-axis.component';
-import { DateRangeModel } from '../../../../models';
-import { ChartPlateComponent } from '../../../chart-plate.component';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { ChartModule } from '../../../../chart.module';
 import { anything, capture, instance, mock, reset, when } from 'ts-mockito';

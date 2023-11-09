@@ -1,7 +1,6 @@
-import { ChartDataset } from 'chart.js';
-import { ChartBarSettings } from '../bar-chart/chart-bar.settings';
-import { ChartDataModel } from '../../../models';
-import { ChartConstants } from '../../../models/chart-constants';
+import { ChartBarSettings } from "../bar-chart/chart-bar.settings";
+import { ChartDataModel } from "../../../models";
+import { ChartConstants } from "../../../models/chart-constants";
 import { IChartDataset } from "../models/i-chart-dataset";
 
 // noinspection JSSuspiciousNameCombination
