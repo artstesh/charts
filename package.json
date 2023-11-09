@@ -20,6 +20,7 @@
   "files": [
     "dist/**/*"
   ],
+  "private": false,
   "keywords": [
     "chart",
     "diagram",
