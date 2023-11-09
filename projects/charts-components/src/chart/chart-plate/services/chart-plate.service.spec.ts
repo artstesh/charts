@@ -58,47 +58,25 @@ describe('ChartPlateService', () => {
     });
 
     describe('removeDataset()', () => {
-      let order: number;
-      let name: string;
+      let id: string;
 
       beforeEach(() => {
-        order = Forger.create<number>()!;
-        name = Forger.create<string>()!;
+        id = Forger.create<string>()!;
       });
 
       it('nothing if no data', fakeAsync(() => {
         chart.data = undefined as any;
         //
-        service.removeDataset(name, order);
+        service.removeDataset(id);
         tick(300);
         //
-        should().false(updated);
-      }));
-
-      it('not remove only by order success', fakeAsync(() => {
-        chart.data.datasets.push({ order });
-        //
-        service.removeDataset(name, order);
-        tick(300);
-        //
-        should().array(chart.data.datasets).length(1);
-        should().false(updated);
-      }));
-
-      it('remove by name success', fakeAsync(() => {
-        chart.data.datasets.push({ label: name });
-        //
-        service.removeDataset(name, order);
-        tick(300);
-        //
-        should().array(chart.data.datasets).length(1);
         should().false(updated);
       }));
 
       it('removed successfully', fakeAsync(() => {
-        chart.data.datasets.push({ order, label: name });
+        chart.data.datasets.push({ id: id });
         //
-        service.removeDataset(name, order);
+        service.removeDataset(id);
         tick(300);
         //
         should().array(chart.data.datasets).empty();
@@ -107,9 +85,9 @@ describe('ChartPlateService', () => {
 
       it('alsoDelete removed successfully', fakeAsync(() => {
         const alsoDelete = Forger.create<string>()!;
-        chart.data.datasets.push({ label: alsoDelete });
+        chart.data.datasets.push({ id: alsoDelete });
         //
-        service.removeDataset(name, order, alsoDelete);
+        service.removeDataset(id, alsoDelete);
         tick(300);
         //
         should().array(chart.data.datasets).empty();

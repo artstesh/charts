@@ -9,6 +9,7 @@ import { ChartLineDatasetFactory } from '../chart-plate/chart-types/factories/ch
 import { ChartBarDatasetFactory } from '../chart-plate/chart-types/factories/chart-bar-dataset.factory';
 import { ChartPlateSettings } from '../chart-plate/models/chart-plate.settings';
 import { ChartPlateFactory } from '../chart-plate/models/chart-plate.factory';
+import { IChartDataset } from "../chart-plate/chart-types/models/i-chart-dataset";
 
 @Injectable({
   providedIn: 'root',
@@ -22,11 +23,11 @@ export class SettingsMapService {
     return XLinearAxisScaleFactory.build(settings);
   }
 
-  public lineDataset(settings: ChartLineSettings, data: ChartDataModel[]): ChartDataset<any, ChartDataModel[]> {
+  public lineDataset(settings: ChartLineSettings, data: ChartDataModel[]): IChartDataset<any, ChartDataModel[]> {
     return ChartLineDatasetFactory.build(settings, data);
   }
 
-  public batDataset(settings: ChartBarSettings, data: ChartDataModel[]): ChartDataset<any, ChartDataModel[]> {
+  public batDataset(settings: ChartBarSettings, data: ChartDataModel[]): IChartDataset<any, ChartDataModel[]> {
     return ChartBarDatasetFactory.build(settings, data);
   }
 }

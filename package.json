@@ -28,7 +28,6 @@
   ],
   "main": "dist/esm2015/public-api.js",
   "types": "dist/public-api.d.ts",
-  "private": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/artstesh/charts.git"

@@ -5,10 +5,11 @@ import { ChartDataset, ScaleOptionsByType } from 'chart.js';
 import { ChartLineSettings } from '../line-chart/chart-line.settings';
 import { ChartDataModel } from '../../../models';
 import { ChartConstants } from '../../../models/chart-constants';
+import { IChartDataset } from "../models/i-chart-dataset";
 
 describe('#chart-types ChartLineDatasetModel', () => {
   let settings: ChartLineSettings;
-  let scale: ChartDataset<'line', ChartDataModel[]>;
+  let scale: IChartDataset<'line', ChartDataModel[]>;
   let data: ChartDataModel[];
 
   beforeEach(() => {
@@ -23,6 +24,10 @@ describe('#chart-types ChartLineDatasetModel', () => {
 
   it('should have defined scale', () => {
     should().true(scale);
+  });
+
+  it('id is correct', () => {
+    should().string(scale.id).equals(settings.id);
   });
 
   it('type is correct', () => {

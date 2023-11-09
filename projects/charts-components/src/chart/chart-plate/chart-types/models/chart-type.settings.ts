@@ -5,12 +5,14 @@ export abstract class ChartTypeSettings<T extends ChartTypeSettings<T>> implemen
   public name: string = '';
   public color: string = '';
   public yLeft: boolean = false;
+  public id: string = `id-${Math.floor(Math.random()*9999 + 1)}`;
 
   public isSame(model: T): boolean {
     if (this.order !== model.order) return false;
     if (this.name !== model.name) return false;
     if (this.color !== model.color) return false;
     if (this.yLeft !== model.yLeft) return false;
+    if (this.id !== model.id) return false;
     return this._isSame(model);
   }
 
@@ -20,6 +22,7 @@ export abstract class ChartTypeSettings<T extends ChartTypeSettings<T>> implemen
     result.name = model.name;
     result.color = model.color;
     result.yLeft = model.yLeft;
+    result.id = model.id;
     return result;
   }
 

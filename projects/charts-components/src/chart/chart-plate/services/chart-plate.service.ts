@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { auditTime } from 'rxjs/operators';
 import Chart from 'chart.js/auto';
 import { ChartDataset, ScaleOptionsByType } from 'chart.js';
+import { IChartDataset } from "../chart-types/models/i-chart-dataset";
 
 @Injectable()
 export class ChartPlateService {
@@ -25,12 +26,12 @@ export class ChartPlateService {
     this.updateChart();
   }
 
-  removeDataset(name: string, order: number, alsoDelete?: string): void {
+  removeDataset(id: string, alsoDelete?: string): void {
     if (!this.chart?.data?.datasets?.length) return;
     const initialLength = this.chart.data.datasets.length;
-    this.chart.data.datasets = this.chart.data.datasets.filter((d) => d.label != name || d.order !== order);
+    this.chart.data.datasets = this.chart.data.datasets.filter((d) => (d as IChartDataset).id !== id);
     if (alsoDelete) {
-      this.chart.data.datasets = this.chart.data.datasets.filter((d) => d.label !== alsoDelete);
+      this.chart.data.datasets = this.chart.data.datasets.filter((d) =>  (d as IChartDataset).id !== alsoDelete);
     }
     if (this.chart.data.datasets.length !== initialLength) this.updateChart(true);
   }

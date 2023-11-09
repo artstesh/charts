@@ -35,13 +35,13 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
   }
 
   ngOnDestroy(): void {
-    this.service.removeDataset(this._settings.name, this._settings.order);
+    this.service.removeDataset(this._settings.id);
     this.subs.forEach((s) => s.unsubscribe());
   }
 
   protected dataUpdated(): void {
     this.updateFilteredData();
-    this.service.removeDataset(this._settings.name, this._settings.order);
+    this.service.removeDataset(this._settings.id);
     this.service.addDataset(this.getDataset());
   }
 

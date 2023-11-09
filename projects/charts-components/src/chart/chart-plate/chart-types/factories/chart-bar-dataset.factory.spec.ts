@@ -5,10 +5,11 @@ import { Forger } from '@artstesh/forger';
 import { ChartBarDatasetFactory } from './chart-bar-dataset.factory';
 import { should } from '@artstesh/it-should';
 import { ChartConstants } from '../../../models/chart-constants';
+import { IChartDataset } from "../models/i-chart-dataset";
 
 describe('#chart-types ChartLineDatasetModel', () => {
   let settings: ChartBarSettings;
-  let scale: ChartDataset<'bar', ChartDataModel[]>;
+  let scale: IChartDataset<'bar', ChartDataModel[]>;
   let data: ChartDataModel[];
 
   beforeEach(() => {
@@ -27,6 +28,10 @@ describe('#chart-types ChartLineDatasetModel', () => {
 
   it('type is correct', () => {
     should().string(scale.type).equals('bar');
+  });
+
+  it('id is correct', () => {
+    should().string(scale.id).equals(settings.id);
   });
 
   it('label is correct', () => {

@@ -1,6 +1,7 @@
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
 import { ChartBarSettings } from './chart-bar.settings';
+import { ChartLineSettings } from "../line-chart/chart-line.settings";
 
 describe('#chart-elements ChartBarSettings', () => {
   let model: ChartBarSettings;
@@ -11,6 +12,13 @@ describe('#chart-elements ChartBarSettings', () => {
 
   afterEach(() => {
     expect().nothing();
+  });
+
+  it('ids are different', () => {
+    const settings1 = new ChartBarSettings();
+    const settings2 = new ChartBarSettings();
+    //
+    should().string(settings1.id).not.equals(settings2.id);
   });
 
   it('setThickness()', () => {
@@ -26,6 +34,13 @@ describe('#chart-elements ChartBarSettings', () => {
       const other = new ChartBarSettings().copy(model);
       //
       should().true(model.isSame(other));
+    });
+
+    it('different id', () => {
+      const other = new ChartBarSettings().copy(model);
+      other.id = Forger.create<string>()!;
+      //
+      should().false(model.isSame(other));
     });
 
     it('different order', () => {

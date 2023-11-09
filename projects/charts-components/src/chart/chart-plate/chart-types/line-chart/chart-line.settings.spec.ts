@@ -13,6 +13,13 @@ describe('#chart-elements ChartLineSettings', () => {
     expect().nothing();
   });
 
+  it('ids are different', () => {
+    const settings1 = new ChartLineSettings();
+    const settings2 = new ChartLineSettings();
+    //
+    should().string(settings1.id).not.equals(settings2.id);
+  });
+
   it('setThickness()', () => {
     const radius = Forger.create<number>()!;
     //
@@ -28,6 +35,13 @@ describe('#chart-elements ChartLineSettings', () => {
       const other = new ChartLineSettings().copy(model);
       //
       should().true(model.isSame(other));
+    });
+
+    it('different id', () => {
+      const other = new ChartLineSettings().copy(model);
+      other.id = Forger.create<string>()!;
+      //
+      should().false(model.isSame(other));
     });
 
     it('different order', () => {

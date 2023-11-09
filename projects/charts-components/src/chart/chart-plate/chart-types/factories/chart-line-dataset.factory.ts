@@ -1,21 +1,24 @@
 // noinspection JSSuspiciousNameCombination
-import { ChartConstants } from '../../../models/chart-constants';
-import { ChartDataset } from 'chart.js';
-import { ChartLineSettings } from '../line-chart/chart-line.settings';
-import { ChartDataModel } from '../../../models';
+import { ChartConstants } from "../../../models/chart-constants";
+import { ChartDataset } from "chart.js";
+import { ChartLineSettings } from "../line-chart/chart-line.settings";
+import { ChartDataModel } from "../../../models";
+import { ChartType, DefaultDataPoint } from "chart.js/dist/types";
+import { IChartDataset } from "../models/i-chart-dataset";
 
 export class ChartLineDatasetFactory {
-  public static build(settings: ChartLineSettings, data: ChartDataModel[]): ChartDataset<'line', ChartDataModel[]> {
+  public static build(settings: ChartLineSettings, data: ChartDataModel[]): IChartDataset<"line", ChartDataModel[]> {
     return {
-      type: 'line',
+      backgroundColor: settings.color,
+      borderColor: settings.color,
       data: data,
+      id: settings.id,
+      label: settings.name,
+      order: settings.order,
+      pointRadius: settings.pointRadius,
+      type: 'line',
       xAxisID: ChartConstants.BottomAxisId,
       yAxisID: settings.yLeft ? ChartConstants.LeftAxisId : ChartConstants.RightAxisId,
-      label: settings.name,
-      borderColor: settings.color,
-      backgroundColor: settings.color,
-      pointRadius: settings.pointRadius,
-      order: settings.order,
-    } as ChartDataset<'line', ChartDataModel[]>;
+    } as IChartDataset<'line', ChartDataModel[]>;
   }
 }
