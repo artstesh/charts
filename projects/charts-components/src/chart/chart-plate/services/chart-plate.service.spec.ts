@@ -136,7 +136,6 @@ describe('ChartPlateService', () => {
     describe('resetScale()', () => {
       it('nothing if no data', fakeAsync(() => {
         chart.options = undefined;
-        const scale = Forger.create<number>()! as any;
         //
         service.resetScale(id);
         tick(300);
