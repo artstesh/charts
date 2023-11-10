@@ -17,7 +17,7 @@ export class XLinearAxisSettings {
     return this;
   }
 
-  public copy(model: XLinearAxisSettings): XLinearAxisSettings {
+  public static copy(model: XLinearAxisSettings): XLinearAxisSettings {
     return new XLinearAxisSettings().setLimits(model.limits).setDisplayGrid(model.displayGrid);
   }
 }

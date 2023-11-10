@@ -1,6 +1,7 @@
 import { XLinearAxisSettings } from './x-linear-axis.settings';
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
+import { ChartLegendSettings } from "../../legend";
 
 describe('#chart-elements XLinearAxisSettings', () => {
   let model: XLinearAxisSettings;
@@ -13,6 +14,34 @@ describe('#chart-elements XLinearAxisSettings', () => {
 
   afterEach(() => {
     expect().nothing();
+  });
+
+  describe("setLimits()", () => {
+    it("success", () => {
+      const expected = Forger.create<[number, number]>()!;
+      //
+      model.setLimits(expected);
+      //
+      should().array(model.limits).equal(expected);
+    });
+  });
+
+  describe("copy()", () => {
+    it("success", () => {
+      const other = XLinearAxisSettings.copy(model);
+      //
+      should().objects(model, other).equal();
+    });
+  });
+
+  describe("setDisplayGrid()", () => {
+    it("success", () => {
+      const expected = Forger.create<boolean>()!;
+      //
+      model.setDisplayGrid(expected);
+      //
+      should().true(model.displayGrid === expected);
+    });
   });
 
   describe('isSame()', () => {

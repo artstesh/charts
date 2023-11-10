@@ -4,10 +4,17 @@ import { ChartLineComponent } from './chart-plate/chart-types/line-chart/chart-l
 import { ChartBarComponent } from './chart-plate/chart-types/bar-chart/chart-bar.component';
 import { CommonModule } from '@angular/common';
 import { XLinearAxisComponent } from './chart-plate/chart-elements/axes/x-linear-axis/x-linear-axis.component';
+import { ChartLegendComponent } from './chart-plate/chart-elements/legend';
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [ChartPlateComponent, ChartLineComponent, ChartBarComponent, XLinearAxisComponent],
-  exports: [ChartPlateComponent, ChartLineComponent, ChartBarComponent],
+  declarations: [
+    ChartPlateComponent,
+    ChartLineComponent,
+    ChartBarComponent,
+    XLinearAxisComponent,
+    ChartLegendComponent,
+  ],
+  exports: [ChartPlateComponent, ChartLineComponent, ChartBarComponent, XLinearAxisComponent, ChartLegendComponent],
 })
 export class ChartModule {}

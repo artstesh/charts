@@ -9,7 +9,7 @@ describe('#chart-elements XLinearAxisScaleFactory', () => {
   let scale: ScaleOptionsByType<'linear'>;
 
   beforeEach(() => {
-    settings = new XLinearAxisSettings().copy(Forger.create<XLinearAxisSettings>()!);
+    settings = XLinearAxisSettings.copy(Forger.create<XLinearAxisSettings>()!);
     scale = XLinearAxisScaleFactory.build(settings);
   });
 
