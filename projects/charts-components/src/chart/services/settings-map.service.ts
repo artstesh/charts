@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { XLinearAxisScaleFactory } from '../chart-plate/chart-elements/axes/x-linear-axis/x-linear-axis-scale.factory';
-import { XLinearAxisSettings } from "../chart-plate/chart-elements/axes";
+import { XLinearAxisSettings } from '../chart-plate/chart-elements/axes';
 import { ChartConfiguration, LegendOptions, ScaleOptionsByType } from 'chart.js';
 import { ChartLineSettings } from '../chart-plate/chart-types/line-chart/chart-line.settings';
 import { ChartDataModel } from '../models';
