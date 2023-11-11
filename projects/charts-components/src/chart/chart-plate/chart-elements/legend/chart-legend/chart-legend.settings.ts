@@ -1,5 +1,5 @@
 import { LayoutPosition } from 'chart.js';
-import { Align } from "chart.js/dist/types";
+import { Align } from 'chart.js/dist/types';
 
 export type LegendPosition = LayoutPosition;
 export type LegendAlignment = Align;

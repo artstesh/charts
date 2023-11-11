@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { auditTime } from 'rxjs/operators';
 import Chart from 'chart.js/auto';
-import { ChartDataset, LegendOptions, ScaleOptionsByType } from "chart.js";
+import { ChartDataset, LegendOptions, ScaleOptionsByType } from 'chart.js';
 import { IChartDataset } from '../chart-types/models/i-chart-dataset';
 
 @Injectable()

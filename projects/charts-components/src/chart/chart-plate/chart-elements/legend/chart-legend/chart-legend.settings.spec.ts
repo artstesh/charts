@@ -39,7 +39,9 @@ describe('#chart-elements ChartLegendSettings', () => {
       //
       model = model.setPosition(expected);
       //
-      should().string(model.position as string).equals(expected);
+      should()
+        .string(model.position as string)
+        .equals(expected);
     });
   });
 

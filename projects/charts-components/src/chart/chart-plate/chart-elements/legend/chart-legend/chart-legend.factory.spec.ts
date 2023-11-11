@@ -2,7 +2,7 @@ import { should } from '@artstesh/it-should';
 import { Forger } from '@artstesh/forger';
 import { LegendOptions } from 'chart.js';
 import { ChartLegendFactory } from './chart-legend.factory';
-import { ChartLegendSettings } from "./chart-legend.settings";
+import { ChartLegendSettings } from './chart-legend.settings';
 
 describe('#chart-elements XLinearAxisScaleFactory', () => {
   let settings: ChartLegendSettings;
@@ -24,7 +24,9 @@ describe('#chart-elements XLinearAxisScaleFactory', () => {
   });
 
   it('position is correct', () => {
-    should().string(legend.position as string).equals(settings.position as string);
+    should()
+      .string(legend.position as string)
+      .equals(settings.position as string);
   });
 
   it('align correct', () => {

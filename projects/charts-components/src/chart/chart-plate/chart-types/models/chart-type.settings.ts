@@ -2,7 +2,7 @@ import { IChartElementSettings } from '../../../models/i-chart-element.settings'
 
 export abstract class ChartTypeSettings<T extends ChartTypeSettings<T>> implements IChartElementSettings<T> {
   public order: number = 0;
-  public name: string = `Unnamed-${Math.round(Math.random()*9999)}`;
+  public name: string = `Unnamed-${Math.round(Math.random() * 9999)}`;
   public color: string = '';
   public yLeft: boolean = false;
   public id: string = `id-${Math.floor(Math.random() * 9999 + 1)}`;

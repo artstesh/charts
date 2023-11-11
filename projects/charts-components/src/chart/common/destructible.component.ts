@@ -1,5 +1,5 @@
-import { Component, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs";
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({template: ''})
 export class DestructibleComponent implements OnDestroy {

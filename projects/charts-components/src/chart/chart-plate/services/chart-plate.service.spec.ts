@@ -163,14 +163,13 @@ describe('ChartPlateService', () => {
     });
   });
 
-  describe("legend", () => {
+  describe('legend', () => {
     let id: string;
 
     beforeEach(() => {
       id = Forger.create<string>()!;
       chart.options = { plugins: {} };
     });
-
 
     describe('setLegend()', () => {
       it('nothing if no data', fakeAsync(() => {
