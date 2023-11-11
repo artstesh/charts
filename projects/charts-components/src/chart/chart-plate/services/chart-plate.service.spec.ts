@@ -162,4 +162,45 @@ describe('ChartPlateService', () => {
       }));
     });
   });
+
+  describe("legend", () => {
+    let id: string;
+
+    beforeEach(() => {
+      id = Forger.create<string>()!;
+      chart.options = { plugins: {} };
+    });
+
+
+    describe('setLegend()', () => {
+      it('nothing if no data', fakeAsync(() => {
+        chart.options = undefined;
+        const legend = Forger.create<number>()! as any;
+        //
+        service.setLegend(legend);
+        tick(300);
+        //
+        should().false(updated);
+      }));
+
+      it('successfully updates', fakeAsync(() => {
+        chart.options.plugins.legend = Forger.create<number>()! as any;
+        const legend = Forger.create<number>()! as any;
+        //
+        service.setLegend(legend);
+        tick(300);
+        //
+        should().true(updated);
+      }));
+
+      it('sets successfully', fakeAsync(() => {
+        const legend = Forger.create<number>()! as any;
+        //
+        service.setLegend(legend);
+        tick(300);
+        //
+        should().number(chart.options.plugins.legend).equals(legend);
+      }));
+    });
+  });
 });

@@ -1,13 +1,13 @@
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
-import { ChartLegendDirection, ChartLegendPosition, ChartLegendSettings } from "./chart-legend.settings";
+import { ChartLegendSettings } from './chart-legend.settings';
 
 describe('#chart-elements ChartLegendSettings', () => {
   let model: ChartLegendSettings;
 
   beforeEach(() => {
     model = new ChartLegendSettings();
-    model.direction = Forger.create<'row' | 'column'>()!;
+    model.align = Forger.create<'start' | 'center' | 'end'>()!;
     model.position = Forger.create<'top' | 'right' | 'bottom' | 'left'>()!;
   });
 
@@ -15,31 +15,31 @@ describe('#chart-elements ChartLegendSettings', () => {
     expect().nothing();
   });
 
-  describe("copy()", () => {
-    it("success", () => {
+  describe('copy()', () => {
+    it('success', () => {
       const other = ChartLegendSettings.copy(model);
       //
       should().objects(model, other).equal();
     });
   });
 
-  describe("setDirection()", () => {
-    it("success", () => {
-      const expected = Forger.create<'row' | 'column'>()!;
+  describe('setAlign()', () => {
+    it('success', () => {
+      const expected = Forger.create<'start' | 'center' | 'end'>()!;
       //
-      model.setDirection(expected);
+      model.setAlign(expected);
       //
-      should().string(model.direction).equals(expected);
+      should().string(model.align).equals(expected);
     });
   });
 
-  describe("setPosition()", () => {
-    it("success", () => {
+  describe('setPosition()', () => {
+    it('success', () => {
       const expected = Forger.create<'bottom' | 'left' | 'top' | 'right'>()!;
       //
-      model.setPosition(expected)
+      model.setPosition(expected);
       //
-      should().string(model.position).equals(expected);
+      should().string(model.position as string).equals(expected);
     });
   });
 
@@ -50,10 +50,10 @@ describe('#chart-elements ChartLegendSettings', () => {
       should().true(model.isSame(other));
     });
 
-    it('different direction', () => {
+    it('different align', () => {
       const other = ChartLegendSettings.copy(model);
-      model.direction = 'column';
-      other.direction = 'row';
+      model.align = Forger.create<'center' | 'end'>()!;
+      other.align = 'start';
       //
       should().false(model.isSame(other));
     });

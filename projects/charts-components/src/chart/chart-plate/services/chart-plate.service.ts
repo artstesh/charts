@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { auditTime } from 'rxjs/operators';
 import Chart from 'chart.js/auto';
-import { ChartDataset, ScaleOptionsByType } from 'chart.js';
+import { ChartDataset, LegendOptions, ScaleOptionsByType } from "chart.js";
 import { IChartDataset } from '../chart-types/models/i-chart-dataset';
 
 @Injectable()
@@ -45,6 +45,12 @@ export class ChartPlateService {
   public resetScale(id: string): void {
     if (!this.chart?.options?.scales) return;
     this.chart.options.scales[id] = {};
+    this.updateChart();
+  }
+
+  public setLegend(options: LegendOptions<any>): void {
+    if (!this.chart?.options?.plugins) return;
+    this.chart.options.plugins.legend = options;
     this.updateChart();
   }
 }
