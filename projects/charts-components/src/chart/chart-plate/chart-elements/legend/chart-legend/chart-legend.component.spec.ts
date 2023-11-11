@@ -1,16 +1,13 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture } from '@angular/core/testing';
 import { ChartLegendComponent } from './chart-legend.component';
-import { XLinearAxisComponent } from "../../axes/x-linear-axis/x-linear-axis.component";
-import { anything, capture, instance, mock, reset, when } from "ts-mockito";
-import { ChartAxisLimitService } from "../../../../services/chart-axis-limit.service";
-import { ChartPlateService } from "../../../services/chart-plate.service";
-import { SettingsMapService } from "../../../../services/settings-map.service";
-import { EventEmitter } from "@angular/core";
-import { MockBuilder, MockProvider, MockRender } from "ng-mocks";
-import { ChartModule } from "../../../../chart.module";
-import { Forger } from "@artstesh/forger";
-import { should } from "@artstesh/it-should";
+import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
+import { ChartPlateService } from '../../../services/chart-plate.service';
+import { SettingsMapService } from '../../../../services/settings-map.service';
+import { EventEmitter } from '@angular/core';
+import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { ChartModule } from '../../../../chart.module';
+import { Forger } from '@artstesh/forger';
+import { should } from '@artstesh/it-should';
 
 describe('#chart-elements ChartLegendComponent', () => {
   let fixture: ComponentFixture<ChartLegendComponent>;
