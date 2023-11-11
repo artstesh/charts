@@ -27,7 +27,7 @@ describe('#chart-elements ChartLegendSettings', () => {
     it('success', () => {
       const expected = Forger.create<'start' | 'center' | 'end'>()!;
       //
-      model.setAlign(expected);
+      model = model.setAlign(expected);
       //
       should().string(model.align).equals(expected);
     });
@@ -37,7 +37,7 @@ describe('#chart-elements ChartLegendSettings', () => {
     it('success', () => {
       const expected = Forger.create<'bottom' | 'left' | 'top' | 'right'>()!;
       //
-      model.setPosition(expected);
+      model = model.setPosition(expected);
       //
       should().string(model.position as string).equals(expected);
     });

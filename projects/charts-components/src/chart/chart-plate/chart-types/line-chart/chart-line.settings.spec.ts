@@ -20,10 +20,17 @@ describe('#chart-elements ChartLineSettings', () => {
     should().string(settings1.id).not.equals(settings2.id);
   });
 
-  it('setThickness()', () => {
+  it('names are different', () => {
+    const settings1 = new ChartLineSettings();
+    const settings2 = new ChartLineSettings();
+    //
+    should().string(settings1.name).not.equals(settings2.name);
+  });
+
+  it('setPointRadius()', () => {
     const radius = Forger.create<number>()!;
     //
-    model.setPointRadius(radius);
+    model = model.setPointRadius(radius);
     //
     should()
       .number(model.pointRadius as number)

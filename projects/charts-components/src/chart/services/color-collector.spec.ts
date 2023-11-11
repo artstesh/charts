@@ -31,7 +31,7 @@ describe('ColorCollector', () => {
     });
 
     it('numbers are same for same indexes', () => {
-      const index = Forger.create<number>({ numberMin: 0, numberMax: 10 })!;
+      const index = Forger.create<number>({ numberMin: 0, numberMax: 1000 })!;
       //
       const color1 = ColorCollector.getColor(index);
       const color2 = ColorCollector.getColor(index);

@@ -23,7 +23,7 @@ describe('#chart-elements ChartBarSettings', () => {
   it('setThickness()', () => {
     const thickness = Forger.create<number>()!;
     //
-    model.setThickness(thickness);
+    model = model.setThickness(thickness);
     //
     should().number(model.thickness).equals(thickness);
   });

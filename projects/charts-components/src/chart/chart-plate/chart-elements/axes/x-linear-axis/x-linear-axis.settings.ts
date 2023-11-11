@@ -7,17 +7,22 @@ export class XLinearAxisSettings {
     return this.limits![0] === model.limits![0] && this.limits![1] === model.limits![1];
   }
 
-  public setDisplayGrid(value: boolean): this {
-    this.displayGrid = value;
-    return this;
+  public setDisplayGrid(value: boolean): XLinearAxisSettings {
+    const result = XLinearAxisSettings.copy(this);
+    result.displayGrid = value;
+    return result;
   }
 
-  public setLimits(value: [number | null, number | null]): this {
-    this.limits = value;
-    return this;
+  public setLimits(value: [number | null, number | null]): XLinearAxisSettings {
+    const result = XLinearAxisSettings.copy(this);
+    result.limits = value;
+    return result;
   }
 
   public static copy(model: XLinearAxisSettings): XLinearAxisSettings {
-    return new XLinearAxisSettings().setLimits(model.limits).setDisplayGrid(model.displayGrid);
+    const result = new XLinearAxisSettings();
+    result.limits = model.limits;
+    result.displayGrid = model.displayGrid;
+    return result;
   }
 }

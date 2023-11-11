@@ -19,7 +19,7 @@ describe('#chart-elements XLinearAxisSettings', () => {
     it('success', () => {
       const expected = Forger.create<[number, number]>()!;
       //
-      model.setLimits(expected);
+      model = model.setLimits(expected);
       //
       should().array(model.limits).equal(expected);
     });
@@ -37,7 +37,7 @@ describe('#chart-elements XLinearAxisSettings', () => {
     it('success', () => {
       const expected = Forger.create<boolean>()!;
       //
-      model.setDisplayGrid(expected);
+      model = model.setDisplayGrid(expected);
       //
       should().true(model.displayGrid === expected);
     });

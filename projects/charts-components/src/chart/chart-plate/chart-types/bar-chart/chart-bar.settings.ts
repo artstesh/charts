@@ -4,8 +4,9 @@ export class ChartBarSettings extends ChartTypeSettings<ChartBarSettings> {
   thickness?: number;
 
   public setThickness(thickness: number | undefined): ChartBarSettings {
-    this.thickness = thickness;
-    return this;
+    const result = this.copy(this);
+    result.thickness = thickness;
+    return result;
   }
 
   protected _isSame(model: ChartBarSettings): boolean {
@@ -14,6 +15,8 @@ export class ChartBarSettings extends ChartTypeSettings<ChartBarSettings> {
   }
 
   protected _copy(model: ChartBarSettings): ChartBarSettings {
-    return new ChartBarSettings().setThickness(model.thickness);
+    const result = new ChartBarSettings();
+    result.thickness = model.thickness;
+    return result;
   }
 }

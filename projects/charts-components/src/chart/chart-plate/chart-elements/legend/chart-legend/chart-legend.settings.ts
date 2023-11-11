@@ -1,26 +1,34 @@
 import { LayoutPosition } from 'chart.js';
 import { Align } from "chart.js/dist/types";
 
+export type LegendPosition = LayoutPosition;
+export type LegendAlignment = Align;
+
 export class ChartLegendSettings {
-  align: Align = 'center';
-  position: LayoutPosition = 'bottom';
+  align: LegendAlignment = 'center';
+  position: LegendPosition = 'bottom';
 
   public isSame(model: ChartLegendSettings): boolean {
     if (this.align !== model.align) return false;
     return this.position === model.position;
   }
 
-  public setAlign(value: Align): this {
-    this.align = value;
-    return this;
+  public setAlign(value: LegendAlignment): ChartLegendSettings {
+    const result = ChartLegendSettings.copy(this);
+    result.align = value;
+    return result;
   }
 
-  public setPosition(value: LayoutPosition): this {
-    this.position = value;
-    return this;
+  public setPosition(value: LegendPosition): ChartLegendSettings {
+    const result = ChartLegendSettings.copy(this);
+    result.position = value;
+    return result;
   }
 
   public static copy(model: ChartLegendSettings): ChartLegendSettings {
-    return new ChartLegendSettings().setAlign(model.align).setPosition(model.position);
+    const result = new ChartLegendSettings();
+    result.align = model.align;
+    result.position = model.position;
+    return result;
   }
 }
