@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ChartAxisLimitsModel, IChartAxisLimitsModel } from '../models/chart-axis-limits.model';
+import { ChartAxisLimitsModel, IChartAxisLimitsModel } from "../models";
 import { ReplaySubject } from 'rxjs';
 import { auditTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ChartDataModel } from '../models';
