@@ -21,10 +21,10 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "charts-components/*": [
-        "dist/charts-components/*"
+        "dist/chart/*"
       ],
       "charts-components": [
-        "dist/charts-components"
+        "dist/chart"
       ]
     },
     "lib": [
