@@ -202,4 +202,37 @@ describe('ChartPlateService', () => {
       }));
     });
   });
+
+  describe('setLabels', () => {
+
+    it('nothing if no data', fakeAsync(() => {
+      chart.data = undefined;
+      const labels = Forger.create<string[]>()!;
+      //
+      service.setLabels(labels);
+      tick(300);
+      //
+      should().false(updated);
+    }));
+
+    it('successfully updates', fakeAsync(() => {
+      chart.data = { };
+      const labels = Forger.create<string[]>()!;
+      //
+      service.setLabels(labels);
+      tick(300);
+      //
+      should().true(updated);
+    }));
+
+    it('sets successfully', fakeAsync(() => {
+      chart.data = { };
+      const labels = Forger.create<string[]>()!;
+      //
+      service.setLabels(labels);
+      tick(300);
+      //
+      should().array(chart.data.labels).equal(labels);
+    }));
+  });
 });

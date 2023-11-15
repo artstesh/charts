@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { XLinearAxisComponent } from './chart-plate/chart-elements/axes';
 import { ChartLegendComponent } from './chart-plate/chart-elements/legend';
 import { DestructibleComponent } from './common/destructible.component';
-import { XLabeledAxisComponent } from './chart-plate/chart-elements/axes/x-labeled-axis/x-labeled-axis.component';
+import { XCategoryAxisComponent } from './chart-plate/chart-elements/axes/x-category-axis/x-category-axis.component';
 
 @NgModule({
   imports: [CommonModule],
@@ -15,8 +15,15 @@ import { XLabeledAxisComponent } from './chart-plate/chart-elements/axes/x-label
     XLinearAxisComponent,
     ChartLegendComponent,
     DestructibleComponent,
-    XLabeledAxisComponent,
+    XCategoryAxisComponent,
   ],
-  exports: [ChartPlateComponent, ChartLineComponent, ChartBarComponent, XLinearAxisComponent, ChartLegendComponent],
+  exports: [
+    ChartPlateComponent,
+    ChartLineComponent,
+    ChartBarComponent,
+    XLinearAxisComponent,
+    ChartLegendComponent,
+    XCategoryAxisComponent,
+  ],
 })
 export class ChartModule {}
