@@ -8,3 +8,4 @@ export * from './selected-area.model';
 export * from './legend-item.model';
 export * from './chart-scatter-config.model';
 export * from './chart-line.model';
+export * from './chart-axis-label.model';
