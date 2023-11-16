@@ -5,7 +5,10 @@ import { IChartDataset } from '../models/i-chart-dataset';
 
 // noinspection JSSuspiciousNameCombination
 export class ChartBarDatasetFactory {
-  public static build(settings: ChartBarSettings, data: (ChartDataModel |number | null | undefined)[]): IChartDataset<'bar', ChartDataModel[]> {
+  public static build(
+    settings: ChartBarSettings,
+    data: (ChartDataModel | number | null | undefined)[],
+  ): IChartDataset<'bar', ChartDataModel[]> {
     return {
       backgroundColor: settings.color,
       barThickness: settings.thickness,

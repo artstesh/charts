@@ -1,7 +1,7 @@
 import { should } from '@artstesh/it-should';
 import { Forger } from '@artstesh/forger';
 import { ScaleOptionsByType } from 'chart.js';
-import { XCategoryAxisFactory } from "./x-category-axis.factory";
+import { XCategoryAxisFactory } from './x-category-axis.factory';
 
 describe('#chart-elements XCategoryAxisFactory', () => {
   let labels: string[];
@@ -21,6 +21,8 @@ describe('#chart-elements XCategoryAxisFactory', () => {
   });
 
   it('grid is not visible', () => {
-    should().array((scale as any).labels).equal(labels);
+    should()
+      .array((scale as any).labels)
+      .equal(labels);
   });
 });

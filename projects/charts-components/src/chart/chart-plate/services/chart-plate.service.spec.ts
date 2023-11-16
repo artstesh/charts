@@ -204,7 +204,6 @@ describe('ChartPlateService', () => {
   });
 
   describe('setLabels', () => {
-
     it('nothing if no data', fakeAsync(() => {
       chart.data = undefined;
       const labels = Forger.create<string[]>()!;
@@ -216,7 +215,7 @@ describe('ChartPlateService', () => {
     }));
 
     it('successfully updates', fakeAsync(() => {
-      chart.data = { };
+      chart.data = {};
       const labels = Forger.create<string[]>()!;
       //
       service.setLabels(labels);
@@ -226,7 +225,7 @@ describe('ChartPlateService', () => {
     }));
 
     it('sets successfully', fakeAsync(() => {
-      chart.data = { };
+      chart.data = {};
       const labels = Forger.create<string[]>()!;
       //
       service.setLabels(labels);

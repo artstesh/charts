@@ -12,7 +12,7 @@ import { ChartPlateFactory } from '../chart-plate/models/chart-plate.factory';
 import { IChartDataset } from '../chart-plate/chart-types/models/i-chart-dataset';
 import { ChartLegendSettings } from '../chart-plate/chart-elements/legend';
 import { ChartLegendFactory } from '../chart-plate/chart-elements/legend/chart-legend/chart-legend.factory';
-import { XCategoryAxisFactory } from "../chart-plate/chart-elements/axes/x-category-axis/x-category-axis.factory";
+import { XCategoryAxisFactory } from '../chart-plate/chart-elements/axes/x-category-axis/x-category-axis.factory';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +34,10 @@ export class SettingsMapService {
     return ChartLineDatasetFactory.build(settings, data);
   }
 
-  public batDataset(settings: ChartBarSettings, data: (ChartDataModel |number | null | undefined)[]): IChartDataset<any, ChartDataModel[]> {
+  public batDataset(
+    settings: ChartBarSettings,
+    data: (ChartDataModel | number | null | undefined)[],
+  ): IChartDataset<any, ChartDataModel[]> {
     return ChartBarDatasetFactory.build(settings, data);
   }
 

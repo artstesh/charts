@@ -1,5 +1,5 @@
-import { XLinearAxisSettings } from "../x-linear-axis/x-linear-axis.settings";
-import { ScaleOptionsByType } from "chart.js";
+import { XLinearAxisSettings } from '../x-linear-axis/x-linear-axis.settings';
+import { ScaleOptionsByType } from 'chart.js';
 
 export class XCategoryAxisFactory {
   public static build(labels: string[]): ScaleOptionsByType<'category'> {
@@ -7,7 +7,7 @@ export class XCategoryAxisFactory {
       type: 'category',
       display: 'auto',
       grid: { display: false },
-      labels: labels
+      labels: labels,
     } as ScaleOptionsByType<'category'>;
   }
 }
