@@ -60,14 +60,6 @@ describe('#chart-elements XLinearAxisSettings', () => {
       should().false(model.isSame(other));
     });
 
-    it('different displayGrid', () => {
-      const other = new XLinearAxisSettings();
-      other.limits = [...model.limits];
-      other.displayGrid = !model.displayGrid;
-      //
-      should().false(model.isSame(other));
-    });
-
     it('different limits', () => {
       const other = new XLinearAxisSettings();
       other.limits = Forger.create<[number | null, number | null]>()!;

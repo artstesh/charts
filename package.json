@@ -34,9 +34,9 @@
     "url": "git+https://github.com/artstesh/charts.git"
   },
   "dependencies": {
-    "@angular/common": "^12.1.3",
-    "@angular/compiler": "^12.1.3",
-    "@angular/core": "^12.1.3",
+    "@angular/common": "^12.0.0",
+    "@angular/compiler": "^12.0.0",
+    "@angular/core": "^12.0.0",
     "rxjs": "^6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "^0.11.4",
