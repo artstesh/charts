@@ -1,6 +1,6 @@
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
-import { XTimelineAxisSettings } from "./x-timeline-axis.settings";
+import { XTimelineAxisSettings } from './x-timeline-axis.settings';
 
 describe('#chart-elements XTimelineAxisSettings', () => {
   let model: XTimelineAxisSettings;

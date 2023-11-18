@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { XLinearAxisScaleFactory } from '../chart-plate/chart-elements/axes/x-linear-axis/x-linear-axis-scale.factory';
-import { XLinearAxisSettings, XTimelineAxisSettings } from "../chart-plate/chart-elements/axes";
+import { XLinearAxisSettings, XTimelineAxisSettings } from '../chart-plate/chart-elements/axes';
 import { ChartConfiguration, LegendOptions, ScaleOptionsByType } from 'chart.js';
 import { ChartLineSettings } from '../chart-plate/chart-types/line-chart/chart-line.settings';
 import { ChartDataModel } from '../models';
@@ -13,7 +13,7 @@ import { IChartDataset } from '../chart-plate/chart-types/models/i-chart-dataset
 import { ChartLegendSettings } from '../chart-plate/chart-elements/legend';
 import { ChartLegendFactory } from '../chart-plate/chart-elements/legend/chart-legend/chart-legend.factory';
 import { XCategoryAxisFactory } from '../chart-plate/chart-elements/axes/x-category-axis/x-category-axis.factory';
-import { XTimelineAxisFactory } from "../chart-plate/chart-elements/axes/x-timeline-axis/x-timeline-axis.factory";
+import { XTimelineAxisFactory } from '../chart-plate/chart-elements/axes/x-timeline-axis/x-timeline-axis.factory';
 
 @Injectable({
   providedIn: 'root',

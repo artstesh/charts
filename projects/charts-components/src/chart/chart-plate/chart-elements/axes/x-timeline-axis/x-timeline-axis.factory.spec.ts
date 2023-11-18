@@ -1,8 +1,8 @@
 import { should } from '@artstesh/it-should';
 import { Forger } from '@artstesh/forger';
 import { ScaleOptionsByType } from 'chart.js';
-import { XTimelineAxisFactory } from "./x-timeline-axis.factory";
-import { XTimelineAxisSettings } from "./x-timeline-axis.settings";
+import { XTimelineAxisFactory } from './x-timeline-axis.factory';
+import { XTimelineAxisSettings } from './x-timeline-axis.settings';
 
 describe('#chart-elements XLinearAxisScaleFactory', () => {
   let settings: XTimelineAxisSettings;
@@ -10,8 +10,8 @@ describe('#chart-elements XLinearAxisScaleFactory', () => {
 
   beforeEach(() => {
     settings = XTimelineAxisSettings.copy(Forger.create<XTimelineAxisSettings>()!);
-    settings.locale = Forger.create<'en'|'ru'|'pl'>()!;
-    settings.dateFormat.timeZone = undefined;// too hard to mock properly, doesn't matter
+    settings.locale = Forger.create<'en' | 'ru' | 'pl'>()!;
+    settings.dateFormat.timeZone = undefined; // too hard to mock properly, doesn't matter
     scale = XTimelineAxisFactory.build(settings);
   });
 
@@ -28,8 +28,12 @@ describe('#chart-elements XLinearAxisScaleFactory', () => {
   });
 
   it('limits are defined', () => {
-    should().number(scale.min as number).equals(settings.limits[0]!);
-    should().number(scale.max as number).equals(settings.limits[1]!);
+    should()
+      .number(scale.min as number)
+      .equals(settings.limits[0]!);
+    should()
+      .number(scale.max as number)
+      .equals(settings.limits[1]!);
   });
 
   it('sets ticks callback', () => {
