@@ -27,7 +27,13 @@
     "angular",
     "graph"
   ],
-  "main": "dist/esm2015/public-api.js",
+  "module": "dist/fesm2015/charts-components.mjs",
+  "es2020": "dist/fesm2020/charts-components.mjs",
+  "esm2020": "dist/esm2020/charts-components.mjs",
+  "fesm2020": "dist/fesm2020/charts-components.mjs",
+  "fesm2015": "dist/fesm2015/charts-components.mjs",
+  "typings": "dist/charts-components.d.ts",
+  "main": "dist/esm2020/public-api.js",
   "types": "dist/public-api.d.ts",
   "repository": {
     "type": "git",
