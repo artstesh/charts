@@ -30,6 +30,7 @@
   "module": "dist/fesm2022/charts-components.mjs",
   "main": "dist/esm2022/public-api.mjs",
   "types": "dist/public-api.d.ts",
+  "typings": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/artstesh/charts.git"
