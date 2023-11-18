@@ -43,8 +43,8 @@ describe('#chart-elements XLinearAxisComponent', () => {
   });
 
   it('should add the axis on chartInitialized', () => {
-    const expectedScale = Forger.create<number>()!; // a trick to avoid huge obj creation
-    when(mapService.xLinearScale(anything())).thenReturn(expectedScale as any);
+    const expectedScale = Forger.create<number>()! as any; // a trick to avoid huge obj creation
+    when(mapService.xLinearScale(anything())).thenReturn(expectedScale);
     //
     chartInitialized$.next();
     fixture.detectChanges();
