@@ -27,6 +27,7 @@ module.exports = function (config) {
         flags: [
           '--no-sandbox',
           '--disable-gpu',
+          '--ignore-certificate-errors',
           '--headless',
           '--remote-debugging-port=9222'
         ]
