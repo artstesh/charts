@@ -2,8 +2,8 @@
   "name": "charts-components",
   "version": "0.0.2",
   "peerDependencies": {
-    "@angular/common": "^16.0.0",
-    "@angular/core": "^16.0.0",
+    "@angular/common": "^12.0.0",
+    "@angular/core": "^12.0.0",
     "chart.js": "4.4.0",
     "chartjs-plugin-datalabels": "2.2.0"
   },
