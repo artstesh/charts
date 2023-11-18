@@ -9,3 +9,4 @@ export * from './legend-item.model';
 export * from './chart-scatter-config.model';
 export * from './chart-line.model';
 export * from './chart-axis-limits.model';
+export * from './chart-categorized-data.model';

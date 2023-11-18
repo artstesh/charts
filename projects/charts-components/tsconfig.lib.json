@@ -13,6 +13,9 @@
       "es2018"
     ]
   },
+  "angularCompilerOptions": {
+    "preserveSymlinks": true
+  },
   "exclude": [
     "src/test.ts",
     "**/*.spec.ts"
@@ -23,7 +26,13 @@
     ],
     "@themes/*": [
       "src/chart/themes/*"
-    ]
+    ],
+    "@chart-plate/*": [
+      "chart/chart-plate/*"
+    ],
+    "paths": {
+      "@angular/*": [ "./node_modules/@angular/*" ]
+    }
   },
   "lib": [
     "es2018",

@@ -53,4 +53,10 @@ export class ChartPlateService {
     this.chart.options.plugins.legend = options;
     this.updateChart();
   }
+
+  public setLabels(value: string[]): void {
+    if (!this.chart?.data) return;
+    this.chart.data.labels = value;
+    this.updateChart();
+  }
 }
