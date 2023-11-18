@@ -32,8 +32,8 @@
   "esm2020": "dist/esm2020/charts-components.mjs",
   "fesm2020": "dist/fesm2020/charts-components.mjs",
   "fesm2015": "dist/fesm2015/charts-components.mjs",
-  "typings": "dist/charts-components.d.ts",
-  "main": "dist/esm2020/public-api.js",
+  "typings": "dist/index.d.ts",
+  "main": "dist/esm2020/public-api.mjs",
   "types": "dist/public-api.d.ts",
   "repository": {
     "type": "git",
