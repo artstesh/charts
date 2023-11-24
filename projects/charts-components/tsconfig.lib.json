@@ -31,7 +31,9 @@
       "chart/chart-plate/*"
     ],
     "paths": {
-      "@angular/*": [ "./node_modules/@angular/*" ]
+      "@angular/*": [ "./node_modules/@angular/*" ],
+      "date-fns/*": [ "./node_modules/date-fns/*" ],
+      "date-fns": [ "./node_modules/date-fns" ]
     }
   },
   "lib": [
