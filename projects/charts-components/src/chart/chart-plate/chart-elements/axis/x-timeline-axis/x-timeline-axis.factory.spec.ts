@@ -10,8 +10,7 @@ describe('#chart-elements XLinearAxisScaleFactory', () => {
 
   beforeEach(() => {
     settings = XTimelineAxisSettings.copy(Forger.create<XTimelineAxisSettings>()!);
-    settings.locale = Forger.create<'en'|'ru'|'pl'>()!;
-    settings.dateFormat.timeZone = undefined;// too hard to mock properly, doesn't matter
+    settings.dateUnit = Forger.create<'minute' | 'hour' | 'day' | 'week'>()!;
     scale = XTimelineAxisFactory.build(settings);
   });
 
@@ -33,11 +32,15 @@ describe('#chart-elements XLinearAxisScaleFactory', () => {
   });
 
   it('sets ticks callback', () => {
-    const date = Forger.create<Date>()!;
-    const expected = date.toLocaleDateString(settings.locale, settings.dateFormat);
+    settings.dateFormat = (v: number,i: number) => `${v}-${i}`;
+    const value = Forger.create<number>()!;
+    const index = Forger.create<number>()!;
     //
-    const result = (scale.ticks as any).callback!(date) as string;
+    should().string((scale.ticks as any).callback(value, index)).equals(settings.dateFormat(value, index));
+  });
+
+  it('sets unit', () => {
     //
-    should().string(result).equals(expected);
+    should().string(scale.time.unit as string).equals(settings.dateUnit);
   });
 });
