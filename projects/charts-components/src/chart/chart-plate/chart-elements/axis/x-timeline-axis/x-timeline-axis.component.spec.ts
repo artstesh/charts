@@ -8,7 +8,7 @@ import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.ser
 import { should } from '@artstesh/it-should';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
-import { XTimelineAxisComponent } from "./x-timeline-axis.component";
+import { XTimelineAxisComponent } from './x-timeline-axis.component';
 
 describe('#chart-elements XTimelineAxisComponent', () => {
   let fixture: ComponentFixture<XTimelineAxisComponent>;
