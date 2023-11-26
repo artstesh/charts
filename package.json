@@ -47,9 +47,7 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "rxjs": "^6.6.0",
     "tslib": "^2.3.0",
-    "zone.js": "^0.11.4",
-    "spacetime": "^7.4.8",
-    "chartjs-adapter-spacetime": "^1.0.1"
+    "zone.js": "^0.11.4"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^12.1.3",
