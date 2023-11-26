@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { XLinearAxisScaleFactory } from '../chart-plate/chart-elements/axes/x-linear-axis/x-linear-axis-scale.factory';
-import { XLinearAxisSettings, XTimelineAxisSettings } from '../chart-plate/chart-elements/axes';
+import { XLinearAxisScaleFactory } from '../chart-plate/chart-elements/axis/x-linear-axis/x-linear-axis-scale.factory';
+import { XLinearAxisSettings, XTimelineAxisSettings } from "../chart-plate/chart-elements/axis";
 import { ChartConfiguration, LegendOptions, ScaleOptionsByType } from 'chart.js';
 import { ChartLineSettings } from '../chart-plate/chart-types/line-chart/chart-line.settings';
 import { ChartDataModel } from '../models';
@@ -12,8 +12,8 @@ import { ChartPlateFactory } from '../chart-plate/models/chart-plate.factory';
 import { IChartDataset } from '../chart-plate/chart-types/models/i-chart-dataset';
 import { ChartLegendSettings } from '../chart-plate/chart-elements/legend';
 import { ChartLegendFactory } from '../chart-plate/chart-elements/legend/chart-legend/chart-legend.factory';
-import { XCategoryAxisFactory } from '../chart-plate/chart-elements/axes/x-category-axis/x-category-axis.factory';
-import { XTimelineAxisFactory } from '../chart-plate/chart-elements/axes/x-timeline-axis/x-timeline-axis.factory';
+import { XCategoryAxisFactory } from '../chart-plate/chart-elements/axis/x-category-axis/x-category-axis.factory';
+import { XTimelineAxisFactory } from "../chart-plate/chart-elements/axis/x-timeline-axis/x-timeline-axis.factory";
 
 @Injectable({
   providedIn: 'root',

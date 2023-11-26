@@ -1,12 +1,14 @@
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
 import { XTimelineAxisSettings } from './x-timeline-axis.settings';
+import { TickDateDisplayFormat } from '../../../../models';
 
 describe('#chart-elements XTimelineAxisSettings', () => {
   let model: XTimelineAxisSettings;
 
   beforeEach(() => {
     model = XTimelineAxisSettings.copy(Forger.create<XTimelineAxisSettings>()!);
+    model.dateUnit = Forger.create<'minute' | 'hour' | 'day' | 'week'>()!;
   });
 
   afterEach(() => {
@@ -15,17 +17,17 @@ describe('#chart-elements XTimelineAxisSettings', () => {
 
   describe('setLocale()', () => {
     it('success', () => {
-      const expected = Forger.create<string>()!;
+      const expected = Forger.create<'month' | 'quarter' | 'year'>()!;
       //
-      model = model.setLocale(expected);
+      model = model.setDateUnit(expected);
       //
-      should().string(model.locale).equals(expected);
+      should().true(model.dateUnit === expected);
     });
   });
 
   describe('setDateFormat()', () => {
     it('success', () => {
-      const expected = Forger.create<Intl.DateTimeFormatOptions>()!;
+      const expected = (v: number,i: number) => `${v}-${i}`;
       //
       model = model.setDateFormat(expected);
       //
@@ -63,33 +65,35 @@ describe('#chart-elements XTimelineAxisSettings', () => {
 
   describe('isSame()', () => {
     it('are same', () => {
-      const other = new XTimelineAxisSettings();
-      other.limits = [...model.limits];
-      other.displayGrid = model.displayGrid;
+      const other = XTimelineAxisSettings.copy(model);
       //
       should().true(model.isSame(other));
     });
 
     it('different displayGrid', () => {
-      const other = new XTimelineAxisSettings();
-      other.limits = [...model.limits];
+      const other = XTimelineAxisSettings.copy(model);
       other.displayGrid = !model.displayGrid;
       //
       should().false(model.isSame(other));
     });
 
     it('different displayGrid', () => {
-      const other = new XTimelineAxisSettings();
-      other.limits = [...model.limits];
-      other.displayGrid = !model.displayGrid;
+      const other = XTimelineAxisSettings.copy(model);
+      other.limits = Forger.create<[number,number]>()!;
       //
       should().false(model.isSame(other));
     });
 
-    it('different limits', () => {
-      const other = new XTimelineAxisSettings();
-      other.limits = Forger.create<[number | null, number | null]>()!;
-      other.displayGrid = model.displayGrid;
+    it('different dateUnit', () => {
+      const other = XTimelineAxisSettings.copy(model);
+      other.dateUnit = Forger.create<'month' | 'quarter' | 'year'>()!;
+      //
+      should().false(model.isSame(other));
+    });
+
+    it('different dateFormat', () => {
+      const other = XTimelineAxisSettings.copy(model);
+      other.dateFormat = (v,i) => `${v}-${i}`;
       //
       should().false(model.isSame(other));
     });
