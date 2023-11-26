@@ -27,20 +27,28 @@ describe('#chart-elements XLinearAxisScaleFactory', () => {
   });
 
   it('limits are defined', () => {
-    should().number(scale.min as number).equals(settings.limits[0]!);
-    should().number(scale.max as number).equals(settings.limits[1]!);
+    should()
+      .number(scale.min as number)
+      .equals(settings.limits[0]!);
+    should()
+      .number(scale.max as number)
+      .equals(settings.limits[1]!);
   });
 
   it('sets ticks callback', () => {
-    settings.dateFormat = (v: number,i: number) => `${v}-${i}`;
+    settings.dateFormat = (v: number, i: number) => `${v}-${i}`;
     const value = Forger.create<number>()!;
     const index = Forger.create<number>()!;
     //
-    should().string((scale.ticks as any).callback(value, index)).equals(settings.dateFormat(value, index));
+    should()
+      .string((scale.ticks as any).callback(value, index))
+      .equals(settings.dateFormat(value, index));
   });
 
   it('sets unit', () => {
     //
-    should().string(scale.time.unit as string).equals(settings.dateUnit);
+    should()
+      .string(scale.time.unit as string)
+      .equals(settings.dateUnit);
   });
 });
