@@ -27,7 +27,7 @@ describe('#chart-elements XTimelineAxisSettings', () => {
 
   describe('setDateFormat()', () => {
     it('success', () => {
-      const expected = (v: number,i: number) => `${v}-${i}`;
+      const expected = (v: number, i: number) => `${v}-${i}`;
       //
       model = model.setDateFormat(expected);
       //
@@ -79,7 +79,7 @@ describe('#chart-elements XTimelineAxisSettings', () => {
 
     it('different displayGrid', () => {
       const other = XTimelineAxisSettings.copy(model);
-      other.limits = Forger.create<[number,number]>()!;
+      other.limits = Forger.create<[number, number]>()!;
       //
       should().false(model.isSame(other));
     });
@@ -93,7 +93,7 @@ describe('#chart-elements XTimelineAxisSettings', () => {
 
     it('different dateFormat', () => {
       const other = XTimelineAxisSettings.copy(model);
-      other.dateFormat = (v,i) => `${v}-${i}`;
+      other.dateFormat = (v, i) => `${v}-${i}`;
       //
       should().false(model.isSame(other));
     });

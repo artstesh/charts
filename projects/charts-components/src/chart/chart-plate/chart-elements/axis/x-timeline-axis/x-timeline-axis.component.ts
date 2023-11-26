@@ -1,15 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { Subscription } from "rxjs";
-import { ChartAxisLimitService } from "../../../../services/chart-axis-limit.service";
-import { ChartPlateService } from "../../../services/chart-plate.service";
-import { SettingsMapService } from "../../../../services/settings-map.service";
-import { XTimelineAxisSettings } from "./x-timeline-axis.settings";
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
+import { ChartPlateService } from '../../../services/chart-plate.service';
+import { SettingsMapService } from '../../../../services/settings-map.service';
+import { XTimelineAxisSettings } from './x-timeline-axis.settings';
 
 @Component({
   selector: 'lib-x-timeline-axis',
   template: '',
   styleUrls: [],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class XTimelineAxisComponent implements OnInit, OnDestroy {
   static id = 'x';

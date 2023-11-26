@@ -10,11 +10,11 @@ export class XTimelineAxisFactory {
       min: settings.limits[0],
       max: settings.limits[1],
       time: {
-        unit: settings.dateUnit
+        unit: settings.dateUnit,
       },
       ticks: {
-        callback: (val: number, index: number) => settings.dateFormat(val, index)
-      }
+        callback: (val: number, index: number) => settings.dateFormat(val, index),
+      },
     } as unknown as ScaleOptionsByType<'time'>;
   }
 }
