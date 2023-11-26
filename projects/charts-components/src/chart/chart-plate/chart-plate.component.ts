@@ -5,9 +5,9 @@ import { ChartAxisLimitService } from '../services/chart-axis-limit.service';
 import { ChartPlateService } from './services/chart-plate.service';
 import { SettingsMapService } from '../services/settings-map.service';
 import { ChartPlateSettings } from './models/chart-plate.settings';
-import { registerAdapter } from "../utils/chart-date.adapter";
+import { registerAdapter } from '../utils/chart-date.adapter';
 
-registerAdapter()
+registerAdapter();
 
 @Component({
   selector: 'app-chart-plate',
