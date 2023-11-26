@@ -74,7 +74,6 @@ export function registerAdapter() {
       }
     },
     endOf: function (this: DateAdapter, timestamp: number, unit: TimeUnit | 'isoWeek'): number {
-      console.log('endOf');
       return timestamp;
     },
     format: function (this: DateAdapter, timestamp: number, format: TimeUnit): string {
@@ -85,11 +84,9 @@ export function registerAdapter() {
     },
     init: function (this: DateAdapter, chartOptions: ChartOptions) {},
     parse: function (this: DateAdapter, value: unknown, format?: TimeUnit): number | null {
-      console.log('parse');
       return new Date(value as any).getTime();
     },
     startOf: function (this: DateAdapter, timestamp: number, unit: TimeUnit | 'isoWeek', weekday?: number): number {
-      console.log('startOf');
       return timestamp;
     },
   });
