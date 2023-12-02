@@ -9,6 +9,7 @@ export class XLinearAxisScaleFactory {
       grid: { display: settings.displayGrid },
       min: settings.limits[0],
       max: settings.limits[1],
+      offset: true
     } as ScaleOptionsByType<'linear'>;
   }
 }

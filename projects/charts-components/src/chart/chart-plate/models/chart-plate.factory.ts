@@ -37,7 +37,8 @@ export class ChartPlateFactory {
             ticks: {
               maxRotation: 0,
             },
-          },
+            offset: true
+          }
         },
         elements: {
           point: {

@@ -35,6 +35,14 @@ describe('#chart-elements ChartTooltipSettings', () => {
       //
       should().array(model.skipDatasets).equal(expected);
     });
+
+    it('setContent()', () => {
+      const expected = Forger.create<string>()! as any;
+      //
+      model = model.setContent(expected);
+      //
+      should().string(model.content as any).equals(expected);
+    });
   });
 
   describe('isSame()', () => {
@@ -47,6 +55,13 @@ describe('#chart-elements ChartTooltipSettings', () => {
     it('different color', () => {
       const other = ChartTooltipSettings.copy(model);
       other.color = Forger.create<string>()!;
+      //
+      should().false(model.isSame(other));
+    });
+
+    it('different content', () => {
+      const other = ChartTooltipSettings.copy(model);
+      other.content = Forger.create<string>()! as any;
       //
       should().false(model.isSame(other));
     });

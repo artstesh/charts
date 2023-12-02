@@ -3,7 +3,7 @@ import { ChartTooltipGetModel } from "../../../models";
 export class ChartTooltipSettings {
   color: string | 'auto' = 'auto';
   skipDatasets: string[] = [];
-  content: (data: ChartTooltipGetModel) => string | null | undefined = (d) => null;
+  content: (data: ChartTooltipGetModel) => string | null | undefined = (d) => '';
 
   public isSame(model: ChartTooltipSettings): boolean {
     if (this.content !== model.content) return false;
