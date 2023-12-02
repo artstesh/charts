@@ -13,8 +13,15 @@ import { SettingsMapService } from '../../../../services/settings-map.service';
 })
 export class XLinearAxisComponent implements OnInit, OnDestroy {
   static id = 'x';
-  _settings: XLinearAxisSettings = new XLinearAxisSettings();
   private subs: Subscription[] = [];
+
+  constructor(
+    private limitService: ChartAxisLimitService,
+    private service: ChartPlateService,
+    private mapService: SettingsMapService,
+  ) {}
+
+  _settings: XLinearAxisSettings = new XLinearAxisSettings();
 
   @Input() set settings(value: XLinearAxisSettings | undefined) {
     if (!value || this._settings.isSame(value)) return;
@@ -22,12 +29,6 @@ export class XLinearAxisComponent implements OnInit, OnDestroy {
     this.limitService.setHorizontalLimits(this._settings.limits[0], this._settings.limits[1]);
     this.setAxis();
   }
-
-  constructor(
-    private limitService: ChartAxisLimitService,
-    private service: ChartPlateService,
-    private mapService: SettingsMapService,
-  ) {}
 
   ngOnInit(): void {
     this.subs.push(this.service.chartInitialized.subscribe(() => this.setAxis()));

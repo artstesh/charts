@@ -14,17 +14,18 @@ import { SettingsMapService } from '../../../services/settings-map.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSettings> {
-  private _data!: ChartDataModel[];
-  private _dataFiltered!: ChartDataModel[];
   protected _settings: ChartLineSettings = new ChartLineSettings();
+  private _dataFiltered!: ChartDataModel[];
+
+  constructor(limitService: ChartAxisLimitService, service: ChartPlateService, mapService: SettingsMapService) {
+    super(limitService, service, mapService);
+  }
+
+  private _data!: ChartDataModel[];
 
   @Input() set data(aw: ChartDataModel[]) {
     this._data = aw;
     this.dataUpdated();
-  }
-
-  constructor(limitService: ChartAxisLimitService, service: ChartPlateService, mapService: SettingsMapService) {
-    super(limitService, service, mapService);
   }
 
   protected updateFilteredData(): void {

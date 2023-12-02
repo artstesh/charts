@@ -5,9 +5,9 @@ import { ChartAxisLimitService } from '../services/chart-axis-limit.service';
 import { ChartPlateService } from './services/chart-plate.service';
 import { SettingsMapService } from '../services/settings-map.service';
 import { ChartPlateSettings } from './models/chart-plate.settings';
-import { registerAdapter } from "../utils/chart-date.adapter";
+import { registerAdapter } from '../utils/chart-date.adapter';
 
-registerAdapter()
+registerAdapter();
 
 @Component({
   selector: 'app-chart-plate',
@@ -16,10 +16,13 @@ registerAdapter()
   providers: [ChartAxisLimitService, ChartPlateService],
 })
 export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
-  private subs: Subscription[] = [];
   @ViewChild('chart')
   chartRef!: ElementRef;
   chart!: Chart;
+  private subs: Subscription[] = [];
+
+  constructor(private service: ChartPlateService, private mapService: SettingsMapService) {}
+
   private _settings: ChartPlateSettings = new ChartPlateSettings();
 
   @Input() set settings(value: ChartPlateSettings | undefined) {
@@ -27,8 +30,6 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
     this._settings = value;
     this.setChart();
   }
-
-  constructor(private service: ChartPlateService, private mapService: SettingsMapService) {}
 
   ngOnInit(): void {
     this.subs.push(this.service.updateTrigger$.subscribe((force) => this.updateChart(force)));

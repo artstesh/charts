@@ -41,7 +41,9 @@ describe('#chart-elements ChartTooltipSettings', () => {
       //
       model = model.setContent(expected);
       //
-      should().string(model.content as any).equals(expected);
+      should()
+        .string(model.content as any)
+        .equals(expected);
     });
   });
 

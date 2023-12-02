@@ -1,4 +1,4 @@
-import { TimeUnit, _adapters, DateAdapter, ChartOptions } from "chart.js";
+import { _adapters, ChartOptions, DateAdapter, TimeUnit } from 'chart.js';
 
 const viewFormats = {
   default: 'M/d/yyyy',
@@ -12,7 +12,7 @@ const viewFormats = {
   month: 'MMM yyyy',
   quarter: "'Q'Q '-' yyyy",
   year: 'yyyy',
-}
+};
 
 export function registerAdapter() {
   _adapters._date.override({
@@ -30,11 +30,11 @@ export function registerAdapter() {
         case 'day':
           return date.setDate(date.getDate() + amount);
         case 'week':
-          return date.setDate(date.getDate() + amount*7);
+          return date.setDate(date.getDate() + amount * 7);
         case 'month':
           return date.setMonth(date.getMonth() + amount);
         case 'quarter':
-          return date.setMonth(date.getMonth() + amount*3);
+          return date.setMonth(date.getMonth() + amount * 3);
         case 'year':
           return date.setFullYear(date.getFullYear() + amount);
       }
@@ -47,7 +47,7 @@ export function registerAdapter() {
         case 'millisecond':
           return difference.getTime();
         case 'second':
-          return difference.getTime()/1000;
+          return difference.getTime() / 1000;
         case 'minute':
           return difference.getTime() / 60000;
         case 'hour':

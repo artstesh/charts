@@ -15,13 +15,13 @@ export class ChartAxisLimitsModel implements IChartAxisLimitsModel {
     public maxY?: number | null,
   ) {}
 
+  public get rawData(): IChartAxisLimitsModel {
+    return { ...this };
+  }
+
   public isTheSame(model?: ChartAxisLimitsModel | null): boolean {
     if (!model) return false;
     return model.maxX === this.maxX && model.minX === this.minX && model.minY === this.minY && model.maxY === this.maxY;
-  }
-
-  public get rawData(): IChartAxisLimitsModel {
-    return { ...this };
   }
 
   public contains(model: ChartDataModel): boolean {

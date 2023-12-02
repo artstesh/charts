@@ -11,6 +11,10 @@ import { ChartTooltipSettings } from './chart-tooltip.settings';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartTooltipComponent extends DestructibleComponent implements OnInit, OnDestroy {
+  constructor(private service: ChartPlateService, private mapService: SettingsMapService) {
+    super();
+  }
+
   _settings: ChartTooltipSettings = new ChartTooltipSettings();
 
   @Input() set settings(value: ChartTooltipSettings | undefined) {
@@ -19,21 +23,17 @@ export class ChartTooltipComponent extends DestructibleComponent implements OnIn
     this.setTooltip();
   }
 
-  constructor(private service: ChartPlateService, private mapService: SettingsMapService) {
-    super();
-  }
-
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.subs.push(this.service.chartInitialized.subscribe(() => this.setTooltip()));
-  }
-
-  private setTooltip(): void {
-    this.service.setTooltip(this.mapService.tooltip(this._settings));
   }
 
   onDestroy = () => {
     this.eliminateTip();
   };
+
+  private setTooltip(): void {
+    this.service.setTooltip(this.mapService.tooltip(this._settings));
+  }
 
   private eliminateTip(): void {
     this.service.setTooltip({});
