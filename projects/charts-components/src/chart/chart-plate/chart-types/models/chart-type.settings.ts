@@ -4,7 +4,7 @@ export abstract class ChartTypeSettings<T extends ChartTypeSettings<T>> implemen
   public order: number = 0;
   public name: string = `Unnamed-${Math.round(Math.random() * 9999)}`;
   public color: string = '';
-  public yLeft: boolean = false;
+  public yLeft: boolean = true;
   public id: string = `id-${Math.floor(Math.random() * 9999 + 1)}`;
 
   public isSame(model: T): boolean {

@@ -1,6 +1,5 @@
 import { ChartConfiguration } from 'chart.js';
 import { ChartPlateSettings } from './chart-plate.settings';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export class ChartPlateFactory {
   public static build(settings: ChartPlateSettings): ChartConfiguration {
@@ -9,10 +8,10 @@ export class ChartPlateFactory {
       data: {
         datasets: [],
       },
-      plugins: [ChartDataLabels],
+      //  plugins: [ChartDataLabels],
       options: {
         interaction: {
-          intersect: true,
+          axis: 'xy',
           mode: settings.interactionMode,
         },
         animation: {
@@ -20,9 +19,6 @@ export class ChartPlateFactory {
         },
         responsive: true,
         plugins: {
-          datalabels: {
-            display: false,
-          },
           legend: {
             display: false,
           },
@@ -37,6 +33,7 @@ export class ChartPlateFactory {
             ticks: {
               maxRotation: 0,
             },
+            offset: true,
           },
         },
         elements: {
