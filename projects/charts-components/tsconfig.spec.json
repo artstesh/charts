@@ -7,7 +7,9 @@
       "jasmine"
     ],
     "plugins": [
-      { "transform": "@artstesh/forger/lib/utils/transformer" }
+      {
+        "transform": "@artstesh/forger/lib/utils/transformer"
+      }
     ]
   },
   "files": [

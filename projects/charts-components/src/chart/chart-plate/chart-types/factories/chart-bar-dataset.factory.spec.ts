@@ -6,7 +6,7 @@ import { should } from '@artstesh/it-should';
 import { ChartConstants } from '../../../models/chart-constants';
 import { IChartDataset } from '../models/i-chart-dataset';
 
-describe('#chart-types ChartLineDatasetModel', () => {
+describe('#chart-types ChartLineDatasetFactory', () => {
   let settings: ChartBarSettings;
   let scale: IChartDataset<'bar', ChartDataModel[]>;
   let data: ChartDataModel[];

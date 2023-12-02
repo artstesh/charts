@@ -12,16 +12,17 @@ export class ChartAxisLimitService {
     distinctUntilChanged((x, y) => x?.isTheSame(y) ?? false),
     map(() => undefined),
   );
-  private _model: ChartAxisLimitsModel = new ChartAxisLimitsModel();
 
   constructor() {}
 
-  public setModel(model: ChartAxisLimitsModel | null) {
-    this._model = model ?? new ChartAxisLimitsModel();
-  }
+  private _model: ChartAxisLimitsModel = new ChartAxisLimitsModel();
 
   public get model(): IChartAxisLimitsModel {
     return this._model.rawData;
+  }
+
+  public setModel(model: ChartAxisLimitsModel | null) {
+    this._model = model ?? new ChartAxisLimitsModel();
   }
 
   public setHorizontalLimits(minX: number | null, maxX: number | null): void {

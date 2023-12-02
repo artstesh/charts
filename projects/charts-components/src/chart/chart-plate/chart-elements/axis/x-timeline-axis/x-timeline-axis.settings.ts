@@ -1,11 +1,19 @@
-import { TickDateDisplayFormat } from '../../../../models';
-
 export type DateUnit = 'millisecond' | 'second' | 'minute' | 'hour' | 'day' | 'week' | 'month' | 'quarter' | 'year';
 
 export class XTimelineAxisSettings {
   limits: [number | null, number | null] = [null, null];
   displayGrid: boolean = false;
   dateUnit: DateUnit = 'day';
+
+  public static copy(model: XTimelineAxisSettings): XTimelineAxisSettings {
+    const result = new XTimelineAxisSettings();
+    result.limits = model.limits;
+    result.displayGrid = model.displayGrid;
+    result.dateUnit = model.dateUnit;
+    result.dateFormat = model.dateFormat;
+    return result;
+  }
+
   dateFormat: (milliseconds: number, index: number) => string = (m: number, i: number) =>
     new Date(m).toLocaleString('en', { month: '2-digit', year: '2-digit', day: '2-digit' });
 
@@ -37,15 +45,6 @@ export class XTimelineAxisSettings {
   public setLimits(value: [number | null, number | null]): XTimelineAxisSettings {
     const result = XTimelineAxisSettings.copy(this);
     result.limits = value;
-    return result;
-  }
-
-  public static copy(model: XTimelineAxisSettings): XTimelineAxisSettings {
-    const result = new XTimelineAxisSettings();
-    result.limits = model.limits;
-    result.displayGrid = model.displayGrid;
-    result.dateUnit = model.dateUnit;
-    result.dateFormat = model.dateFormat;
     return result;
   }
 }

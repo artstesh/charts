@@ -13,8 +13,15 @@ import { XTimelineAxisSettings } from './x-timeline-axis.settings';
 })
 export class XTimelineAxisComponent implements OnInit, OnDestroy {
   static id = 'x';
-  _settings: XTimelineAxisSettings = new XTimelineAxisSettings();
   private subs: Subscription[] = [];
+
+  constructor(
+    private limitService: ChartAxisLimitService,
+    private service: ChartPlateService,
+    private mapService: SettingsMapService,
+  ) {}
+
+  _settings: XTimelineAxisSettings = new XTimelineAxisSettings();
 
   @Input() set settings(value: XTimelineAxisSettings | undefined) {
     if (!value || this._settings.isSame(value)) return;
@@ -22,12 +29,6 @@ export class XTimelineAxisComponent implements OnInit, OnDestroy {
     this.limitService.setHorizontalLimits(this._settings.limits[0], this._settings.limits[1]);
     this.setAxis();
   }
-
-  constructor(
-    private limitService: ChartAxisLimitService,
-    private service: ChartPlateService,
-    private mapService: SettingsMapService,
-  ) {}
 
   ngOnInit(): void {
     this.subs.push(this.service.chartInitialized.subscribe(() => this.setAxis()));
@@ -38,11 +39,7 @@ export class XTimelineAxisComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.resetAxis();
-    this.subs.forEach((s) => s.unsubscribe());
-  }
-
-  private resetAxis(): void {
     this.service.resetScale(XTimelineAxisComponent.id);
+    this.subs.forEach((s) => s.unsubscribe());
   }
 }

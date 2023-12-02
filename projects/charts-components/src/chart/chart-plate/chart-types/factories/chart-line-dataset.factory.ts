@@ -1,8 +1,8 @@
 // noinspection JSSuspiciousNameCombination
-import { ChartConstants } from '../../../models/chart-constants';
-import { ChartLineSettings } from '../line-chart/chart-line.settings';
-import { ChartDataModel } from '../../../models';
-import { IChartDataset } from '../models/i-chart-dataset';
+import { ChartConstants } from "../../../models/chart-constants";
+import { ChartLineSettings } from "../line-chart/chart-line.settings";
+import { ChartDataModel } from "../../../models";
+import { IChartDataset } from "../models/i-chart-dataset";
 
 export class ChartLineDatasetFactory {
   public static build(settings: ChartLineSettings, data: ChartDataModel[]): IChartDataset<'line', ChartDataModel[]> {
