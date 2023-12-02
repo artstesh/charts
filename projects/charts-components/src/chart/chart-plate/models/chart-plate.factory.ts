@@ -9,10 +9,10 @@ export class ChartPlateFactory {
       data: {
         datasets: [],
       },
-      plugins: [ChartDataLabels],
+    //  plugins: [ChartDataLabels],
       options: {
         interaction: {
-          intersect: true,
+          axis: 'xy',
           mode: settings.interactionMode,
         },
         animation: {

@@ -9,7 +9,7 @@ import { IChartDataset } from '../chart-types/models/i-chart-dataset';
 export class ChartPlateService {
   chartInitialized = new EventEmitter();
   private _updateTrigger$ = new Subject<boolean>();
-  public updateTrigger$ = this._updateTrigger$.pipe(auditTime(250));
+  public updateTrigger$ = this._updateTrigger$.pipe(auditTime(350));
   private chart?: Chart;
 
   public setChart(chart: Chart): void {
@@ -58,5 +58,10 @@ export class ChartPlateService {
     if (!this.chart?.data) return;
     this.chart.data.labels = value;
     this.updateChart();
+  }
+
+  public setTooltip(v: any): void {
+    if (!this.chart?.options?.plugins) return;
+    this.chart.options.plugins.tooltip = v;
   }
 }

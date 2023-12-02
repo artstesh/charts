@@ -38,11 +38,7 @@ export class XTimelineAxisComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.resetAxis();
-    this.subs.forEach((s) => s.unsubscribe());
-  }
-
-  private resetAxis(): void {
     this.service.resetScale(XTimelineAxisComponent.id);
+    this.subs.forEach((s) => s.unsubscribe());
   }
 }

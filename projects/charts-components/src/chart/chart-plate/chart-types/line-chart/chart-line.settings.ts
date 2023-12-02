@@ -1,7 +1,7 @@
 import { ChartTypeSettings } from '../models/chart-type.settings';
 
 export class ChartLineSettings extends ChartTypeSettings<ChartLineSettings> {
-  pointRadius: number = 0;
+  pointRadius: number = 5;
 
   public setPointRadius(pointRadius: number): ChartLineSettings {
     const result = this.copy(this);
