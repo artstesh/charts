@@ -11,6 +11,14 @@ import { ChartDataset } from 'chart.js';
   template: '',
 })
 export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>> implements OnInit, OnDestroy {
+  private subs: Subscription[] = [];
+
+  protected constructor(
+    protected limitService: ChartAxisLimitService,
+    protected service: ChartPlateService,
+    protected mapService: SettingsMapService,
+  ) {}
+
   protected abstract _settings: T;
 
   @Input() set settings(value: T | undefined) {
@@ -19,14 +27,6 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
     this._settings.color = this._settings.color || ColorCollector.getColor(this._settings.order);
     this.dataUpdated();
   }
-
-  private subs: Subscription[] = [];
-
-  protected constructor(
-    protected limitService: ChartAxisLimitService,
-    protected service: ChartPlateService,
-    protected mapService: SettingsMapService,
-  ) {}
 
   ngOnInit(): void {
     if (!this._settings.color) this._settings.color = ColorCollector.getColor(this._settings.order);

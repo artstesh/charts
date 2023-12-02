@@ -6,7 +6,7 @@ import { ChartDataModel } from '../../../models';
 import { ChartConstants } from '../../../models/chart-constants';
 import { IChartDataset } from '../models/i-chart-dataset';
 
-describe('#chart-types ChartLineDatasetModel', () => {
+describe('#chart-types ChartLineDatasetFactory', () => {
   let settings: ChartLineSettings;
   let scale: IChartDataset<'line', ChartDataModel[]>;
   let data: ChartDataModel[];

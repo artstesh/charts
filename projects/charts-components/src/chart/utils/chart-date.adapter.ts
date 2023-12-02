@@ -1,4 +1,4 @@
-import { TimeUnit, _adapters, DateAdapter, ChartOptions } from 'chart.js';
+import { _adapters, ChartOptions, DateAdapter, TimeUnit } from 'chart.js';
 
 const viewFormats = {
   default: 'M/d/yyyy',

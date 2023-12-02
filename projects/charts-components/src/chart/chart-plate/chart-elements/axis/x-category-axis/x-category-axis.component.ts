@@ -12,6 +12,9 @@ import { SettingsMapService } from '../../../../services/settings-map.service';
 export class XCategoryAxisComponent implements OnInit, OnDestroy {
   static id = 'x';
   private subs: Subscription[] = [];
+
+  constructor(private service: ChartPlateService, private mapService: SettingsMapService) {}
+
   _labels: string[] = [];
 
   @Input() set labels(value: string[]) {
@@ -19,8 +22,6 @@ export class XCategoryAxisComponent implements OnInit, OnDestroy {
     this._labels = value;
     this.setAxis();
   }
-
-  constructor(private service: ChartPlateService, private mapService: SettingsMapService) {}
 
   ngOnInit(): void {
     this.subs.push(this.service.chartInitialized.subscribe(() => this.setAxis()));

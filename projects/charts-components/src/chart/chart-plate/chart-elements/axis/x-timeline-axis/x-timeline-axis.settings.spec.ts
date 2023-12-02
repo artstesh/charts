@@ -1,7 +1,6 @@
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
 import { XTimelineAxisSettings } from './x-timeline-axis.settings';
-import { TickDateDisplayFormat } from '../../../../models';
 
 describe('#chart-elements XTimelineAxisSettings', () => {
   let model: XTimelineAxisSettings;
