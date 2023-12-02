@@ -3,7 +3,7 @@ import { IChartElementSettings } from '../../models/i-chart-element.settings';
 export type InteractMode = 'point' | 'nearest' | 'index' | 'dataset' | 'x' | 'y';
 
 export class ChartPlateSettings implements IChartElementSettings<ChartPlateSettings> {
-  public interactionMode: InteractMode = 'x';
+  public interactionMode: InteractMode = 'nearest';
 
   public setMode(mode: InteractMode): this {
     this.interactionMode = mode;

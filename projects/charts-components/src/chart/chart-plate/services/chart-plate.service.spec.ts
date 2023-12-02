@@ -5,6 +5,7 @@ import { should } from '@artstesh/it-should';
 import { Forger } from '@artstesh/forger';
 
 describe('ChartPlateService', () => {
+  let waitTime = 400;
   let service: ChartPlateService;
   let updated: boolean;
   let chart: any;
@@ -35,7 +36,7 @@ describe('ChartPlateService', () => {
         chart.data = undefined as any;
         //
         service.addDataset([] as any);
-        tick(300);
+        tick(waitTime);
         //
         should().false(updated);
       }));
@@ -43,7 +44,7 @@ describe('ChartPlateService', () => {
       it('success', fakeAsync(() => {
         //
         service.addDataset([] as any);
-        tick(300);
+        tick(waitTime);
         //
         should().true(updated);
       }));
@@ -68,7 +69,7 @@ describe('ChartPlateService', () => {
         chart.data = undefined as any;
         //
         service.removeDataset(id);
-        tick(300);
+        tick(waitTime);
         //
         should().false(updated);
       }));
@@ -77,7 +78,7 @@ describe('ChartPlateService', () => {
         chart.data.datasets.push({ id: id });
         //
         service.removeDataset(id);
-        tick(300);
+        tick(waitTime);
         //
         should().array(chart.data.datasets).empty();
         should().true(updated);
@@ -88,7 +89,7 @@ describe('ChartPlateService', () => {
         chart.data.datasets.push({ id: alsoDelete });
         //
         service.removeDataset(id, alsoDelete);
-        tick(300);
+        tick(waitTime);
         //
         should().array(chart.data.datasets).empty();
       }));
@@ -109,7 +110,7 @@ describe('ChartPlateService', () => {
         const scale = Forger.create<number>()! as any;
         //
         service.setScale(id, scale);
-        tick(300);
+        tick(waitTime);
         //
         should().false(updated);
       }));
@@ -118,7 +119,7 @@ describe('ChartPlateService', () => {
         const scale = Forger.create<number>()! as any;
         //
         service.setScale(id, scale);
-        tick(300);
+        tick(waitTime);
         //
         should().true(updated);
       }));
@@ -127,7 +128,7 @@ describe('ChartPlateService', () => {
         const scale = Forger.create<number>()! as any;
         //
         service.setScale(id, scale);
-        tick(300);
+        tick(waitTime);
         //
         should().number(chart.options.scales[id]).equals(scale);
       }));
@@ -138,7 +139,7 @@ describe('ChartPlateService', () => {
         chart.options = undefined;
         //
         service.resetScale(id);
-        tick(300);
+        tick(waitTime);
         //
         should().false(updated);
       }));
@@ -147,7 +148,7 @@ describe('ChartPlateService', () => {
         chart.options.scales[id] = Forger.create<number>()! as any;
         //
         service.resetScale(id);
-        tick(300);
+        tick(waitTime);
         //
         should().true(updated);
       }));
@@ -156,7 +157,7 @@ describe('ChartPlateService', () => {
         chart.options.scales[id] = Forger.create<number>()! as any;
         //
         service.resetScale(id);
-        tick(300);
+        tick(waitTime);
         //
         should().array(Object.keys(chart.options.scales[id])).empty();
       }));
@@ -177,7 +178,7 @@ describe('ChartPlateService', () => {
         const legend = Forger.create<number>()! as any;
         //
         service.setLegend(legend);
-        tick(300);
+        tick(waitTime);
         //
         should().false(updated);
       }));
@@ -187,7 +188,7 @@ describe('ChartPlateService', () => {
         const legend = Forger.create<number>()! as any;
         //
         service.setLegend(legend);
-        tick(300);
+        tick(waitTime);
         //
         should().true(updated);
       }));
@@ -196,7 +197,7 @@ describe('ChartPlateService', () => {
         const legend = Forger.create<number>()! as any;
         //
         service.setLegend(legend);
-        tick(300);
+        tick(waitTime);
         //
         should().number(chart.options.plugins.legend).equals(legend);
       }));
@@ -209,7 +210,7 @@ describe('ChartPlateService', () => {
       const labels = Forger.create<string[]>()!;
       //
       service.setLabels(labels);
-      tick(300);
+      tick(waitTime);
       //
       should().false(updated);
     }));
@@ -219,7 +220,7 @@ describe('ChartPlateService', () => {
       const labels = Forger.create<string[]>()!;
       //
       service.setLabels(labels);
-      tick(300);
+      tick(waitTime);
       //
       should().true(updated);
     }));
@@ -229,9 +230,31 @@ describe('ChartPlateService', () => {
       const labels = Forger.create<string[]>()!;
       //
       service.setLabels(labels);
-      tick(300);
+      tick(waitTime);
       //
       should().array(chart.data.labels).equal(labels);
+    }));
+  });
+
+  describe('setTooltip', () => {
+    it('nothing if no data', fakeAsync(() => {
+      chart.options = undefined;
+      const tooltip = Forger.create<string>()!; // just a primitive mock
+      //
+      service.setTooltip(tooltip);
+      tick(waitTime);
+      //
+      should().false(chart.options?.plugins?.tooltip);
+    }));
+
+    it('sets successfully', fakeAsync(() => {
+      chart.options = { plugins: {} };
+      const tooltip = Forger.create<string>()!; // just a primitive mock
+      //
+      service.setTooltip(tooltip);
+      tick(waitTime);
+      //
+      should().string(chart.options.plugins.tooltip).equals(tooltip);
     }));
   });
 });
