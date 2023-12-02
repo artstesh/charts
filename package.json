@@ -8,7 +8,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build",
     "prepare": "npm run build",
     "preversion": "npm test",
     "version": "npm run format && git add -A projects",
