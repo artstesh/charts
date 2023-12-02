@@ -8,6 +8,13 @@ export class ChartLegendSettings {
   align: LegendAlignment = 'center';
   position: LegendPosition = 'bottom';
 
+  public static copy(model: ChartLegendSettings): ChartLegendSettings {
+    const result = new ChartLegendSettings();
+    result.align = model.align;
+    result.position = model.position;
+    return result;
+  }
+
   public isSame(model: ChartLegendSettings): boolean {
     if (this.align !== model.align) return false;
     return this.position === model.position;
@@ -22,13 +29,6 @@ export class ChartLegendSettings {
   public setPosition(value: LegendPosition): ChartLegendSettings {
     const result = ChartLegendSettings.copy(this);
     result.position = value;
-    return result;
-  }
-
-  public static copy(model: ChartLegendSettings): ChartLegendSettings {
-    const result = new ChartLegendSettings();
-    result.align = model.align;
-    result.position = model.position;
     return result;
   }
 }

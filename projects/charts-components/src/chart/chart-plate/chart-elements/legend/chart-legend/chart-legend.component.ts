@@ -11,16 +11,16 @@ import { ChartLegendSettings } from './chart-legend.settings';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartLegendComponent extends DestructibleComponent implements OnInit, OnDestroy {
+  constructor(private service: ChartPlateService, private mapService: SettingsMapService) {
+    super();
+  }
+
   _settings: ChartLegendSettings = new ChartLegendSettings();
 
   @Input() set settings(value: ChartLegendSettings | undefined) {
     if (!value || this._settings.isSame(value)) return;
     this._settings = value;
     this.setLegend();
-  }
-
-  constructor(private service: ChartPlateService, private mapService: SettingsMapService) {
-    super();
   }
 
   ngOnInit(): void {
@@ -31,11 +31,11 @@ export class ChartLegendComponent extends DestructibleComponent implements OnIni
     this.service.setLegend(this.mapService.chartLegend(this._settings));
   }
 
-  private removeLegend(): void {
-    this.mapService.chartLegend({} as any);
-  }
-
   onDestroy = () => {
     this.removeLegend();
   };
+
+  private removeLegend(): void {
+    this.mapService.chartLegend({} as any);
+  }
 }
