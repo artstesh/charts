@@ -58,7 +58,6 @@ export class ChartTooltipFactory {
           color = tooltip.labelColors[i]?.backgroundColor;
         }
       }
-      tooltipEl.style.backgroundColor = settings.color === 'auto' && typeof color === 'string' ? color : settings.color;
       const rowPointData = nearestPoint.raw as ChartDataModel;
       const model: ChartTooltipGetModel = {
         y: rowPointData.y,
@@ -77,10 +76,9 @@ export class ChartTooltipFactory {
       } else if (tooltip.caretX > chart.width - tooltip.width / 2) {
         offset = chart.width - tooltip.width / 2 + 30;
       }
-
       tooltipEl.style.left = positionX + offset + 'px';
       tooltipEl.style.top = positionY + nearestPoint.element.y - tooltipEl.offsetHeight * 1.5 + 'px';
-      tooltipEl.style.padding = tooltip.options.padding + 'px ' + tooltip.options.padding + 'px';
+      tooltipEl.style.padding = '0';
     }
   }
 }

@@ -20,14 +20,6 @@ describe('#chart-elements ChartTooltipSettings', () => {
   });
 
   describe('setters', () => {
-    it('setColor()', () => {
-      const expected = Forger.create<string>()!;
-      //
-      model = model.setColor(expected);
-      //
-      should().string(model.color).equals(expected);
-    });
-
     it('setSkipDatasets()', () => {
       const expected = Forger.create<string[]>()!;
       //
@@ -52,13 +44,6 @@ describe('#chart-elements ChartTooltipSettings', () => {
       const other = ChartTooltipSettings.copy(model);
       //
       should().true(model.isSame(other));
-    });
-
-    it('different color', () => {
-      const other = ChartTooltipSettings.copy(model);
-      other.color = Forger.create<string>()!;
-      //
-      should().false(model.isSame(other));
     });
 
     it('different content', () => {
