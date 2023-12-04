@@ -77,7 +77,7 @@ export class ChartTooltipFactory {
         offset = chart.width - tooltip.width / 2 + 30;
       }
       tooltipEl.style.left = positionX + offset + 'px';
-      tooltipEl.style.top = positionY + nearestPoint.element.y - tooltipEl.offsetHeight * 1.5 + 'px';
+      tooltipEl.style.top = positionY + nearestPoint.element.y - tooltipEl.offsetHeight + 'px';
       tooltipEl.style.padding = '0';
     }
   }
