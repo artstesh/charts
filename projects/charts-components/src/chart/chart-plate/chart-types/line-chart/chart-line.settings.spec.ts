@@ -7,6 +7,7 @@ describe('#chart-elements ChartLineSettings', () => {
 
   beforeEach(() => {
     model = new ChartLineSettings().copy(Forger.create<ChartLineSettings>()!);
+    model.fill = Forger.create<false | 'start' | 'end' | 'origin'>()!;
   });
 
   afterEach(() => {
@@ -27,6 +28,11 @@ describe('#chart-elements ChartLineSettings', () => {
     should().string(settings1.name).not.equals(settings2.name);
   });
 
+  it('fill is false by default', () => {
+    //
+    should().false(new ChartLineSettings().fill);
+  });
+
   it('setPointRadius()', () => {
     const radius = Forger.create<number>()!;
     //
@@ -35,6 +41,22 @@ describe('#chart-elements ChartLineSettings', () => {
     should()
       .number(model.pointRadius as number)
       .equals(radius);
+  });
+
+  it('setTension()', () => {
+    const radius = Forger.create<number>()!;
+    //
+    model = model.setTension(radius);
+    //
+    should().number(model.tension).equals(radius);
+  });
+
+  it('setPointRadius()', () => {
+    const fill = Forger.create<false | 'start' | 'end' | 'origin'>()!;
+    //
+    model = model.setFill(fill);
+    //
+    should().true(model.fill === fill);
   });
 
   describe('isSame()', () => {
@@ -75,6 +97,14 @@ describe('#chart-elements ChartLineSettings', () => {
     it('different pointRadius', () => {
       const other = new ChartLineSettings().copy(model);
       other.pointRadius = Forger.create<number>()!;
+      //
+      should().false(model.isSame(other));
+    });
+
+    it('different fill', () => {
+      const other = new ChartLineSettings().copy(model);
+      model.fill = false;
+      other.fill = Forger.create<'origin' | 'start' | 'end'>()!;
       //
       should().false(model.isSame(other));
     });
