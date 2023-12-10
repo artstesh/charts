@@ -39,7 +39,7 @@ export class ChartAxisLimitService {
 
   public examine(data: ChartDataModel[]): ChartDataModel[] {
     const result: ChartDataModel[] = [];
-    for (let datum of data) {
+    for (let datum of data ?? []) {
       if (!this._model.contains(datum)) continue;
       result.push(datum);
     }
