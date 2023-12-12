@@ -7,6 +7,7 @@ export class XCategoryAxisFactory {
       display: 'auto',
       grid: { display: false },
       labels: labels,
+      offset: true,
     } as ScaleOptionsByType<'category'>;
   }
 }

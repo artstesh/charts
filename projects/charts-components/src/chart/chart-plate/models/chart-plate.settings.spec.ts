@@ -14,11 +14,19 @@ describe('ChartPlateSettings', () => {
   });
 
   it('setMode()', () => {
-    const mode = Forger.create<'x' | 'y'>()!;
+    const expected = Forger.create<'x' | 'y'>()!;
     //
-    model.setMode(mode);
+    const result = model.setMode(expected);
     //
-    should().string(model.interactionMode).equals(mode);
+    should().string(result.interactionMode).equals(expected);
+  });
+
+  it('setType()', () => {
+    const expected = Forger.create<string>()! as any;
+    //
+    const result = model.setType(expected);
+    //
+    should().string(result.type).equals(expected);
   });
 
   describe('isSame()', () => {
@@ -31,6 +39,13 @@ describe('ChartPlateSettings', () => {
     it('different interactionMode', () => {
       const other = new ChartPlateSettings().copy(model);
       other.interactionMode = Forger.create<'x' | 'y'>()!;
+      //
+      should().false(model.isSame(other));
+    });
+
+    it('different type', () => {
+      const other = new ChartPlateSettings().copy(model);
+      other.type = Forger.create<string>()! as any;
       //
       should().false(model.isSame(other));
     });

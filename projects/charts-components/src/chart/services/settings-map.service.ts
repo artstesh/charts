@@ -5,8 +5,6 @@ import { ChartConfiguration, LegendOptions, ScaleOptionsByType } from 'chart.js'
 import { ChartLineSettings } from '../chart-plate/chart-types/line-chart/chart-line.settings';
 import { ChartDataModel } from '../models';
 import { ChartBarSettings } from '../chart-plate/chart-types/bar-chart/chart-bar.settings';
-import { ChartLineDatasetFactory } from '../chart-plate/chart-types/factories/chart-line-dataset.factory';
-import { ChartBarDatasetFactory } from '../chart-plate/chart-types/factories/chart-bar-dataset.factory';
 import { ChartPlateSettings } from '../chart-plate/models/chart-plate.settings';
 import { ChartPlateFactory } from '../chart-plate/models/chart-plate.factory';
 import { IChartDataset } from '../chart-plate/chart-types/models/i-chart-dataset';
@@ -16,6 +14,8 @@ import { XCategoryAxisFactory } from '../chart-plate/chart-elements/axis/x-categ
 import { XTimelineAxisFactory } from '../chart-plate/chart-elements/axis/x-timeline-axis/x-timeline-axis.factory';
 import { ChartTooltipSettings } from '../chart-plate/chart-elements/chart-tooltip/chart-tooltip.settings';
 import { ChartTooltipFactory } from '../chart-plate/chart-elements/chart-tooltip/chart-tooltip.factory';
+import { ChartLineDatasetFactory } from '../chart-plate/chart-types/line-chart/chart-line-dataset.factory';
+import { ChartBarDatasetFactory } from '../chart-plate/chart-types/bar-chart/chart-bar-dataset.factory';
 
 @Injectable({
   providedIn: 'root',

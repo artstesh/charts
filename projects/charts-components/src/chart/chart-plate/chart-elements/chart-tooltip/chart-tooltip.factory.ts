@@ -58,6 +58,7 @@ export class ChartTooltipFactory {
           color = tooltip.labelColors[i]?.backgroundColor;
         }
       }
+      console.log(nearestPoint);
       const rowPointData = nearestPoint.raw as ChartDataModel;
       const model: ChartTooltipGetModel = {
         y: rowPointData.y,

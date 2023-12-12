@@ -24,4 +24,8 @@ describe('ChartPlateFactory', () => {
   it('interactionMode is correct', () => {
     should().string(configuration!.options!.interaction!.mode).equals(settings.interactionMode);
   });
+
+  it('type is correct', () => {
+    should().string(configuration!.type).equals(settings.type);
+  });
 });
