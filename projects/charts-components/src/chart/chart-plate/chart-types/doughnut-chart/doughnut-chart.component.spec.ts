@@ -4,22 +4,19 @@ import { ComponentFixture } from '@angular/core/testing';
 import { EventEmitter } from '@angular/core';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { anything, instance, mock, reset, verify, when } from 'ts-mockito';
-import { Subject } from 'rxjs';
 import { ChartModule } from '../../../chart.module';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { Forger } from '@artstesh/forger';
 import { DoughnutChartComponent } from './doughnut-chart.component';
 import { DoughnutChartFactory } from './doughnut-chart.factory';
 
-describe('#chart-types LineChartComponent', () => {
+describe('#chart-types DoughnutChartComponent', () => {
   let fixture: ComponentFixture<DoughnutChartComponent>;
   const plateService = mock(ChartPlateService);
   const factory = mock(DoughnutChartFactory);
-  let limitServiceChanged$: Subject<undefined>;
   let chartInitialized: EventEmitter<unknown>;
 
   beforeEach(async () => {
-    limitServiceChanged$ = new Subject<undefined>();
     chartInitialized = new EventEmitter();
     when(plateService.chartInitialized).thenReturn(chartInitialized);
     return MockBuilder(DoughnutChartComponent, ChartModule)
@@ -29,6 +26,7 @@ describe('#chart-types LineChartComponent', () => {
 
   beforeEach(() => {
     fixture = MockRender(DoughnutChartComponent);
+    fixture.componentInstance.data = [];
   });
 
   afterEach(() => {

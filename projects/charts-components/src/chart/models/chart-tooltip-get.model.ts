@@ -1,6 +1,6 @@
+import { ChartDataModel } from './chart-data.model';
+
 export interface ChartTooltipGetModel {
-  x: number;
-  y: number | null;
+  value: ChartDataModel | number | undefined;
   datasetId: string;
-  label: string;
 }

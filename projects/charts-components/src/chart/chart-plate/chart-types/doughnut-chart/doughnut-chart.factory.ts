@@ -17,7 +17,6 @@ export class DoughnutChartFactory {
       data: values,
       id: settings.id,
       label: settings.name,
-      type: 'doughnut',
     } as IChartDataset<'doughnut', number[]>;
   }
 }

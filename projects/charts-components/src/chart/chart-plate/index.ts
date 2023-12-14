@@ -1,4 +1,5 @@
 export * from './chart-plate.component';
+export * from './models/chart-plate.settings';
 export * from './chart-types/bar-chart/chart-bar.component';
 export * from './chart-types/bar-chart/chart-bar.settings';
 export * from './chart-types/line-chart/chart-line.component';

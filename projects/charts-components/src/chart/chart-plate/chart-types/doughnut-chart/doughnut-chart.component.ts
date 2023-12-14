@@ -24,15 +24,15 @@ export class DoughnutChartComponent extends DestructibleComponent implements OnI
     this.dataUpdated();
   }
 
-  private _data!: RadialDataModel[];
+  private _data: RadialDataModel[] = [];
 
   @Input() set data(aw: RadialDataModel[]) {
-    this._data = aw;
+    this._data = aw ?? [];
     this.dataUpdated();
   }
 
   ngOnInit(): void {
-    this.subs.push(this.service.chartInitialized.subscribe(() => this.service.addDataset(this.getDataset() as any)));
+    this.subs.push(this.service.chartInitialized.subscribe(() => this.dataUpdated()));
   }
 
   onDestroy = () => {
@@ -41,7 +41,9 @@ export class DoughnutChartComponent extends DestructibleComponent implements OnI
 
   protected dataUpdated(): void {
     this.service.removeDataset(this._settings.id);
+    this.service.resetScale();
     this.service.addDataset(this.getDataset() as any);
+    this.service.setLabels(this._data.map((d) => d.label));
   }
 
   protected getDataset = () => this.factory.build(this._settings, this._data);
