@@ -4,7 +4,7 @@ import { ChartPlateSettings } from './chart-plate.settings';
 export class ChartPlateFactory {
   public static build(settings: ChartPlateSettings): ChartConfiguration {
     return {
-      type: 'line',
+      type: settings.type,
       data: {
         datasets: [],
       },
