@@ -15,6 +15,7 @@ export class XTimelineAxisFactory {
       ticks: {
         callback: (val: number, index: number) => settings.dateFormat(val, index),
       },
+      offset: true,
     } as unknown as ScaleOptionsByType<'time'>;
   }
 }

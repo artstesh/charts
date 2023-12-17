@@ -1,6 +1,6 @@
 import { Chart, ChartTypeRegistry, TooltipModel, TooltipOptions } from 'chart.js';
 import { _DeepPartialObject } from 'chart.js/dist/types/utils';
-import { ChartDataModel, ChartTooltipGetModel } from '../../../models';
+import { ChartTooltipGetModel } from '../../../models';
 import { ChartTooltipSettings } from './chart-tooltip.settings';
 import { IChartDataset } from '../../chart-types/models/i-chart-dataset';
 
@@ -58,11 +58,9 @@ export class ChartTooltipFactory {
           color = tooltip.labelColors[i]?.backgroundColor;
         }
       }
-      const rowPointData = nearestPoint.raw as ChartDataModel;
+      const rowPointData = nearestPoint.raw;
       const model: ChartTooltipGetModel = {
-        y: rowPointData.y,
-        x: rowPointData.x,
-        label: nearestPoint?.dataset?.label,
+        value: rowPointData as any,
         datasetId: (nearestPoint?.dataset as IChartDataset)?.id,
       };
       const existing = document.querySelector('.lib-chart-tooltip-content');
