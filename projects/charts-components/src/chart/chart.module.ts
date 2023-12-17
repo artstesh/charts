@@ -7,6 +7,7 @@ import { DestructibleComponent } from './common/destructible.component';
 import { XCategoryAxisComponent } from './chart-plate/chart-elements/axis/x-category-axis/x-category-axis.component';
 import { XTimelineAxisComponent } from './chart-plate/chart-elements/axis/x-timeline-axis/x-timeline-axis.component';
 import { ChartTooltipComponent } from './chart-plate/chart-elements/chart-tooltip/chart-tooltip.component';
+import { DoughnutChartComponent } from './chart-plate/chart-types/doughnut-chart/doughnut-chart.component';
 
 @NgModule({
   imports: [CommonModule],
@@ -20,6 +21,7 @@ import { ChartTooltipComponent } from './chart-plate/chart-elements/chart-toolti
     XCategoryAxisComponent,
     XTimelineAxisComponent,
     ChartTooltipComponent,
+    DoughnutChartComponent,
   ],
   exports: [
     ChartPlateComponent,
@@ -30,6 +32,7 @@ import { ChartTooltipComponent } from './chart-plate/chart-elements/chart-toolti
     XCategoryAxisComponent,
     XTimelineAxisComponent,
     ChartTooltipComponent,
+    DoughnutChartComponent,
   ],
 })
 export class ChartModule {}

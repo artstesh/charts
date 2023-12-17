@@ -28,7 +28,8 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
   @Input() set settings(value: ChartPlateSettings | undefined) {
     if (!value || this._settings.isSame(value)) return;
     this._settings = value;
-    this.setChart();
+    if (!!this.chart?.config) (this.chart.config as any).type = value.type;
+    this.service.updateChart();
   }
 
   ngOnInit(): void {
