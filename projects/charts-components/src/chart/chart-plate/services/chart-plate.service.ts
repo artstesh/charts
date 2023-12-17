@@ -34,6 +34,7 @@ export class ChartPlateService {
       this.chart.data.datasets = this.chart.data.datasets.filter((d) => (d as IChartDataset).id !== alsoDelete);
     }
     if (this.chart.data.datasets.length !== initialLength) this.updateChart(true);
+    this.updateChart();
   }
 
   public setScale(id: string, scale: ScaleOptionsByType): void {
@@ -42,9 +43,10 @@ export class ChartPlateService {
     this.updateChart();
   }
 
-  public resetScale(id: string): void {
+  public resetScale(id?: string): void {
     if (!this.chart?.options?.scales) return;
-    this.chart.options.scales[id] = {};
+    if (!!id) this.chart.options.scales[id] = {};
+    else this.chart.options.scales = {};
     this.updateChart();
   }
 
@@ -63,5 +65,6 @@ export class ChartPlateService {
   public setTooltip(v: any): void {
     if (!this.chart?.options?.plugins) return;
     this.chart.options.plugins.tooltip = v;
+    this.updateChart();
   }
 }

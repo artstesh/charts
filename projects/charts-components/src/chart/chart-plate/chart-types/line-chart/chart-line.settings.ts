@@ -1,7 +1,7 @@
 import { ChartTypeSettings } from '../models/chart-type.settings';
 
 export class ChartLineSettings extends ChartTypeSettings<ChartLineSettings> {
-  pointRadius: number = 5;
+  pointRadius: number = 3;
   fill: false | 'start' | 'end' | 'origin' = false;
   tension: number = 0;
 

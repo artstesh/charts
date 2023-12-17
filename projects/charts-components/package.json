@@ -4,8 +4,8 @@
   "peerDependencies": {
     "@angular/common": "^15.0.0",
     "@angular/core": "^15.0.0",
-    "chart.js": "4.4.0",
-    "chartjs-plugin-datalabels": "2.2.0"
+    "chart.js": "^4.4.0",
+    "chartjs-plugin-datalabels": "^2.2.0"
   },
   "dependencies": {
     "tslib": "^2.2.0"

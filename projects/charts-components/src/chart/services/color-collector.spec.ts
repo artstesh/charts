@@ -22,7 +22,7 @@ describe('ColorCollector', () => {
 
     it('numbers are different for different indexes', () => {
       const index1 = Forger.create<number>({ numberMin: 0, numberMax: 10 })!;
-      const index2 = Forger.create<number>({ numberMin: 10, numberMax: 20 })!;
+      const index2 = Forger.create<number>({ numberMin: 12, numberMax: 22 })!;
       //
       const color1 = ColorCollector.getColor(index1);
       const color2 = ColorCollector.getColor(index2);
