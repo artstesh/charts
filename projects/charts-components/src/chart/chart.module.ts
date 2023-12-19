@@ -8,6 +8,7 @@ import { XCategoryAxisComponent } from './chart-plate/chart-elements/axis/x-cate
 import { XTimelineAxisComponent } from './chart-plate/chart-elements/axis/x-timeline-axis/x-timeline-axis.component';
 import { ChartTooltipComponent } from './chart-plate/chart-elements/chart-tooltip/chart-tooltip.component';
 import { DoughnutChartComponent } from './chart-plate/chart-types/doughnut-chart/doughnut-chart.component';
+import { OrdinateAxisComponent } from './chart-plate/chart-elements/axis/ordinate-axis/ordinate-axis.component';
 
 @NgModule({
   imports: [CommonModule],
@@ -22,6 +23,7 @@ import { DoughnutChartComponent } from './chart-plate/chart-types/doughnut-chart
     XTimelineAxisComponent,
     ChartTooltipComponent,
     DoughnutChartComponent,
+    OrdinateAxisComponent,
   ],
   exports: [
     ChartPlateComponent,

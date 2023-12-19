@@ -1,23 +1,20 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
-import { XLinearAxisSettings } from './x-linear-axis.settings';
+import { DestructibleComponent } from '../../../../common/destructible.component';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
-import { DestructibleComponent } from '../../../../common/destructible.component';
+import { XLinearAxisSettings } from '../x-linear-axis/x-linear-axis.settings';
 import { ChartConstants } from '../../../../models/chart-constants';
 
 @Component({
-  selector: 'lib-x-linear-axis',
+  selector: 'lib-ordinate-axis',
   template: '',
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class XLinearAxisComponent extends DestructibleComponent implements OnInit {
-  constructor(
-    private limitService: ChartAxisLimitService,
-    private service: ChartPlateService,
-    private mapService: SettingsMapService,
-  ) {
+export class OrdinateAxisComponent extends DestructibleComponent implements OnInit {
+  private axisId = ChartConstants.LeftAxisId;
+
+  constructor(private service: ChartPlateService, private mapService: SettingsMapService) {
     super();
   }
 
@@ -26,7 +23,6 @@ export class XLinearAxisComponent extends DestructibleComponent implements OnIni
   @Input() set settings(value: XLinearAxisSettings | undefined) {
     if (!value || this._settings.isSame(value)) return;
     this._settings = value;
-    this.limitService.setHorizontalLimits(this._settings.limits[0], this._settings.limits[1]);
     this.setAxis();
   }
 
@@ -35,7 +31,7 @@ export class XLinearAxisComponent extends DestructibleComponent implements OnIni
   }
 
   setAxis(): void {
-    this.service.setScale(ChartConstants.BottomAxisId, this.mapService.xLinearScale(this._settings));
+    this.service.setScale(this.axisId, this.mapService.xLinearScale(this._settings));
   }
 
   onDestroy = () => {
@@ -44,6 +40,6 @@ export class XLinearAxisComponent extends DestructibleComponent implements OnIni
   };
 
   private resetAxis(): void {
-    this.service.resetScale(ChartConstants.BottomAxisId);
+    this.service.resetScale(this.axisId);
   }
 }
