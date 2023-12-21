@@ -1,40 +1,36 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { EventEmitter } from '@angular/core';
 import { Forger } from '@artstesh/forger';
-import { XLinearAxisComponent } from './x-linear-axis.component';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { ChartModule } from '../../../../chart.module';
 import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
-import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
 import { should } from '@artstesh/it-should';
 import { ChartPlateService } from '../../../services/chart-plate.service';
-import { SettingsMapService } from '../../../../services/settings-map.service';
 import { ChartConstants } from '../../../../models/chart-constants';
+import { OrdinateAxisComponent } from './ordinate-axis.component';
+import { OrdinateAxisFactory } from './ordinate-axis-factory.service';
 
-describe('#chart-elements XLinearAxisComponent', () => {
-  let fixture: ComponentFixture<XLinearAxisComponent>;
-  const limitService = mock(ChartAxisLimitService);
+describe('#chart-elements OrdinateAxisComponent', () => {
+  let fixture: ComponentFixture<OrdinateAxisComponent>;
   const plateService = mock(ChartPlateService);
-  const mapService = mock(SettingsMapService);
+  const factory = mock(OrdinateAxisFactory);
   let chartInitialized$: EventEmitter<any>;
 
   beforeEach(async () => {
     chartInitialized$ = new EventEmitter();
     when(plateService.chartInitialized).thenReturn(chartInitialized$);
-    return MockBuilder(XLinearAxisComponent, ChartModule)
-      .provide(MockProvider(ChartAxisLimitService, instance(limitService)))
-      .provide(MockProvider(SettingsMapService, instance(mapService)))
+    return MockBuilder(OrdinateAxisComponent, ChartModule)
+      .provide(MockProvider(OrdinateAxisFactory, instance(factory)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));
   });
 
   beforeEach(() => {
-    fixture = MockRender(XLinearAxisComponent);
+    fixture = MockRender(OrdinateAxisComponent);
     fixture.detectChanges();
   });
 
   afterEach(() => {
-    reset(limitService);
-    reset(mapService);
+    reset(factory);
     reset(plateService);
     expect().nothing();
   });
@@ -44,14 +40,14 @@ describe('#chart-elements XLinearAxisComponent', () => {
   });
 
   it('should add the axis on chartInitialized', () => {
-    const expectedScale = Forger.create<number>()! as any; // a trick to avoid huge obj creation
-    when(mapService.xLinearScale(anything())).thenReturn(expectedScale);
+    const expectedScale = Forger.create<number>()!; // a trick to avoid huge obj creation
+    when(factory.build(anything())).thenReturn(expectedScale as any);
     //
     chartInitialized$.next();
     fixture.detectChanges();
     //
     const [id, scale] = capture(plateService.setScale).last();
-    should().string(id).equals(ChartConstants.BottomAxisId);
+    should().string(id).equals(ChartConstants.LeftAxisId);
     should().true(scale === expectedScale);
   });
 });
