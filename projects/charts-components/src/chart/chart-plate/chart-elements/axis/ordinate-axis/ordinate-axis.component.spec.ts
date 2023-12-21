@@ -48,6 +48,6 @@ describe('#chart-elements OrdinateAxisComponent', () => {
     //
     const [id, scale] = capture(plateService.setScale).last();
     should().string(id).equals(ChartConstants.LeftAxisId);
-    should().true(scale === expectedScale);
+    should().true(scale === expectedScale as any);
   });
 });
