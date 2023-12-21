@@ -45,16 +45,4 @@ describe('ChartPlateComponent', () => {
       should().array(ngMocks.findAll('[data-test=chart-plate]')).length(1);
     });
   });
-
-  // it('should add the axis on chartInitialized', () => {
-  //   const expectedScale = Forger.create<number>()!; // a trick to avoid huge obj creation
-  //   when(mapService.xLinearScale(anything())).thenReturn(expectedScale as any);
-  //   //
-  //   chartInitialized$.next();
-  //   fixture.detectChanges();
-  //   //
-  //   const [id, scale] = capture(plateService.setScale).last();
-  //   should().string(id).equals(XLinearAxisComponent.id);
-  //   should().true(scale === expectedScale);
-  // });
 });

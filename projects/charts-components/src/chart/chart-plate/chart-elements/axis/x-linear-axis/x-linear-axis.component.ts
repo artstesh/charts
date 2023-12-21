@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
 import { XLinearAxisSettings } from './x-linear-axis.settings';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
+import { DestructibleComponent } from '../../../../common/destructible.component';
+import { ChartConstants } from '../../../../models/chart-constants';
 
 @Component({
   selector: 'lib-x-linear-axis',
@@ -11,15 +12,14 @@ import { SettingsMapService } from '../../../../services/settings-map.service';
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class XLinearAxisComponent implements OnInit, OnDestroy {
-  static id = 'x';
-  private subs: Subscription[] = [];
-
+export class XLinearAxisComponent extends DestructibleComponent implements OnInit {
   constructor(
     private limitService: ChartAxisLimitService,
     private service: ChartPlateService,
     private mapService: SettingsMapService,
-  ) {}
+  ) {
+    super();
+  }
 
   _settings: XLinearAxisSettings = new XLinearAxisSettings();
 
@@ -35,15 +35,15 @@ export class XLinearAxisComponent implements OnInit, OnDestroy {
   }
 
   setAxis(): void {
-    this.service.setScale(XLinearAxisComponent.id, this.mapService.xLinearScale(this._settings));
+    this.service.setScale(ChartConstants.BottomAxisId, this.mapService.xLinearScale(this._settings));
   }
 
-  ngOnDestroy(): void {
+  onDestroy = () => {
     this.resetAxis();
     this.subs.forEach((s) => s.unsubscribe());
-  }
+  };
 
   private resetAxis(): void {
-    this.service.resetScale(XLinearAxisComponent.id);
+    this.service.resetScale(ChartConstants.BottomAxisId);
   }
 }
