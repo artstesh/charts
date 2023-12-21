@@ -31,9 +31,6 @@ export class ChartPlateFactory {
             grid: {
               display: false,
             },
-            ticks: {
-              maxRotation: 0,
-            },
             offset: true,
           },
         },

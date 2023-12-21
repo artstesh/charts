@@ -35,6 +35,7 @@ import { OrdinateAxisComponent } from './chart-plate/chart-elements/axis/ordinat
     XTimelineAxisComponent,
     ChartTooltipComponent,
     DoughnutChartComponent,
+    OrdinateAxisComponent,
   ],
 })
 export class ChartModule {}

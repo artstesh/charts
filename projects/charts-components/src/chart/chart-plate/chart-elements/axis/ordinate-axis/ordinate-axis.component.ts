@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { DestructibleComponent } from '../../../../common/destructible.component';
 import { ChartPlateService } from '../../../services/chart-plate.service';
-import { SettingsMapService } from '../../../../services/settings-map.service';
-import { XLinearAxisSettings } from '../x-linear-axis/x-linear-axis.settings';
 import { ChartConstants } from '../../../../models/chart-constants';
+import { OrdinateAxisFactory } from './ordinate-axis-factory.service';
+import { OrdinateAxisSettings } from './ordinate-axis.settings';
 
 @Component({
   selector: 'lib-ordinate-axis',
@@ -14,13 +14,13 @@ import { ChartConstants } from '../../../../models/chart-constants';
 export class OrdinateAxisComponent extends DestructibleComponent implements OnInit {
   private axisId = ChartConstants.LeftAxisId;
 
-  constructor(private service: ChartPlateService, private mapService: SettingsMapService) {
+  constructor(private service: ChartPlateService, private mapService: OrdinateAxisFactory) {
     super();
   }
 
-  _settings: XLinearAxisSettings = new XLinearAxisSettings();
+  _settings: OrdinateAxisSettings = new OrdinateAxisSettings();
 
-  @Input() set settings(value: XLinearAxisSettings | undefined) {
+  @Input() set settings(value: OrdinateAxisSettings | undefined) {
     if (!value || this._settings.isSame(value)) return;
     this._settings = value;
     this.setAxis();
@@ -31,7 +31,7 @@ export class OrdinateAxisComponent extends DestructibleComponent implements OnIn
   }
 
   setAxis(): void {
-    this.service.setScale(this.axisId, this.mapService.xLinearScale(this._settings));
+    this.service.setScale(this._settings.getAxisId(), this.mapService.build(this._settings));
   }
 
   onDestroy = () => {
@@ -40,6 +40,6 @@ export class OrdinateAxisComponent extends DestructibleComponent implements OnIn
   };
 
   private resetAxis(): void {
-    this.service.resetScale(this.axisId);
+    this.service.resetScale(this._settings.getAxisId());
   }
 }

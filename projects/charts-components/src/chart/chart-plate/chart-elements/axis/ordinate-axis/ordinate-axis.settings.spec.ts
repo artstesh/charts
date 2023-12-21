@@ -8,7 +8,6 @@ describe('#chart-elements OrdinateAxisSettings', () => {
 
   beforeEach(() => {
     model = OrdinateAxisSettings.copy(Forger.create<OrdinateAxisSettings>()!);
-    console.log(model);
   });
 
   afterEach(() => {
