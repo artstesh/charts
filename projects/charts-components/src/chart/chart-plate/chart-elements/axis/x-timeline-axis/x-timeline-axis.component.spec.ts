@@ -9,6 +9,7 @@ import { should } from '@artstesh/it-should';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
 import { XTimelineAxisComponent } from './x-timeline-axis.component';
+import { ChartConstants } from '../../../../models/chart-constants';
 
 describe('#chart-elements XTimelineAxisComponent', () => {
   let fixture: ComponentFixture<XTimelineAxisComponent>;
@@ -50,7 +51,7 @@ describe('#chart-elements XTimelineAxisComponent', () => {
     fixture.detectChanges();
     //
     const [id, scale] = capture(plateService.setScale).last();
-    should().string(id).equals(XTimelineAxisComponent.id);
+    should().string(id).equals(ChartConstants.BottomAxisId);
     should().true(scale === expectedScale);
   });
 });

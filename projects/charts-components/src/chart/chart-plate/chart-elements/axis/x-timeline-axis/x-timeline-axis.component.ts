@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
 import { XTimelineAxisSettings } from './x-timeline-axis.settings';
+import { DestructibleComponent } from '../../../../common/destructible.component';
+import { ChartConstants } from '../../../../models/chart-constants';
 
 @Component({
   selector: 'lib-x-timeline-axis',
@@ -11,15 +12,14 @@ import { XTimelineAxisSettings } from './x-timeline-axis.settings';
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class XTimelineAxisComponent implements OnInit, OnDestroy {
-  static id = 'x';
-  private subs: Subscription[] = [];
-
+export class XTimelineAxisComponent extends DestructibleComponent implements OnInit {
   constructor(
     private limitService: ChartAxisLimitService,
     private service: ChartPlateService,
     private mapService: SettingsMapService,
-  ) {}
+  ) {
+    super();
+  }
 
   _settings: XTimelineAxisSettings = new XTimelineAxisSettings();
 
@@ -35,11 +35,10 @@ export class XTimelineAxisComponent implements OnInit, OnDestroy {
   }
 
   setAxis(): void {
-    this.service.setScale(XTimelineAxisComponent.id, this.mapService.xTimelineScale(this._settings));
+    this.service.setScale(ChartConstants.BottomAxisId, this.mapService.xTimelineScale(this._settings));
   }
 
-  ngOnDestroy(): void {
-    this.service.resetScale(XTimelineAxisComponent.id);
-    this.subs.forEach((s) => s.unsubscribe());
-  }
+  onDestroy = () => {
+    this.service.resetScale(ChartConstants.BottomAxisId);
+  };
 }
