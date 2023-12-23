@@ -20,7 +20,8 @@ export class XTimelineAxisSettings {
   public isSame(model: XTimelineAxisSettings): boolean {
     if (this.displayGrid !== model.displayGrid) return false;
     if (this.dateUnit !== model.dateUnit) return false;
-    if (this.dateFormat !== model.dateFormat) return false;
+    const date = new Date().getTime();
+    if (this.dateFormat(date, 0) !== model.dateFormat(date, 0)) return false;
     return this.limits![0] === model.limits![0] && this.limits![1] === model.limits![1];
   }
 
