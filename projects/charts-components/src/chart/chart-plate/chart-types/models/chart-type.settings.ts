@@ -16,8 +16,20 @@ export abstract class ChartTypeSettings<T extends ChartTypeSettings<T>> implemen
     return this._isSame(model);
   }
 
-  public setRight(yLeft = false): T {
-    return this.copy({ ...(this as any), yLeft });
+  public setRight(right = true): T {
+    return this.copy({ ...(this as any), yLeft: !right });
+  }
+
+  public setOrder(order: number): T {
+    return this.copy({ ...(this as any), order });
+  }
+
+  public setColor(color: string): T {
+    return this.copy({ ...(this as any), color });
+  }
+
+  public setName(name: string): T {
+    return this.copy({ ...(this as any), name });
   }
 
   public copy(model: T): T {
