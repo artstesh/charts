@@ -8,6 +8,7 @@ describe('#chart-elements XTimelineAxisSettings', () => {
   beforeEach(() => {
     model = XTimelineAxisSettings.copy(Forger.create<XTimelineAxisSettings>()!);
     model.dateUnit = Forger.create<'minute' | 'hour' | 'day' | 'week'>()!;
+    model.dateFormat = (v, i) => v + i + '';
   });
 
   afterEach(() => {
