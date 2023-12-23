@@ -59,6 +59,38 @@ describe('#chart-elements ChartLineSettings', () => {
     should().true(model.fill === fill);
   });
 
+  it('setRight()', () => {
+    const expected = Forger.create<boolean>()!;
+    //
+    model = model.setRight(expected);
+    //
+    should().true(model.yLeft !== expected);
+  });
+
+  it('setOrder()', () => {
+    const expected = Forger.create<number>()!;
+    //
+    model = model.setOrder(expected);
+    //
+    should().number(model.order).equals(expected);
+  });
+
+  it('setColor()', () => {
+    const expected = Forger.create<string>()!;
+    //
+    model = model.setColor(expected);
+    //
+    should().string(model.color).equals(expected);
+  });
+
+  it('setName()', () => {
+    const expected = Forger.create<string>()!;
+    //
+    model = model.setName(expected);
+    //
+    should().string(model.name).equals(expected);
+  });
+
   describe('isSame()', () => {
     it('are same', () => {
       const other = new ChartLineSettings().copy(model);
