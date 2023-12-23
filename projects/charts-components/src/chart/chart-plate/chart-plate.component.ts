@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import Chart from 'chart.js/auto';
 import { Subscription } from 'rxjs';
 import { ChartAxisLimitService } from '../services/chart-axis-limit.service';
@@ -14,6 +23,7 @@ registerAdapter();
   templateUrl: './chart-plate.component.html',
   styleUrls: ['./chart-plate.component.scss'],
   providers: [ChartAxisLimitService, ChartPlateService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('chart')
