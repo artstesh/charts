@@ -7,19 +7,26 @@ import { ChartPlateComponent } from './chart-plate.component';
 import { ChartModule } from '../chart.module';
 import { ChartPlateService } from './services/chart-plate.service';
 import { SettingsMapService } from '../services/settings-map.service';
+import { ChartPostboyService } from "../services/chart-postboy.service";
+import { Subject } from "rxjs";
+import { ChartInitializedEvent } from "../messages/events/chart-initialized.event";
+import { ChartUpdateCommand } from "../messages/commands/chart-update.command";
 
 describe('ChartPlateComponent', () => {
   let fixture: ComponentFixture<ChartPlateComponent>;
-  const plateService = mock(ChartPlateService);
-  let chartInitialized$: EventEmitter<any>;
+  const postboy = mock(ChartPostboyService);
+  let chartInitialized$: Subject<ChartInitializedEvent>;
+  let chartUpdate$: Subject<ChartUpdateCommand>;
   const mapService = mock(SettingsMapService);
 
   beforeEach(async () => {
-    chartInitialized$ = new EventEmitter();
-    when(plateService.chartInitialized).thenReturn(chartInitialized$);
+    chartInitialized$ = new Subject<ChartInitializedEvent>();
+    chartUpdate$ = new Subject<ChartUpdateCommand>();
+    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized$);
+    when(postboy.subscribe(ChartUpdateCommand.ID)).thenReturn(chartUpdate$);
     return MockBuilder(ChartPlateComponent, ChartModule)
       .provide(MockProvider(SettingsMapService, instance(mapService)))
-      .provide(MockProvider(ChartPlateService, instance(plateService)));
+      .provide(MockProvider(ChartPostboyService, instance(postboy)));
   });
 
   beforeEach(() => {
@@ -28,7 +35,8 @@ describe('ChartPlateComponent', () => {
   });
 
   afterEach(() => {
-    reset(plateService);
+    reset(postboy);
+    reset(mapService);
     expect().nothing();
   });
 

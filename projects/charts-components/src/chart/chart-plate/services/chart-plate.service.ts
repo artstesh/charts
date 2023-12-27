@@ -4,20 +4,25 @@ import { auditTime } from 'rxjs/operators';
 import Chart from 'chart.js/auto';
 import { ChartDataset, LegendOptions, ScaleOptionsByType } from 'chart.js';
 import { IChartDataset } from '../chart-types/models/i-chart-dataset';
+import { IPostboyDependingService, PostboyService } from "@artstesh/postboy";
+import { ChartInitializedEvent } from "../../messages/events/chart-initialized.event";
+import { ChartPostboyService } from "../../services/chart-postboy.service";
+import { ChartUpdateCommand } from "../../messages/commands/chart-update.command";
 
 @Injectable()
-export class ChartPlateService {
-  chartInitialized = new EventEmitter();
-  private _updateTrigger$ = new Subject<boolean>();
-  public updateTrigger$ = this._updateTrigger$.pipe(auditTime(350));
+export class ChartPlateService implements IPostboyDependingService {
   private chart?: Chart;
 
-  public setChart(chart: Chart): void {
-    this.chart = chart;
+  constructor(private postboy: ChartPostboyService) {
   }
 
-  public updateChart(force = false): void {
-    this._updateTrigger$.next(force);
+  up(): void {
+    this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)
+      .subscribe(ev => this.chart = ev.chart);
+  }
+
+  private updateChart(force = false): void {
+    this.postboy.fire(new ChartUpdateCommand(force));
   }
 
   addDataset(dataset: ChartDataset): void {
@@ -34,7 +39,7 @@ export class ChartPlateService {
       this.chart.data.datasets = this.chart.data.datasets.filter((d) => (d as IChartDataset).id !== alsoDelete);
     }
     if (this.chart.data.datasets.length !== initialLength) this.updateChart(true);
-    this.updateChart();
+    else this.updateChart();
   }
 
   public setScale(id: string, scale: ScaleOptionsByType): void {

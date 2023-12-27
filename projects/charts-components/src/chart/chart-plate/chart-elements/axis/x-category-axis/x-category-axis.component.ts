@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@a
 import { Subscription } from 'rxjs';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
+import { ChartPostboyService } from "../../../../services/chart-postboy.service";
+import { ChartInitializedEvent } from "../../../../messages/events/chart-initialized.event";
 
 @Component({
   selector: 'lib-x-category-axis',
@@ -13,7 +15,8 @@ export class XCategoryAxisComponent implements OnInit, OnDestroy {
   static id = 'x';
   private subs: Subscription[] = [];
 
-  constructor(private service: ChartPlateService, private mapService: SettingsMapService) {}
+  constructor(private service: ChartPlateService,
+              private postboy: ChartPostboyService,private mapService: SettingsMapService) {}
 
   _labels: string[] = [];
 
@@ -24,7 +27,8 @@ export class XCategoryAxisComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subs.push(this.service.chartInitialized.subscribe(() => this.setAxis()));
+    this.subs.push(this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)
+      .subscribe(() => this.setAxis()));
   }
 
   setAxis(): void {

@@ -6,6 +6,7 @@ import { ChartAxisLimitService } from '../../../services/chart-axis-limit.servic
 import { ChartLineSettings } from './chart-line.settings';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
+import { ChartPostboyService } from "../../../services/chart-postboy.service";
 
 @Component({
   selector: 'chart-line',
@@ -17,8 +18,9 @@ export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSett
   protected _settings: ChartLineSettings = new ChartLineSettings();
   private _dataFiltered!: ChartDataModel[];
 
-  constructor(limitService: ChartAxisLimitService, service: ChartPlateService, mapService: SettingsMapService) {
-    super(limitService, service, mapService);
+  constructor(limitService: ChartAxisLimitService,
+              postboy: ChartPostboyService,service: ChartPlateService, mapService: SettingsMapService) {
+    super(limitService, postboy, service, mapService);
   }
 
   private _data!: ChartDataModel[];

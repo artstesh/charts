@@ -4,6 +4,8 @@ import { ChartPlateService } from '../../services/chart-plate.service';
 import { DoughnutChartSettings } from './doughnut-chart.settings';
 import { DestructibleComponent } from '../../../common/destructible.component';
 import { DoughnutChartFactory } from './doughnut-chart.factory';
+import { ChartPostboyService } from "../../../services/chart-postboy.service";
+import { ChartInitializedEvent } from "../../../messages/events/chart-initialized.event";
 
 @Component({
   selector: 'lib-doughnut-chart',
@@ -12,7 +14,8 @@ import { DoughnutChartFactory } from './doughnut-chart.factory';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DoughnutChartComponent extends DestructibleComponent implements OnInit {
-  constructor(private service: ChartPlateService, private factory: DoughnutChartFactory) {
+  constructor(private service: ChartPlateService,
+              private postboy: ChartPostboyService,private factory: DoughnutChartFactory) {
     super();
   }
 
@@ -32,7 +35,8 @@ export class DoughnutChartComponent extends DestructibleComponent implements OnI
   }
 
   ngOnInit(): void {
-    this.subs.push(this.service.chartInitialized.subscribe(() => this.dataUpdated()));
+    this.subs.push(this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)
+      .subscribe(() => this.dataUpdated()));
   }
 
   onDestroy = () => {

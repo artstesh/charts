@@ -11,6 +11,8 @@ import { ChartAxisLimitService } from '../../../services/chart-axis-limit.servic
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { Forger } from '@artstesh/forger';
 import { SettingsMapService } from '../../../services/settings-map.service';
+import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 
 describe('#chart-types LineChartComponent', () => {
   let fixture: ComponentFixture<ChartLineComponent>;
@@ -18,14 +20,16 @@ describe('#chart-types LineChartComponent', () => {
   const limitService = mock(ChartAxisLimitService);
   const mapService = mock(SettingsMapService);
   let limitServiceChanged$: Subject<undefined>;
-  let chartInitialized: EventEmitter<unknown>;
+  const postboy = mock(ChartPostboyService);
+  let chartInitialized: Subject<ChartInitializedEvent>;
 
   beforeEach(async () => {
     limitServiceChanged$ = new Subject<undefined>();
-    chartInitialized = new EventEmitter();
-    when(plateService.chartInitialized).thenReturn(chartInitialized);
+    chartInitialized = new Subject<ChartInitializedEvent>();
+    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
     when(limitService.changed).thenReturn(limitServiceChanged$.asObservable());
     return MockBuilder(ChartLineComponent, ChartModule)
+      .provide(MockProvider(ChartPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)))
       .provide(MockProvider(SettingsMapService, instance(mapService)))
       .provide(MockProvider(ChartAxisLimitService, instance(limitService)));
@@ -38,6 +42,7 @@ describe('#chart-types LineChartComponent', () => {
   afterEach(() => {
     reset(mapService);
     reset(plateService);
+    reset(postboy);
     reset(limitService);
     expect().nothing();
   });

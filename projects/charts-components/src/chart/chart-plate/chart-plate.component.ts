@@ -15,6 +15,11 @@ import { ChartPlateService } from './services/chart-plate.service';
 import { SettingsMapService } from '../services/settings-map.service';
 import { ChartPlateSettings } from './models/chart-plate.settings';
 import { registerAdapter } from '../utils/chart-date.adapter';
+import { PostboyService } from "@artstesh/postboy";
+import { ChartInitializedEvent } from "../messages/events/chart-initialized.event";
+import { ChartPostboyService } from "../services/chart-postboy.service";
+import { MessageRegistratorService } from "../services/message-registrator.service";
+import { ChartUpdateCommand } from "../messages/commands/chart-update.command";
 
 registerAdapter();
 
@@ -22,7 +27,7 @@ registerAdapter();
   selector: 'app-chart-plate',
   templateUrl: './chart-plate.component.html',
   styleUrls: ['./chart-plate.component.scss'],
-  providers: [ChartAxisLimitService, ChartPlateService],
+  providers: [ChartAxisLimitService, ChartPlateService, MessageRegistratorService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
@@ -31,7 +36,11 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
   chart!: Chart;
   private subs: Subscription[] = [];
 
-  constructor(private service: ChartPlateService, private mapService: SettingsMapService) {}
+  constructor(private postboy: ChartPostboyService,
+              private registrator: MessageRegistratorService,
+              private mapService: SettingsMapService) {
+    this.registrator.up();
+  }
 
   private _settings: ChartPlateSettings = new ChartPlateSettings();
 
@@ -39,11 +48,12 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
     if (!value || this._settings.isSame(value)) return;
     this._settings = value;
     if (!!this.chart?.config) (this.chart.config as any).type = value.type;
-    this.service.updateChart();
+    this.postboy.fire(new ChartUpdateCommand());
   }
 
   ngOnInit(): void {
-    this.subs.push(this.service.updateTrigger$.subscribe((force) => this.updateChart(force)));
+    this.subs.push(this.postboy.subscribe<ChartUpdateCommand>(ChartUpdateCommand.ID)
+      .subscribe(ev => this.updateChart(ev.force)));
   }
 
   ngAfterViewInit(): void {
@@ -51,13 +61,13 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.registrator.down();
     this.subs.forEach((s) => s.unsubscribe());
   }
 
   setChart(): void {
     this.chart = new Chart(this.chartRef.nativeElement, this.mapService.chartPlateConfig(this._settings));
-    this.service.setChart(this.chart);
-    this.service.chartInitialized.emit();
+    this.postboy.fire(new ChartInitializedEvent(this.chart));
   }
 
   updateChart(force = false): void {
