@@ -3,9 +3,12 @@ import { ChartAxisLimitsModel, IChartAxisLimitsModel } from '../models/chart-axi
 import { ReplaySubject } from 'rxjs';
 import { auditTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ChartDataModel } from '../models';
+import { IPostboyDependingService } from '@artstesh/postboy';
+import { ChartPostboyService } from './chart-postboy.service';
+import { FilterDatasetQuery } from '../messages/queries/filter-dataset.query';
 
 @Injectable()
-export class ChartAxisLimitService {
+export class ChartAxisLimitService implements IPostboyDependingService {
   private _limitsChanged = new ReplaySubject<ChartAxisLimitsModel>(1);
   public changed = this._limitsChanged.pipe(
     auditTime(50),
@@ -13,7 +16,13 @@ export class ChartAxisLimitService {
     map(() => undefined),
   );
 
-  constructor() {}
+  constructor(private postboy: ChartPostboyService) {}
+
+  up(): void {
+    this.postboy
+      .subscribe<FilterDatasetQuery>(FilterDatasetQuery.ID)
+      .subscribe((ev) => ev.finish(this.examine(ev.collection)));
+  }
 
   private _model: ChartAxisLimitsModel = new ChartAxisLimitsModel();
 
@@ -28,12 +37,6 @@ export class ChartAxisLimitService {
   public setHorizontalLimits(minX: number | null, maxX: number | null): void {
     this._model.minX = minX;
     this._model.maxX = maxX;
-    this._limitsChanged.next(this._model);
-  }
-
-  public setMainVerticalLimits(min: number | null, max: number | null): void {
-    this._model.minY = min;
-    this._model.maxY = max;
     this._limitsChanged.next(this._model);
   }
 

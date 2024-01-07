@@ -3,7 +3,6 @@
 import { ComponentFixture } from '@angular/core/testing';
 
 import { ChartBarComponent } from './chart-bar.component';
-import { EventEmitter } from '@angular/core';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { anything, instance, mock, reset, verify, when } from 'ts-mockito';
 import { Forger } from '@artstesh/forger';
@@ -12,8 +11,9 @@ import { ChartAxisLimitService } from '../../../services/chart-axis-limit.servic
 import { Subject } from 'rxjs';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
-import { ChartPostboyService } from "../../../services/chart-postboy.service";
-import { ChartInitializedEvent } from "../../../messages/events/chart-initialized.event";
+import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
+import { ChartLimitEvent } from '../../../messages/events/chart-limit.event';
 
 describe('#chart-types ChartBarComponent', () => {
   let fixture: ComponentFixture<ChartBarComponent>;
@@ -28,7 +28,7 @@ describe('#chart-types ChartBarComponent', () => {
     limitServiceChanged$ = new Subject<undefined>();
     chartInitialized = new Subject<ChartInitializedEvent>();
     when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
-    when(limitService.changed).thenReturn(limitServiceChanged$.asObservable());
+    when(postboy.subscribe(ChartLimitEvent.ID)).thenReturn(limitServiceChanged$);
     return MockBuilder(ChartBarComponent, ChartModule)
       .provide(MockProvider(ChartPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)))

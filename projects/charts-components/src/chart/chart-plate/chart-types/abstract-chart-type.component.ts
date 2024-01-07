@@ -1,13 +1,13 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ChartAxisLimitService } from '../../services/chart-axis-limit.service';
 import { ChartTypeSettings } from './models/chart-type.settings';
 import { ColorCollector } from '../../services';
 import { ChartPlateService } from '../services/chart-plate.service';
 import { SettingsMapService } from '../../services/settings-map.service';
 import { ChartDataset } from 'chart.js';
-import { ChartInitializedEvent } from "../../messages/events/chart-initialized.event";
-import { ChartPostboyService } from "../../services/chart-postboy.service";
+import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
+import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { ChartLimitEvent } from '../../messages/events/chart-limit.event';
 
 @Component({
   template: '',
@@ -16,7 +16,6 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
   private subs: Subscription[] = [];
 
   protected constructor(
-    protected limitService: ChartAxisLimitService,
     protected postboy: ChartPostboyService,
     protected service: ChartPlateService,
     protected mapService: SettingsMapService,
@@ -33,9 +32,12 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
 
   ngOnInit(): void {
     if (!this._settings.color) this._settings.color = ColorCollector.getColor(this._settings.order);
-    this.subs.push(this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)
-      .subscribe(() => this.service.addDataset(this.getDataset())));
-    this.subs.push(this.limitService.changed.subscribe(() => this.rangeUpdated()));
+    this.subs.push(
+      this.postboy
+        .subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)
+        .subscribe(() => this.service.addDataset(this.getDataset())),
+    );
+    this.subs.push(this.postboy.subscribe<ChartLimitEvent>(ChartLimitEvent.ID).subscribe(() => this.rangeUpdated()));
   }
 
   ngOnDestroy(): void {
