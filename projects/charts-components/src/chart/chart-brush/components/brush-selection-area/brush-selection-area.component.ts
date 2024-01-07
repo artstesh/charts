@@ -1,12 +1,18 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ChartConstants } from '../../../models/chart-constants';
-import { ChartBrushService } from '../../services/chart-brush.service';
 import { ChartPostboyService } from '../../../services/chart-postboy.service';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 import Chart from 'chart.js/auto';
 import { BrushRangeModel } from '../../models/brush-range.model';
 import { DestructibleComponent } from '../../../common/destructible.component';
 import { Subscription } from 'rxjs';
+import { ChartLimitEvent } from '../../../messages/events/chart-limit.event';
+import { filter } from 'rxjs/operators';
+import { ChartLimitActor } from '../../../models';
+import { BrushAreaEvent } from '../../messages/events/brush-area.event';
+import { ZoomAreaCommand } from '../../messages/commands/zoom-area.command';
+import { MoveBrushCommand } from '../../messages/commands/move-brush.command';
+import { WidthRestrictionsCommand } from '../../messages/commands/width-restrictions.command';
 
 @Component({
   selector: 'lib-brush-selection-area',
@@ -19,19 +25,15 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
   @ViewChild('brushPlate') plate!: ElementRef;
   readonly scrollRange = 16;
   readonly areaMinSize = 100;
-  minDate: number = 0;
-  maxDate: number = 0;
-  daysLength = 0;
+  maxValue: number = 0;
+  minValue: number = 0;
+  daysLength = 1;
   selectedModel?: BrushRangeModel;
   isDown = false;
   movingBalancePause = 10;
   private movingBalanceTimer: ReturnType<typeof setTimeout> | null = null;
 
-  constructor(
-    private service: ChartBrushService,
-    private postboy: ChartPostboyService,
-    private detector: ChangeDetectorRef,
-  ) {
+  constructor(private postboy: ChartPostboyService, private detector: ChangeDetectorRef) {
     super();
   }
 
@@ -56,7 +58,7 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
     $event.preventDefault();
     if (this.isDown) {
       const newMousePosition = $event instanceof MouseEvent ? $event.clientX : $event.touches[0].clientX;
-      this.service.moveArea(newMousePosition - this.mouseDownPosition);
+      this.postboy.fire(new MoveBrushCommand(newMousePosition - this.mouseDownPosition));
       this.mouseDownPosition = newMousePosition;
     }
   }
@@ -64,7 +66,7 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
   onMouseScroll(ev: WheelEvent, direction: 'up' | 'down'): void {
     ev.stopPropagation();
     ev.preventDefault();
-    this.service.zoomArea(direction === 'down' ? this.scrollRange : -this.scrollRange);
+    this.postboy.fire(new ZoomAreaCommand(direction === 'down' ? this.scrollRange : -this.scrollRange));
   }
 
   updateMainChart(): void {
@@ -73,16 +75,16 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
     const rightPoint = this.selectedModel!.left + this.selectedModel!.width;
     const startIndex = Math.round((leftPoint / chartRectangle.width) * this.daysLength);
     const endIndex = Math.round((rightPoint / chartRectangle.width) * this.daysLength);
-    let startDate = this.minDate + startIndex;
-    let endDate = this.minDate + endIndex;
-    if (startDate < this.minDate) startDate = this.minDate;
-    if (endDate > this.maxDate) endDate = this.maxDate;
+    let startDate = this.maxValue + startIndex;
+    let endDate = this.maxValue + endIndex;
+    if (startDate < this.maxValue) startDate = this.maxValue;
+    if (endDate > this.minValue) endDate = this.minValue;
     this.updateMainChartBalanced(startDate, endDate);
   }
 
   resetAreaToDefault(): void {
     const chartRectangle = this.mainChart.canvas.getBoundingClientRect();
-    this.service.setWidthRestrictions(chartRectangle.width, this.areaMinSize);
+    this.postboy.fire(new WidthRestrictionsCommand(chartRectangle.width, this.areaMinSize));
   }
 
   private observeParentChart() {
@@ -96,22 +98,31 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
   }
 
   private observeSelectedArea(): Subscription {
-    return this.service.SelectedArea$.subscribe((sa) => {
-      this.selectedModel = sa;
-      this.plate.nativeElement.style.left = this.selectedModel.left + 'px';
-      this.plate.nativeElement.style.width = this.selectedModel.width + 'px';
+    return this.postboy.subscribe<BrushAreaEvent>(BrushAreaEvent.ID).subscribe((ev) => {
+      this.selectedModel = ev.range;
+      this.plate.nativeElement.style.left = ev.range.left + 'px';
+      this.plate.nativeElement.style.width = ev.range.width + 'px';
       this.updateMainChart();
     });
   }
 
   private observeParentRange(): Subscription {
-    return this.service.parentChartRange$.subscribe((range) => {
-      if (!range.min || !range.max || (range.min === this.minDate && range.max === this.maxDate)) return;
-      this.minDate = range.min;
-      this.maxDate = range.max;
-      this.daysLength = 1; //(this.mainChart?.scales?.[ChartConstants.BottomAxisId] as Scale<CoreScaleOptions>);
-      this.resetAreaToDefault();
-    });
+    return this.postboy
+      .subscribe<ChartLimitEvent>(ChartLimitEvent.ID)
+      .pipe(filter((e) => e.actor !== ChartLimitActor.Brush))
+      .subscribe((ev) => {
+        if (
+          ev.limits?.maxX == null ||
+          ev.limits.minX == null ||
+          (ev.limits.maxX === this.maxValue && ev.limits.minX === this.minValue)
+        )
+          return;
+        this.maxValue = ev.limits.minX;
+        this.minValue = ev.limits.maxX;
+        const ticks = this.mainChart.scales[ChartConstants.BottomAxisId].getTicks();
+        if (!!ticks.length && ticks.length >= 2) this.daysLength = ticks[1].value - ticks[0].value;
+        this.resetAreaToDefault();
+      });
   }
 
   private updateMainChartBalanced(start: number, end: number): void {

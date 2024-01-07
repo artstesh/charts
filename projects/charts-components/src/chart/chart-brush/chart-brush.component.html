@@ -1,1 +1,15 @@
-<p>chart-brush works!</p>
+<div
+  #divElement
+  (dblclick)="resetAreaToDefault()"
+  (mousedown)="mousedown($event)"
+  (mouseleave)="this.isDown = false"
+  (mousemove)="mousemove($event)"
+  (mouseup)="this.isDown = false"
+  (touchend)="this.isDown = false"
+  (touchmove)="mousemove($event)"
+  (touchstart)="mousedown($event)"
+  class="plate"
+  data-test="brush-plate">
+  <lib-brush-selection-area data-test="left-knob" side="left"></lib-brush-selection-area>
+  <lib-brush-selection-area data-test="right-knob" side="right"></lib-brush-selection-area>
+</div>
