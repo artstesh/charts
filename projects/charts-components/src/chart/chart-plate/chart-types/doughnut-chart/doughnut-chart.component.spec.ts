@@ -9,9 +9,9 @@ import { ChartPlateService } from '../../services/chart-plate.service';
 import { Forger } from '@artstesh/forger';
 import { DoughnutChartComponent } from './doughnut-chart.component';
 import { DoughnutChartFactory } from './doughnut-chart.factory';
-import { Subject } from "rxjs";
-import { ChartInitializedEvent } from "../../../messages/events/chart-initialized.event";
-import { ChartPostboyService } from "../../../services/chart-postboy.service";
+import { Subject } from 'rxjs';
+import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
+import { ChartPostboyService } from '../../../services/chart-postboy.service';
 
 describe('#chart-types DoughnutChartComponent', () => {
   let fixture: ComponentFixture<DoughnutChartComponent>;

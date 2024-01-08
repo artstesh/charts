@@ -17,8 +17,7 @@ export class ChartAxisLimitService implements IPostboyDependingService {
 
   constructor(private postboy: ChartPostboyService) {}
 
-  up(): void {
-  }
+  up(): void {}
 
   private _model: ChartAxisLimitsModel = new ChartAxisLimitsModel();
 

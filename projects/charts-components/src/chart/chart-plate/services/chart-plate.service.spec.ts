@@ -3,11 +3,11 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { ChartPlateService } from './chart-plate.service';
 import { should } from '@artstesh/it-should';
 import { Forger } from '@artstesh/forger';
-import { anything, instance, mock, reset, verify, when } from "ts-mockito";
-import { ChartPostboyService } from "../../services/chart-postboy.service";
-import { Subject } from "rxjs";
-import { ChartInitializedEvent } from "../../messages/events/chart-initialized.event";
-import { ChartUpdateCommand } from "../../messages/commands/chart-update.command";
+import { anything, instance, mock, reset, verify, when } from 'ts-mockito';
+import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { Subject } from 'rxjs';
+import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
+import { ChartUpdateCommand } from '../../messages/commands/chart-update.command';
 
 describe('ChartPlateService', () => {
   let waitTime = 400;
