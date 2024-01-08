@@ -8,17 +8,22 @@ import { ChartTooltipComponent } from './chart-tooltip.component';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
 import { ChartModule } from '../../../chart.module';
+import { ChartPostboyService } from "../../../services/chart-postboy.service";
+import { Subject } from "rxjs";
+import { ChartInitializedEvent } from "../../../messages/events/chart-initialized.event";
 
 describe('#chart-elements XLinearAxisComponent', () => {
   let fixture: ComponentFixture<ChartTooltipComponent>;
   const plateService = mock(ChartPlateService);
   const mapService = mock(SettingsMapService);
-  let chartInitialized$: EventEmitter<any>;
+  const postboy = mock(ChartPostboyService);
+  let chartInitialized: Subject<ChartInitializedEvent>;
 
   beforeEach(async () => {
-    chartInitialized$ = new EventEmitter();
-    when(plateService.chartInitialized).thenReturn(chartInitialized$);
+    chartInitialized = new Subject<ChartInitializedEvent>();
+    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
     return MockBuilder(ChartTooltipComponent, ChartModule)
+      .provide(MockProvider(ChartPostboyService, instance(postboy)))
       .provide(MockProvider(SettingsMapService, instance(mapService)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));
   });
@@ -42,7 +47,7 @@ describe('#chart-elements XLinearAxisComponent', () => {
     const expectedTooltip = Forger.create<number>()!; // a trick to avoid huge obj creation
     when(mapService.tooltip(anything())).thenReturn(expectedTooltip as any);
     //
-    chartInitialized$.next();
+    chartInitialized.next();
     fixture.detectChanges();
     //
     const [tooltip] = capture(plateService.setTooltip).last();
