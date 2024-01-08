@@ -63,9 +63,9 @@ export class ChartTooltipFactory {
         value: rowPointData as any,
         datasetId: (nearestPoint?.dataset as IChartDataset)?.id,
       };
-      const existing = document.querySelector('.lib-chart-tooltip-content');
+      const existing = document.querySelector('.art-chart-tooltip-content');
       let htmlDivElement = !!existing ? existing : document.createElement('div');
-      htmlDivElement.className = 'lib-chart-tooltip-content';
+      htmlDivElement.className = 'art-chart-tooltip-content';
       htmlDivElement.innerHTML = settings.content(model) ?? '';
       tooltipEl.appendChild(htmlDivElement);
       let offset = tooltip.caretX;

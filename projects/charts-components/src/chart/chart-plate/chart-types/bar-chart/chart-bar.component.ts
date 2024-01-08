@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AbstractChartTypeComponent } from '../abstract-chart-type.component';
 import { ChartDataModel } from '../../../models';
-import { ChartAxisLimitService } from '../../../services/chart-axis-limit.service';
 import { ChartBarSettings } from './chart-bar.settings';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
+import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { FilterDatasetQuery } from '../../../messages/queries/filter-dataset.query';
 
 @Component({
-  selector: 'chart-bar',
+  selector: 'art-chart-bar',
   template: '',
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,8 +17,8 @@ export class ChartBarComponent extends AbstractChartTypeComponent<ChartBarSettin
   protected _settings: ChartBarSettings = new ChartBarSettings();
   private _dataFiltered!: ChartDataModel[];
 
-  constructor(limitService: ChartAxisLimitService, service: ChartPlateService, mapService: SettingsMapService) {
-    super(limitService, service, mapService);
+  constructor(postboy: ChartPostboyService, service: ChartPlateService, mapService: SettingsMapService) {
+    super(postboy, service, mapService);
   }
 
   private _data!: ChartDataModel[];
@@ -28,7 +29,8 @@ export class ChartBarComponent extends AbstractChartTypeComponent<ChartBarSettin
   }
 
   protected updateFilteredData(): void {
-    this._dataFiltered = this.limitService.examine(this._data);
+    const query = new FilterDatasetQuery(this._data);
+    this._dataFiltered = this.postboy.execute(query);
   }
 
   protected getDataset = () => this.mapService.batDataset(this._settings, this._dataFiltered);

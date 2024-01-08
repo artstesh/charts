@@ -43,7 +43,8 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "rxjs": "^6.6.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.13.0"
+    "zone.js": "~0.13.0",
+    "@artstesh/postboy": "^1.0.8"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^16.0.0",
