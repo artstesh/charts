@@ -9,6 +9,9 @@ import { XTimelineAxisComponent } from './chart-plate/chart-elements/axis/x-time
 import { ChartTooltipComponent } from './chart-plate/chart-elements/chart-tooltip/chart-tooltip.component';
 import { DoughnutChartComponent } from './chart-plate/chart-types/doughnut-chart/doughnut-chart.component';
 import { OrdinateAxisComponent } from './chart-plate/chart-elements/axis/ordinate-axis/ordinate-axis.component';
+import { ChartBrushComponent } from './chart-brush/chart-brush.component';
+import { BrushSelectionAreaComponent } from './chart-brush/components/brush-selection-area/brush-selection-area.component';
+import { BrushKnobComponent } from './chart-brush/components/brush-selection-area/brush-knob/brush-knob.component';
 
 @NgModule({
   imports: [CommonModule],
@@ -24,6 +27,9 @@ import { OrdinateAxisComponent } from './chart-plate/chart-elements/axis/ordinat
     ChartTooltipComponent,
     DoughnutChartComponent,
     OrdinateAxisComponent,
+    ChartBrushComponent,
+    BrushSelectionAreaComponent,
+    BrushKnobComponent,
   ],
   exports: [
     ChartPlateComponent,

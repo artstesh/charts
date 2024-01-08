@@ -12,7 +12,7 @@
       "projectType": "library",
       "root": "projects/charts-components",
       "sourceRoot": "projects/charts-components/src",
-      "prefix": "lib",
+      "prefix": "art",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"

@@ -5,7 +5,8 @@
     "@angular/common": "^13.0.0",
     "@angular/core": "^13.0.0",
     "chart.js": "^4.4.0",
-    "chartjs-plugin-datalabels": "^2.2.0"
+    "chartjs-plugin-datalabels": "^2.2.0",
+    "@artstesh/postboy": "^1.0.8"
   },
   "dependencies": {
     "tslib": "^2.2.0"

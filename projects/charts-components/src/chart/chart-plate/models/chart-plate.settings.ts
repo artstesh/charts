@@ -4,13 +4,13 @@ export type InteractMode = 'point' | 'nearest' | 'index' | 'dataset' | 'x' | 'y'
 
 export class ChartPlateSettings implements IChartElementSettings<ChartPlateSettings> {
   public interactionMode: InteractMode = 'nearest';
-  public type: 'line' | 'doughnut' = 'line';
+  public type: 'line' | 'doughnut' | 'pie' = 'line';
 
   public setMode(interactionMode: InteractMode): ChartPlateSettings {
     return this.copy({ ...this, interactionMode });
   }
 
-  public setType(type: 'line' | 'doughnut'): ChartPlateSettings {
+  public setType(type: 'line' | 'doughnut' | 'pie'): ChartPlateSettings {
     return this.copy({ ...this, type });
   }
 
