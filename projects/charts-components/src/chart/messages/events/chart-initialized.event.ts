@@ -1,4 +1,4 @@
-import { PostboyGenericMessage } from "@artstesh/postboy";
+import { PostboyGenericMessage } from '@artstesh/postboy';
 import Chart from 'chart.js/auto';
 
 export class ChartInitializedEvent extends PostboyGenericMessage {
@@ -10,4 +10,3 @@ export class ChartInitializedEvent extends PostboyGenericMessage {
     super();
   }
 }
-
