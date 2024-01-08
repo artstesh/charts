@@ -1,29 +1,22 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { auditTime } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { ChartDataset, LegendOptions, ScaleOptionsByType } from 'chart.js';
 import { IChartDataset } from '../chart-types/models/i-chart-dataset';
+import { IPostboyDependingService } from '@artstesh/postboy';
+import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
+import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { ChartUpdateCommand } from '../../messages/commands/chart-update.command';
 
 @Injectable()
-export class ChartPlateService {
-  chartInitialized = new EventEmitter();
-  private _updateTrigger$ = new Subject<boolean>();
-  public updateTrigger$ = this._updateTrigger$.pipe(auditTime(350));
+export class ChartPlateService implements IPostboyDependingService {
   private chart?: Chart;
 
-  public setChart(chart: Chart): void {
-    this.chart = chart;
-  }
+  constructor(private postboy: ChartPostboyService) {}
 
-  public updateChart(force = false): void {
-    this._updateTrigger$.next(force);
-  }
-
-  addDataset(dataset: ChartDataset): void {
-    if (!this.chart?.data) return;
-    this.chart.data.datasets.push(dataset);
-    this.updateChart();
+  up(): void {
+    this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {
+      this.chart = ev.chart;
+    });
   }
 
   removeDataset(id: string, alsoDelete?: string): void {
@@ -34,7 +27,17 @@ export class ChartPlateService {
       this.chart.data.datasets = this.chart.data.datasets.filter((d) => (d as IChartDataset).id !== alsoDelete);
     }
     if (this.chart.data.datasets.length !== initialLength) this.updateChart(true);
+    else this.updateChart();
+  }
+
+  addDataset(dataset: ChartDataset): void {
+    if (!this.chart?.data) return;
+    this.chart.data.datasets.push(dataset);
     this.updateChart();
+  }
+
+  private updateChart(force = false): void {
+    this.postboy.fire(new ChartUpdateCommand(force));
   }
 
   public setScale(id: string, scale: ScaleOptionsByType): void {

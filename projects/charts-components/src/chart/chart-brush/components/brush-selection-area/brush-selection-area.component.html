@@ -1,0 +1,15 @@
+<div
+  #brushPlate
+  (dblclick)="resetAreaToDefault()"
+  (mousedown)="mousedown($event)"
+  (mouseleave)="this.isDown = false"
+  (mousemove)="mousemove($event)"
+  (mouseup)="this.isDown = false"
+  (touchend)="this.isDown = false"
+  (touchmove)="mousemove($event)"
+  (touchstart)="mousedown($event)"
+  class="brush-plate"
+  data-test="brush-plate">
+  <art-brush-knob data-test="left-knob" side="left"></art-brush-knob>
+  <art-brush-knob data-test="right-knob" side="right"></art-brush-knob>
+</div>

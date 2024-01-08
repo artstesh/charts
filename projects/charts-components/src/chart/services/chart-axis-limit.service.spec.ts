@@ -6,13 +6,15 @@ import { ChartAxisLimitsModel, IChartAxisLimitsModel } from '../models/chart-axi
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
 import { ChartDataModel } from '../models';
+import { ChartPostboyService } from './chart-postboy.service';
 
 describe('ChartAxisLimitService', () => {
   let service: ChartAxisLimitService;
   const model = mock(ChartAxisLimitsModel);
+  const postboy = mock(ChartPostboyService);
 
   beforeEach(() => {
-    service = new ChartAxisLimitService();
+    service = new ChartAxisLimitService(instance(postboy));
     service.setModel(instance(model));
   });
 
@@ -45,18 +47,6 @@ describe('ChartAxisLimitService', () => {
     });
   });
 
-  describe('setMainVerticalLimits()', () => {
-    it('success', () => {
-      const min: number | null = Forger.create<number | null>()!;
-      const max: number | null = Forger.create<number | null>()!;
-      //
-      service.setMainVerticalLimits(min, max);
-      //
-      should().true(instance(model).minY === min);
-      should().true(instance(model).maxY === max);
-    });
-  });
-
   describe('setHorizontalLimits()', () => {
     it('success', () => {
       const min: number | null = Forger.create<number | null>()!;
@@ -80,15 +70,7 @@ describe('ChartAxisLimitService', () => {
       service.changed.subscribe(() => (fired = true));
     });
 
-    it('setMainVerticalLimits() fires', fakeAsync(() => {
-      //
-      service.setMainVerticalLimits(someNumber, someNumber);
-      tick(updateTime);
-      //
-      should().true(fired);
-    }));
-
-    it('setMainVerticalLimits() fires', fakeAsync(() => {
+    it('setHorizontalLimits() fires', fakeAsync(() => {
       //
       service.setHorizontalLimits(someNumber, someNumber);
       tick(updateTime);

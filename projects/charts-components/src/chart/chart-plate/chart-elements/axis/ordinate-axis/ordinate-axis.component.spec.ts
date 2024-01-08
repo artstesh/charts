@@ -1,5 +1,4 @@
 import { ComponentFixture } from '@angular/core/testing';
-import { EventEmitter } from '@angular/core';
 import { Forger } from '@artstesh/forger';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { ChartModule } from '../../../../chart.module';
@@ -9,17 +8,22 @@ import { ChartPlateService } from '../../../services/chart-plate.service';
 import { ChartConstants } from '../../../../models/chart-constants';
 import { OrdinateAxisComponent } from './ordinate-axis.component';
 import { OrdinateAxisFactory } from './ordinate-axis-factory.service';
+import { Subject } from 'rxjs';
+import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
+import { ChartPostboyService } from '../../../../services/chart-postboy.service';
 
 describe('#chart-elements OrdinateAxisComponent', () => {
   let fixture: ComponentFixture<OrdinateAxisComponent>;
   const plateService = mock(ChartPlateService);
   const factory = mock(OrdinateAxisFactory);
-  let chartInitialized$: EventEmitter<any>;
+  const postboy = mock(ChartPostboyService);
+  let chartInitialized: Subject<ChartInitializedEvent>;
 
   beforeEach(async () => {
-    chartInitialized$ = new EventEmitter();
-    when(plateService.chartInitialized).thenReturn(chartInitialized$);
+    chartInitialized = new Subject<ChartInitializedEvent>();
+    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
     return MockBuilder(OrdinateAxisComponent, ChartModule)
+      .provide(MockProvider(ChartPostboyService, instance(postboy)))
       .provide(MockProvider(OrdinateAxisFactory, instance(factory)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));
   });
@@ -31,6 +35,7 @@ describe('#chart-elements OrdinateAxisComponent', () => {
 
   afterEach(() => {
     reset(factory);
+    reset(postboy);
     reset(plateService);
     expect().nothing();
   });
@@ -43,7 +48,7 @@ describe('#chart-elements OrdinateAxisComponent', () => {
     const expectedScale = Forger.create<number>()!; // a trick to avoid huge obj creation
     when(factory.build(anything())).thenReturn(expectedScale as any);
     //
-    chartInitialized$.next();
+    chartInitialized.next();
     fixture.detectChanges();
     //
     const [id, scale] = capture(plateService.setScale).last();

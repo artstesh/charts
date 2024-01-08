@@ -4,22 +4,26 @@ import { XCategoryAxisComponent } from './x-category-axis.component';
 import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
-import { EventEmitter } from '@angular/core';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { ChartModule } from '../../../../chart.module';
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
+import { ChartPostboyService } from '../../../../services/chart-postboy.service';
+import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
+import { Subject } from 'rxjs';
 
 describe('#chart-elements XCategoryAxisComponent', () => {
   let fixture: ComponentFixture<XCategoryAxisComponent>;
   const plateService = mock(ChartPlateService);
   const mapService = mock(SettingsMapService);
-  let chartInitialized$: EventEmitter<any>;
+  const postboy = mock(ChartPostboyService);
+  let chartInitialized: Subject<ChartInitializedEvent>;
 
   beforeEach(async () => {
-    chartInitialized$ = new EventEmitter();
-    when(plateService.chartInitialized).thenReturn(chartInitialized$);
+    chartInitialized = new Subject<ChartInitializedEvent>();
+    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
     return MockBuilder(XCategoryAxisComponent, ChartModule)
+      .provide(MockProvider(ChartPostboyService, instance(postboy)))
       .provide(MockProvider(SettingsMapService, instance(mapService)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));
   });
@@ -32,6 +36,7 @@ describe('#chart-elements XCategoryAxisComponent', () => {
   afterEach(() => {
     reset(plateService);
     reset(mapService);
+    reset(postboy);
     expect().nothing();
   });
 
@@ -43,7 +48,7 @@ describe('#chart-elements XCategoryAxisComponent', () => {
     const expectedScale = Forger.create<number>()!; // a trick to avoid huge obj creation
     when(mapService.xCategoryScale(anything())).thenReturn(expectedScale as any);
     //
-    chartInitialized$.next();
+    chartInitialized.next();
     fixture.detectChanges();
     //
     const [id, scale] = capture(plateService.setScale).last();
