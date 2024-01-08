@@ -3,18 +3,21 @@ import { DestructibleComponent } from '../../../common/destructible.component';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
 import { ChartTooltipSettings } from './chart-tooltip.settings';
-import { ChartPostboyService } from "../../../services/chart-postboy.service";
-import { ChartInitializedEvent } from "../../../messages/events/chart-initialized.event";
+import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 
 @Component({
-  selector: 'lib-chart-tooltip',
+  selector: 'art-chart-tooltip',
   template: '',
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartTooltipComponent extends DestructibleComponent implements OnInit, OnDestroy {
-  constructor(private service: ChartPlateService,
-              private postboy: ChartPostboyService,private mapService: SettingsMapService) {
+  constructor(
+    private service: ChartPlateService,
+    private postboy: ChartPostboyService,
+    private mapService: SettingsMapService,
+  ) {
     super();
   }
 
@@ -27,8 +30,9 @@ export class ChartTooltipComponent extends DestructibleComponent implements OnIn
   }
 
   ngOnInit(): void {
-    this.subs.push(this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)
-      .subscribe(() => this.setTooltip()));
+    this.subs.push(
+      this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe(() => this.setTooltip()),
+    );
   }
 
   onDestroy = () => {

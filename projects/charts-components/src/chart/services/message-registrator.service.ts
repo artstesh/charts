@@ -8,12 +8,14 @@ import { ReplaySubject, Subject } from 'rxjs';
 import { ChartUpdateCommand } from '../messages/commands/chart-update.command';
 import { ChartLimitEvent } from '../messages/events/chart-limit.event';
 import { FilterDatasetQuery } from '../messages/queries/filter-dataset.query';
+import { ChartAxisLimitService } from './chart-axis-limit.service';
+import { ChartDataModel } from '../models';
 
 @Injectable()
 export class MessageRegistratorService extends PostboyAbstractRegistrator {
-  constructor(postboy: ChartPostboyService, general: ChartPlateService) {
+  constructor(postboy: ChartPostboyService, general: ChartPlateService, private limit: ChartAxisLimitService) {
     super(postboy);
-    this.registerServices([general]);
+    this.registerServices([general, limit]);
   }
 
   protected _up(): void {
@@ -27,6 +29,9 @@ export class MessageRegistratorService extends PostboyAbstractRegistrator {
         distinctUntilChanged((x, y) => x?.limits.isTheSame(y?.limits) ?? false),
         auditTime(50),
       ),
+    );
+    this.registerExecutor<FilterDatasetQuery, ChartDataModel[]>(FilterDatasetQuery.ID, (e) =>
+      this.limit.examine(e.collection),
     );
   }
 }

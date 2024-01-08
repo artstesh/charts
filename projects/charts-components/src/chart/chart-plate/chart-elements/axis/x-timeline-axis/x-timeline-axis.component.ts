@@ -5,11 +5,11 @@ import { SettingsMapService } from '../../../../services/settings-map.service';
 import { XTimelineAxisSettings } from './x-timeline-axis.settings';
 import { DestructibleComponent } from '../../../../common/destructible.component';
 import { ChartConstants } from '../../../../models/chart-constants';
-import { ChartInitializedEvent } from "../../../../messages/events/chart-initialized.event";
-import { ChartPostboyService } from "../../../../services/chart-postboy.service";
+import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
+import { ChartPostboyService } from '../../../../services/chart-postboy.service';
 
 @Component({
-  selector: 'lib-x-timeline-axis',
+  selector: 'art-x-timeline-axis',
   template: '',
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,8 +34,9 @@ export class XTimelineAxisComponent extends DestructibleComponent implements OnI
   }
 
   ngOnInit(): void {
-    this.subs.push(this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)
-      .subscribe(() => this.setAxis()));
+    this.subs.push(
+      this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe(() => this.setAxis()),
+    );
   }
 
   setAxis(): void {

@@ -5,11 +5,11 @@ import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
 import { DestructibleComponent } from '../../../../common/destructible.component';
 import { ChartConstants } from '../../../../models/chart-constants';
-import { ChartPostboyService } from "../../../../services/chart-postboy.service";
-import { ChartInitializedEvent } from "../../../../messages/events/chart-initialized.event";
+import { ChartPostboyService } from '../../../../services/chart-postboy.service';
+import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
 
 @Component({
-  selector: 'lib-x-linear-axis',
+  selector: 'art-x-linear-axis',
   template: '',
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,8 +34,9 @@ export class XLinearAxisComponent extends DestructibleComponent implements OnIni
   }
 
   ngOnInit(): void {
-    this.subs.push(this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)
-      .subscribe(() => this.setAxis()));
+    this.subs.push(
+      this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe(() => this.setAxis()),
+    );
   }
 
   setAxis(): void {

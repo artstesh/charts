@@ -15,7 +15,7 @@ import { MoveBrushCommand } from '../../messages/commands/move-brush.command';
 import { WidthRestrictionsCommand } from '../../messages/commands/width-restrictions.command';
 
 @Component({
-  selector: 'lib-brush-selection-area',
+  selector: 'art-brush-selection-area',
   templateUrl: './brush-selection-area.component.html',
   styleUrls: ['./brush-selection-area.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

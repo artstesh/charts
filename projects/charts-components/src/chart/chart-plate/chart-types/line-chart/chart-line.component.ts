@@ -9,7 +9,7 @@ import { ChartPostboyService } from '../../../services/chart-postboy.service';
 import { FilterDatasetQuery } from '../../../messages/queries/filter-dataset.query';
 
 @Component({
-  selector: 'chart-line',
+  selector: 'art-chart-line',
   template: '',
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,8 +31,7 @@ export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSett
 
   protected updateFilteredData(): void {
     const query = new FilterDatasetQuery(this._data);
-    query.result.subscribe((r) => (this._dataFiltered = r));
-    this.postboy.fire(query);
+    this._dataFiltered = this.postboy.execute(query);
   }
 
   protected getDataset = () => this.mapService.lineDataset(this._settings, this._dataFiltered);

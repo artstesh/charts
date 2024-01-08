@@ -1,11 +1,11 @@
-import { Component, HostListener, Input, OnInit } from "@angular/core";
-import { ChartPostboyService } from "../../../../services/chart-postboy.service";
-import { MoveBrushBorderCommand } from "../../../../messages/commands/move-brush-border.command";
+import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { ChartPostboyService } from '../../../../services/chart-postboy.service';
+import { MoveBrushBorderCommand } from '../../../../messages/commands/move-brush-border.command';
 
 @Component({
-  selector: 'lib-brush-knob',
+  selector: 'art-brush-knob',
   templateUrl: './brush-knob.component.html',
-  styleUrls: ['./brush-knob.component.scss']
+  styleUrls: ['./brush-knob.component.scss'],
 })
 export class BrushKnobComponent implements OnInit {
   @Input() side: 'left' | 'right' = 'left';
@@ -39,7 +39,7 @@ export class BrushKnobComponent implements OnInit {
   mousemove($event: MouseEvent | TouchEvent) {
     if (this.isDown) {
       const newMousePosition = $event instanceof MouseEvent ? $event.clientX : $event.touches[0].clientX;
-      this.postboy.fire(new MoveBrushBorderCommand(newMousePosition - this.mouseDownPosition, this.side))
+      this.postboy.fire(new MoveBrushBorderCommand(newMousePosition - this.mouseDownPosition, this.side));
       this.mouseDownPosition = newMousePosition;
     }
   }

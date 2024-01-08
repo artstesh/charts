@@ -10,7 +10,6 @@ import { ChartTooltipComponent } from './chart-plate/chart-elements/chart-toolti
 import { DoughnutChartComponent } from './chart-plate/chart-types/doughnut-chart/doughnut-chart.component';
 import { OrdinateAxisComponent } from './chart-plate/chart-elements/axis/ordinate-axis/ordinate-axis.component';
 import { ChartBrushComponent } from './chart-brush/chart-brush.component';
-import { ChartPostboyService } from "./services/chart-postboy.service";
 import { BrushSelectionAreaComponent } from './chart-brush/components/brush-selection-area/brush-selection-area.component';
 import { BrushKnobComponent } from './chart-brush/components/brush-selection-area/brush-knob/brush-knob.component';
 
@@ -44,8 +43,5 @@ import { BrushKnobComponent } from './chart-brush/components/brush-selection-are
     DoughnutChartComponent,
     OrdinateAxisComponent,
   ],
-  providers: [
-    {provide: ChartPostboyService, useValue: new ChartPostboyService()}
-  ]
 })
 export class ChartModule {}

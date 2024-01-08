@@ -5,7 +5,6 @@ import { auditTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ChartDataModel } from '../models';
 import { IPostboyDependingService } from '@artstesh/postboy';
 import { ChartPostboyService } from './chart-postboy.service';
-import { FilterDatasetQuery } from '../messages/queries/filter-dataset.query';
 
 @Injectable()
 export class ChartAxisLimitService implements IPostboyDependingService {
@@ -19,9 +18,6 @@ export class ChartAxisLimitService implements IPostboyDependingService {
   constructor(private postboy: ChartPostboyService) {}
 
   up(): void {
-    this.postboy
-      .subscribe<FilterDatasetQuery>(FilterDatasetQuery.ID)
-      .subscribe((ev) => ev.finish(this.examine(ev.collection)));
   }
 
   private _model: ChartAxisLimitsModel = new ChartAxisLimitsModel();

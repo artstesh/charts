@@ -4,11 +4,11 @@ import { ChartPlateService } from '../../../services/chart-plate.service';
 import { ChartConstants } from '../../../../models/chart-constants';
 import { OrdinateAxisFactory } from './ordinate-axis-factory.service';
 import { OrdinateAxisSettings } from './ordinate-axis.settings';
-import { ChartInitializedEvent } from "../../../../messages/events/chart-initialized.event";
-import { ChartPostboyService } from "../../../../services/chart-postboy.service";
+import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
+import { ChartPostboyService } from '../../../../services/chart-postboy.service';
 
 @Component({
-  selector: 'lib-ordinate-axis',
+  selector: 'art-ordinate-axis',
   template: '',
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,8 +16,11 @@ import { ChartPostboyService } from "../../../../services/chart-postboy.service"
 export class OrdinateAxisComponent extends DestructibleComponent implements OnInit {
   private axisId = ChartConstants.LeftAxisId;
 
-  constructor(private service: ChartPlateService,
-              private postboy: ChartPostboyService,private mapService: OrdinateAxisFactory) {
+  constructor(
+    private service: ChartPlateService,
+    private postboy: ChartPostboyService,
+    private mapService: OrdinateAxisFactory,
+  ) {
     super();
   }
 
@@ -30,8 +33,9 @@ export class OrdinateAxisComponent extends DestructibleComponent implements OnIn
   }
 
   ngOnInit(): void {
-    this.subs.push(this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)
-      .subscribe(() => this.setAxis()));
+    this.subs.push(
+      this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe(() => this.setAxis()),
+    );
   }
 
   setAxis(): void {

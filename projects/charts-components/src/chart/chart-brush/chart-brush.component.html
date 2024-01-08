@@ -1,15 +1,15 @@
-<div
-  #divElement
-  (dblclick)="resetAreaToDefault()"
-  (mousedown)="mousedown($event)"
-  (mouseleave)="this.isDown = false"
-  (mousemove)="mousemove($event)"
-  (mouseup)="this.isDown = false"
-  (touchend)="this.isDown = false"
-  (touchmove)="mousemove($event)"
-  (touchstart)="mousedown($event)"
+<div #divElement
   class="plate"
   data-test="brush-plate">
-  <lib-brush-selection-area data-test="left-knob" side="left"></lib-brush-selection-area>
-  <lib-brush-selection-area data-test="right-knob" side="right"></lib-brush-selection-area>
+  <art-brush-selection-area data-test="left-knob" side="left"></art-brush-selection-area>
+  <art-brush-selection-area data-test="right-knob" side="right"></art-brush-selection-area>
 </div>
+
+<!--  (dblclick)="resetAreaToDefault()"-->
+<!--  (mousedown)="mousedown($event)"-->
+<!--  (mouseleave)="this.isDown = false"-->
+<!--  (mousemove)="mousemove($event)"-->
+<!--  (mouseup)="this.isDown = false"-->
+<!--  (touchend)="this.isDown = false"-->
+<!--  (touchmove)="mousemove($event)"-->
+<!--  (touchstart)="mousedown($event)"-->

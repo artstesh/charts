@@ -1,7 +1,7 @@
-import { PostboyCallbackMessage } from '@artstesh/postboy';
+import { PostboyExecutor } from '@artstesh/postboy';
 import { ChartDataModel } from '../../models';
 
-export class FilterDatasetQuery extends PostboyCallbackMessage<ChartDataModel[]> {
+export class FilterDatasetQuery extends PostboyExecutor<ChartDataModel[]> {
   public static readonly ID = 'eafe8cfa-706e-49fd-9830-39f93ddc8649';
 
   constructor(public collection: ChartDataModel[]) {

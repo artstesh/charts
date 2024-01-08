@@ -1,24 +1,22 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { auditTime } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { ChartDataset, LegendOptions, ScaleOptionsByType } from 'chart.js';
 import { IChartDataset } from '../chart-types/models/i-chart-dataset';
-import { IPostboyDependingService, PostboyService } from "@artstesh/postboy";
-import { ChartInitializedEvent } from "../../messages/events/chart-initialized.event";
-import { ChartPostboyService } from "../../services/chart-postboy.service";
-import { ChartUpdateCommand } from "../../messages/commands/chart-update.command";
+import { IPostboyDependingService } from '@artstesh/postboy';
+import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
+import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { ChartUpdateCommand } from '../../messages/commands/chart-update.command';
 
 @Injectable()
 export class ChartPlateService implements IPostboyDependingService {
   private chart?: Chart;
 
-  constructor(private postboy: ChartPostboyService) {
-  }
+  constructor(private postboy: ChartPostboyService) {}
 
   up(): void {
-    this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)
-      .subscribe(ev => this.chart = ev.chart);
+    this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {
+      this.chart = ev.chart;
+    });
   }
 
   private updateChart(force = false): void {

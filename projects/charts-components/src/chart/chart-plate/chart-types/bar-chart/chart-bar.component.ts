@@ -8,7 +8,7 @@ import { ChartPostboyService } from '../../../services/chart-postboy.service';
 import { FilterDatasetQuery } from '../../../messages/queries/filter-dataset.query';
 
 @Component({
-  selector: 'chart-bar',
+  selector: 'art-chart-bar',
   template: '',
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,8 +30,7 @@ export class ChartBarComponent extends AbstractChartTypeComponent<ChartBarSettin
 
   protected updateFilteredData(): void {
     const query = new FilterDatasetQuery(this._data);
-    query.result.subscribe((r) => (this._dataFiltered = r));
-    this.postboy.fire(query);
+    this._dataFiltered = this.postboy.execute(query);
   }
 
   protected getDataset = () => this.mapService.batDataset(this._settings, this._dataFiltered);
