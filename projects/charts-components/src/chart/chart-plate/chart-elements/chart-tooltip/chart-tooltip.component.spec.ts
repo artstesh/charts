@@ -8,9 +8,9 @@ import { ChartTooltipComponent } from './chart-tooltip.component';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
 import { ChartModule } from '../../../chart.module';
-import { ChartPostboyService } from "../../../services/chart-postboy.service";
-import { Subject } from "rxjs";
-import { ChartInitializedEvent } from "../../../messages/events/chart-initialized.event";
+import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { Subject } from 'rxjs';
+import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 
 describe('#chart-elements XLinearAxisComponent', () => {
   let fixture: ComponentFixture<ChartTooltipComponent>;
