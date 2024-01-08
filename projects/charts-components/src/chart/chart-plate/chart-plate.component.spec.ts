@@ -7,10 +7,10 @@ import { ChartPlateComponent } from './chart-plate.component';
 import { ChartModule } from '../chart.module';
 import { ChartPlateService } from './services/chart-plate.service';
 import { SettingsMapService } from '../services/settings-map.service';
-import { ChartPostboyService } from "../services/chart-postboy.service";
-import { Subject } from "rxjs";
-import { ChartInitializedEvent } from "../messages/events/chart-initialized.event";
-import { ChartUpdateCommand } from "../messages/commands/chart-update.command";
+import { ChartPostboyService } from '../services/chart-postboy.service';
+import { Subject } from 'rxjs';
+import { ChartInitializedEvent } from '../messages/events/chart-initialized.event';
+import { ChartUpdateCommand } from '../messages/commands/chart-update.command';
 
 describe('ChartPlateComponent', () => {
   let fixture: ComponentFixture<ChartPlateComponent>;

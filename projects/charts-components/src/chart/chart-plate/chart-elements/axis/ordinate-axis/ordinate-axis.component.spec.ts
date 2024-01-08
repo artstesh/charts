@@ -9,9 +9,9 @@ import { ChartPlateService } from '../../../services/chart-plate.service';
 import { ChartConstants } from '../../../../models/chart-constants';
 import { OrdinateAxisComponent } from './ordinate-axis.component';
 import { OrdinateAxisFactory } from './ordinate-axis-factory.service';
-import { Subject } from "rxjs";
-import { ChartInitializedEvent } from "../../../../messages/events/chart-initialized.event";
-import { ChartPostboyService } from "../../../../services/chart-postboy.service";
+import { Subject } from 'rxjs';
+import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
+import { ChartPostboyService } from '../../../../services/chart-postboy.service';
 
 describe('#chart-elements OrdinateAxisComponent', () => {
   let fixture: ComponentFixture<OrdinateAxisComponent>;
