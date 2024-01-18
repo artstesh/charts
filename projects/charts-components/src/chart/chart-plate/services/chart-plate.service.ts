@@ -31,7 +31,7 @@ export class ChartPlateService implements IPostboyDependingService {
   }
 
   addDataset(dataset: ChartDataset): void {
-    if (!this.chart?.data) return;
+    if (!this.chart?.data || !dataset) return;
     this.chart.data.datasets.push(dataset);
     this.updateChart();
   }

@@ -9,7 +9,12 @@ import { ChartUpdateCommand } from '../messages/commands/chart-update.command';
 import { ChartLimitEvent } from '../messages/events/chart-limit.event';
 import { FilterDatasetQuery } from '../messages/queries/filter-dataset.query';
 import { ChartAxisLimitService } from './chart-axis-limit.service';
-import { ChartDataModel } from '../models';
+import { ChartAreaDataModel, ChartDataModel } from '../models';
+import { GetGradientExecutor } from '../messages/executors/get-gradient.executor';
+import { GradientBuilder } from '../utils/gradient.builder';
+import { IChartDataset } from '../chart-plate/chart-types/models/i-chart-dataset';
+import { BuildAreaChartExecutor } from '../messages/executors/build-area-chart.executor';
+import { AreaChartFactory } from '../chart-plate/chart-types/area-chart/area-chart.factory';
 
 @Injectable()
 export class MessageRegistratorService extends PostboyAbstractRegistrator {
@@ -32,6 +37,13 @@ export class MessageRegistratorService extends PostboyAbstractRegistrator {
     );
     this.registerExecutor<FilterDatasetQuery, ChartDataModel[]>(FilterDatasetQuery.ID, (e) =>
       this.limit.examine(e.collection),
+    );
+    this.registerExecutor<GetGradientExecutor, CanvasGradient | null>(GetGradientExecutor.ID, (e) =>
+      GradientBuilder.build(e.chart, e.colors, e.direction),
+    );
+    this.registerExecutor<BuildAreaChartExecutor, IChartDataset<any, ChartAreaDataModel[]>>(
+      BuildAreaChartExecutor.ID,
+      (e) => AreaChartFactory.build(e.settings, e.data, e.color),
     );
   }
 }

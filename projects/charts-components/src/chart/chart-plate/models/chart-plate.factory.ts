@@ -33,6 +33,9 @@ export class ChartPlateFactory {
             },
             offset: true,
           },
+          [ChartConstants.LeftAxisId]: {
+            offset: true,
+          },
         },
         elements: {
           point: {

@@ -8,12 +8,14 @@ import { ChartDataset } from 'chart.js';
 import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
 import { ChartPostboyService } from '../../services/chart-postboy.service';
 import { ChartLimitEvent } from '../../messages/events/chart-limit.event';
+import Chart from 'chart.js/auto';
 
 @Component({
   template: '',
 })
 export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>> implements OnInit, OnDestroy {
-  private subs: Subscription[] = [];
+  protected subs: Subscription[] = [];
+  protected chart?: Chart;
 
   protected constructor(
     protected postboy: ChartPostboyService,
@@ -33,11 +35,13 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
   ngOnInit(): void {
     if (!this._settings.color) this._settings.color = ColorCollector.getColor(this._settings.order);
     this.subs.push(
-      this.postboy
-        .subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)
-        .subscribe(() => this.service.addDataset(this.getDataset())),
+      this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {
+        this.chart = ev.chart;
+        this.service.addDataset(this.getDataset());
+      }),
     );
     this.subs.push(this.postboy.subscribe<ChartLimitEvent>(ChartLimitEvent.ID).subscribe(() => this.rangeUpdated()));
+    this.initial();
   }
 
   ngOnDestroy(): void {
@@ -54,6 +58,7 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
   protected abstract getDataset(): ChartDataset<any, any>;
 
   protected abstract updateFilteredData(): void;
+  protected initial = () => {};
 
   protected rangeUpdated(): void {
     this.dataUpdated();

@@ -19,6 +19,7 @@ import { ChartInitializedEvent } from '../messages/events/chart-initialized.even
 import { ChartPostboyService } from '../services/chart-postboy.service';
 import { MessageRegistratorService } from '../services/message-registrator.service';
 import { ChartUpdateCommand } from '../messages/commands/chart-update.command';
+import { AreaChartType } from './chart-types/area-chart/area.type';
 
 registerAdapter();
 
@@ -40,6 +41,7 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
     private registrator: MessageRegistratorService,
     private mapService: SettingsMapService,
   ) {
+    Chart.register(AreaChartType);
     this.registrator.up();
   }
 
