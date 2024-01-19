@@ -10,6 +10,7 @@ import { BuildAreaChartExecutor } from '../../../messages/executors/build-area-c
 import { GetGradientExecutor } from '../../../messages/executors/get-gradient.executor';
 import { ChartUpdateCommand } from '../../../messages/commands/chart-update.command';
 import { first } from 'rxjs/operators';
+import { AreaBuilderModel } from '../models/area-builder.model';
 
 @Component({
   selector: 'art-area-chart',
@@ -32,6 +33,11 @@ export class AreaChartComponent extends AbstractChartTypeComponent<AreaChartSett
     this.dataUpdated();
   }
 
+  protected updateFilteredData(): void {
+    const query = new FilterDatasetQuery(this._data);
+    this._dataFiltered = this.postboy.execute(query);
+  }
+
   protected initial = () => {
     this.subs.push(
       this.postboy
@@ -43,14 +49,9 @@ export class AreaChartComponent extends AbstractChartTypeComponent<AreaChartSett
     );
   };
 
-  protected updateFilteredData(): void {
-    const query = new FilterDatasetQuery(this._data);
-    this._dataFiltered = this.postboy.execute(query);
-  }
-
   protected getDataset = () => {
-    console.log(this.chart);
-    return this.postboy.execute(
+    if (!this.chart) return [];
+    let content = this.postboy.execute<BuildAreaChartExecutor,AreaBuilderModel>(
       new BuildAreaChartExecutor(
         this._settings,
         this._dataFiltered,
@@ -59,5 +60,7 @@ export class AreaChartComponent extends AbstractChartTypeComponent<AreaChartSett
         ),
       ),
     );
+    this.alsoDelete = () => content.bottom.id;
+    return [content.top, content.bottom];
   };
 }

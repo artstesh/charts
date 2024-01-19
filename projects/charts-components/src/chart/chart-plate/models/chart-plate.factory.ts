@@ -1,15 +1,16 @@
-import { ChartConfiguration } from 'chart.js';
+import { ChartConfiguration, ChartData, LegendItem } from 'chart.js';
 import { ChartPlateSettings } from './chart-plate.settings';
 import { ChartConstants } from '../../models/chart-constants';
+import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { AreaLegendFilterExecutor } from '../../messages/executors/area-legend-filter.executor';
 
 export class ChartPlateFactory {
-  public static build(settings: ChartPlateSettings): ChartConfiguration {
+  public static build(settings: ChartPlateSettings, postboy: ChartPostboyService): ChartConfiguration {
     return {
       type: settings.type,
       data: {
         datasets: [],
       },
-      //  plugins: [ChartDataLabels],
       options: {
         interaction: {
           axis: 'xy',
@@ -22,6 +23,11 @@ export class ChartPlateFactory {
         plugins: {
           legend: {
             display: false,
+            labels: {
+              filter(item: LegendItem, data: ChartData): boolean {
+                return postboy.execute(new AreaLegendFilterExecutor(item));
+              },
+            },
           },
         },
         maintainAspectRatio: false,

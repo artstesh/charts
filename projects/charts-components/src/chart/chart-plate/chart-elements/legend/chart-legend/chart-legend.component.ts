@@ -36,7 +36,7 @@ export class ChartLegendComponent extends DestructibleComponent implements OnIni
   }
 
   setLegend(): void {
-    this.service.setLegend(this.mapService.chartLegend(this._settings));
+    this.service.setLegend(this.mapService.chartLegend(this._settings, this.postboy));
   }
 
   onDestroy = () => {
@@ -44,6 +44,6 @@ export class ChartLegendComponent extends DestructibleComponent implements OnIni
   };
 
   private removeLegend(): void {
-    this.mapService.chartLegend({} as any);
+    this.service.setLegend({} as any);
   }
 }

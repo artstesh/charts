@@ -37,7 +37,7 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
     this.subs.push(
       this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {
         this.chart = ev.chart;
-        this.service.addDataset(this.getDataset());
+        this.getDataset().forEach((ds) => this.service.addDataset(ds));
       }),
     );
     this.subs.push(this.postboy.subscribe<ChartLimitEvent>(ChartLimitEvent.ID).subscribe(() => this.rangeUpdated()));
@@ -52,11 +52,11 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
   protected dataUpdated(): void {
     this.updateFilteredData();
     this.service.removeDataset(this._settings.id);
-    this.service.addDataset(this.getDataset());
+    this.getDataset().forEach((ds) => this.service.addDataset(ds));
   }
 
-  protected abstract getDataset(): ChartDataset<any, any>;
-
+  protected abstract getDataset(): ChartDataset<any, any>[];
+  protected alsoDelete = (): string | undefined => undefined;
   protected abstract updateFilteredData(): void;
   protected initial = () => {};
 

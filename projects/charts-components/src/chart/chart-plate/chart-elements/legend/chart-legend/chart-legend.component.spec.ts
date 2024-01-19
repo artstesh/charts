@@ -35,6 +35,7 @@ describe('#chart-elements ChartLegendComponent', () => {
   afterEach(() => {
     reset(mapService);
     reset(plateService);
+    reset(postboy);
     expect().nothing();
   });
 
@@ -44,7 +45,7 @@ describe('#chart-elements ChartLegendComponent', () => {
 
   it('should add the axis on chartInitialized', () => {
     const expectedLegend = Forger.create<number>()! as any; // a trick to avoid huge obj creation
-    when(mapService.chartLegend(anything())).thenReturn(expectedLegend);
+    when(mapService.chartLegend(anything(), anything())).thenReturn(expectedLegend);
     //
     chartInitialized.next();
     fixture.detectChanges();

@@ -45,7 +45,7 @@ describe('#chart-types DoughnutChartComponent', () => {
   });
 
   it('should add dataset on chartInitialized', () => {
-    const dataset = Forger.create<number>()! as any; // a trick
+    const dataset = Forger.create<string>()! as any; // a trick
     when(factory.build(anything(), anything())).thenReturn(dataset);
     //
     chartInitialized.next();

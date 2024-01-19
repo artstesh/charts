@@ -19,7 +19,7 @@ import { ChartInitializedEvent } from '../messages/events/chart-initialized.even
 import { ChartPostboyService } from '../services/chart-postboy.service';
 import { MessageRegistratorService } from '../services/message-registrator.service';
 import { ChartUpdateCommand } from '../messages/commands/chart-update.command';
-import { AreaChartType } from './chart-types/area-chart/area.type';
+import { ChartAreaType } from './chart-types/models/area.type';
 
 registerAdapter();
 
@@ -41,7 +41,7 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
     private registrator: MessageRegistratorService,
     private mapService: SettingsMapService,
   ) {
-    Chart.register(AreaChartType);
+    Chart.register(ChartAreaType);
     this.registrator.up();
   }
 
@@ -70,7 +70,7 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   setChart(): void {
-    this.chart = new Chart(this.chartRef.nativeElement, this.mapService.chartPlateConfig(this._settings));
+    this.chart = new Chart(this.chartRef.nativeElement, this.mapService.chartPlateConfig(this._settings, this.postboy));
     this.postboy.fire(new ChartInitializedEvent(this.chart));
   }
 
