@@ -11,7 +11,7 @@ export class GradientBuilder {
         : chart.scales[ChartConstants.LeftAxisId]?.height) ?? 0;
     const x1 = direction === Direction.LeftRight ? length : 0;
     const y1 = direction === Direction.BottomTop ? length : 0;
-    const gradient = chart.ctx.createLinearGradient(0, 0, x1, y1);
+    const gradient = chart.ctx.createLinearGradient(0, y1, x1, 0);
 
     if (!colors.length) colors.push(...['#1a9be1', '#1a9be1']);
     if (colors.length === 1) colors.push(colors[0]);

@@ -17,6 +17,7 @@ import { AreaChartFactory } from '../chart-plate/chart-types/area-chart/area-cha
 import { AreaBuilderModel } from '../chart-plate/chart-types/models/area-builder.model';
 import { AreaLegendFilterExecutor } from '../messages/executors/area-legend-filter.executor';
 import { AreaLegendFilter } from '../chart-plate/services/area-legend.filter';
+import { ChartRenderedEvent } from '../messages/events/chart-rendered.event';
 
 @Injectable()
 export class MessageRegistratorService extends PostboyAbstractRegistrator {
@@ -27,6 +28,7 @@ export class MessageRegistratorService extends PostboyAbstractRegistrator {
 
   protected _up(): void {
     this.registerReplay<ChartInitializedEvent>(ChartInitializedEvent.ID);
+    this.registerReplay<ChartRenderedEvent>(ChartRenderedEvent.ID);
     this.registerSubject<FilterDatasetQuery>(FilterDatasetQuery.ID);
     this.registerWithPipe<ChartUpdateCommand>(ChartUpdateCommand.ID, new Subject<ChartUpdateCommand>(), (s) =>
       s.pipe(auditTime(350)),

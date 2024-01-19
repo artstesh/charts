@@ -8,9 +8,9 @@ import { FilterDatasetQuery } from '../../../messages/queries/filter-dataset.que
 import { AreaChartSettings } from './area-chart.settings';
 import { BuildAreaChartExecutor } from '../../../messages/executors/build-area-chart.executor';
 import { GetGradientExecutor } from '../../../messages/executors/get-gradient.executor';
-import { ChartUpdateCommand } from '../../../messages/commands/chart-update.command';
 import { first } from 'rxjs/operators';
 import { AreaBuilderModel } from '../models/area-builder.model';
+import { ChartRenderedEvent } from '../../../messages/events/chart-rendered.event';
 
 @Component({
   selector: 'art-area-chart',
@@ -21,6 +21,7 @@ import { AreaBuilderModel } from '../models/area-builder.model';
 export class AreaChartComponent extends AbstractChartTypeComponent<AreaChartSettings> {
   protected _settings: AreaChartSettings = new AreaChartSettings();
   private _dataFiltered!: ChartAreaDataModel[];
+  private allowed = false;
 
   constructor(postboy: ChartPostboyService, service: ChartPlateService, mapService: SettingsMapService) {
     super(postboy, service, mapService);
@@ -41,17 +42,18 @@ export class AreaChartComponent extends AbstractChartTypeComponent<AreaChartSett
   protected initial = () => {
     this.subs.push(
       this.postboy
-        .subscribe<ChartUpdateCommand>(ChartUpdateCommand.ID)
+        .subscribe<ChartRenderedEvent>(ChartRenderedEvent.ID)
         .pipe(first())
         .subscribe((ev) => {
+          this.allowed = true;
           this.dataUpdated();
         }),
     );
   };
 
   protected getDataset = () => {
-    if (!this.chart) return [];
-    let content = this.postboy.execute<BuildAreaChartExecutor,AreaBuilderModel>(
+    if (!this.chart || !this.allowed) return [];
+    let content = this.postboy.execute<BuildAreaChartExecutor, AreaBuilderModel>(
       new BuildAreaChartExecutor(
         this._settings,
         this._dataFiltered,

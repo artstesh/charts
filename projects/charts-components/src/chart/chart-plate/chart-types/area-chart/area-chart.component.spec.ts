@@ -13,6 +13,7 @@ import { ChartModule } from '../../../chart.module';
 import { ChartUpdateCommand } from '../../../messages/commands/chart-update.command';
 import { BuildAreaChartExecutor } from '../../../messages/executors/build-area-chart.executor';
 import { AreaBuilderModel } from '../models/area-builder.model';
+import { ChartRenderedEvent } from '../../../messages/events/chart-rendered.event';
 
 describe('AreaChartComponent', () => {
   let fixture: ComponentFixture<AreaChartComponent>;
@@ -21,17 +22,17 @@ describe('AreaChartComponent', () => {
   const mapService = mock(SettingsMapService);
   const postboy = mock(ChartPostboyService);
   let chartInitialized: Subject<ChartInitializedEvent>;
-  let chartUpdate: Subject<ChartUpdateCommand>;
+  let chartRendered: Subject<ChartRenderedEvent>;
   let limitServiceChanged$: Subject<undefined>;
 
   beforeEach(async () => {
     limitServiceChanged$ = new Subject<undefined>();
     chartInitialized = new Subject<ChartInitializedEvent>();
-    chartUpdate = new Subject<ChartUpdateCommand>();
+    chartRendered = new Subject<ChartRenderedEvent>();
     when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
-    when(postboy.subscribe(ChartUpdateCommand.ID)).thenReturn(chartUpdate);
+    when(postboy.subscribe(ChartRenderedEvent.ID)).thenReturn(chartRendered);
     when(postboy.subscribe(ChartLimitEvent.ID)).thenReturn(limitServiceChanged$);
-    when(postboy.execute<BuildAreaChartExecutor,AreaBuilderModel>(anything())).thenReturn({bottom:{}, top:{}})
+    when(postboy.execute<BuildAreaChartExecutor, AreaBuilderModel>(anything())).thenReturn({ bottom: {}, top: {} });
     return MockBuilder(AreaChartComponent, ChartModule)
       .provide(MockProvider(ChartPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)))
@@ -58,6 +59,14 @@ describe('AreaChartComponent', () => {
   it('should add line on chartInitialized', () => {
     //
     chartInitialized.next(new ChartInitializedEvent({} as any));
+    //
+    verify(plateService.addDataset(anything())).never();
+  });
+
+  it('should add line on chartInitialized', () => {
+    //
+    chartInitialized.next(new ChartInitializedEvent({} as any));
+    chartRendered.next(new ChartUpdateCommand());
     //
     verify(plateService.addDataset(anything())).twice();
   });

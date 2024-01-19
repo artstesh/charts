@@ -3,6 +3,7 @@ import { ChartPlateSettings } from './chart-plate.settings';
 import { ChartConstants } from '../../models/chart-constants';
 import { ChartPostboyService } from '../../services/chart-postboy.service';
 import { AreaLegendFilterExecutor } from '../../messages/executors/area-legend-filter.executor';
+import { ChartRenderedEvent } from '../../messages/events/chart-rendered.event';
 
 export class ChartPlateFactory {
   public static build(settings: ChartPlateSettings, postboy: ChartPostboyService): ChartConfiguration {
@@ -18,6 +19,7 @@ export class ChartPlateFactory {
         },
         animation: {
           duration: 300,
+          onComplete: () => postboy.fire(new ChartRenderedEvent()),
         },
         responsive: true,
         plugins: {
