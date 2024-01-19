@@ -3,19 +3,23 @@ import { Forger } from '@artstesh/forger';
 import { LegendOptions } from 'chart.js';
 import { ChartLegendFactory } from './chart-legend.factory';
 import { ChartLegendSettings } from './chart-legend.settings';
+import { instance, mock, reset } from 'ts-mockito';
+import { ChartPostboyService } from '../../../../services/chart-postboy.service';
 
 describe('#chart-elements XLinearAxisScaleFactory', () => {
   let settings: ChartLegendSettings;
   let legend: LegendOptions<any>;
+  const postboy = mock(ChartPostboyService);
 
   beforeEach(() => {
     settings = new ChartLegendSettings();
     settings.align = Forger.create<'start' | 'center' | 'end'>()!;
     settings.position = Forger.create<'top' | 'right' | 'bottom' | 'left'>()!;
-    legend = ChartLegendFactory.build(settings);
+    legend = ChartLegendFactory.build(settings, instance(postboy));
   });
 
   afterEach(() => {
+    reset(postboy);
     expect().nothing();
   });
 

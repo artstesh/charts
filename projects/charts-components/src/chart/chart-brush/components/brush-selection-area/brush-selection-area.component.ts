@@ -32,6 +32,7 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
   isDown = false;
   movingBalancePause = 10;
   private movingBalanceTimer: ReturnType<typeof setTimeout> | null = null;
+  private mouseDownPosition = 0;
 
   constructor(private postboy: ChartPostboyService, private detector: ChangeDetectorRef) {
     super();
@@ -46,8 +47,6 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
   }
-
-  private mouseDownPosition = 0;
 
   mousedown($event: MouseEvent | TouchEvent) {
     this.isDown = true;

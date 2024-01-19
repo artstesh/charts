@@ -1,7 +1,6 @@
 // noinspection JSVoidFunctionReturnValueUsed
 
 import { ComponentFixture } from '@angular/core/testing';
-import { EventEmitter } from '@angular/core';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { anything, instance, mock, reset, verify, when } from 'ts-mockito';
 import { ChartModule } from '../../../chart.module';
@@ -46,7 +45,7 @@ describe('#chart-types DoughnutChartComponent', () => {
   });
 
   it('should add dataset on chartInitialized', () => {
-    const dataset = Forger.create<number>()! as any; // a trick
+    const dataset = Forger.create<string>()! as any; // a trick
     when(factory.build(anything(), anything())).thenReturn(dataset);
     //
     chartInitialized.next();
