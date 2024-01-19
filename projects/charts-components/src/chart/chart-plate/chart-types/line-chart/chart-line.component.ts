@@ -34,5 +34,5 @@ export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSett
     this._dataFiltered = this.postboy.execute(query);
   }
 
-  protected getDataset = () => this.mapService.lineDataset(this._settings, this._dataFiltered);
+  protected getDataset = () => [this.mapService.lineDataset(this._settings, this._dataFiltered)];
 }

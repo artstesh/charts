@@ -1,11 +1,9 @@
 import { ComponentFixture } from '@angular/core/testing';
-import { EventEmitter } from '@angular/core';
 import { MockBuilder, MockProvider, MockRender, ngMocks } from 'ng-mocks';
 import { instance, mock, reset, when } from 'ts-mockito';
 import { should } from '@artstesh/it-should';
 import { ChartPlateComponent } from './chart-plate.component';
 import { ChartModule } from '../chart.module';
-import { ChartPlateService } from './services/chart-plate.service';
 import { SettingsMapService } from '../services/settings-map.service';
 import { ChartPostboyService } from '../services/chart-postboy.service';
 import { Subject } from 'rxjs';
