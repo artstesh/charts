@@ -1,5 +1,4 @@
 import { ComponentFixture } from '@angular/core/testing';
-import { EventEmitter } from '@angular/core';
 import { Forger } from '@artstesh/forger';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { ChartModule } from '../../../../chart.module';

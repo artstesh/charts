@@ -1,35 +1,39 @@
-// noinspection JSVoidFunctionReturnValueUsed
-
 import { ComponentFixture } from '@angular/core/testing';
-import { ChartLineComponent } from './chart-line.component';
-import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
-import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
-import { Subject } from 'rxjs';
-import { ChartModule } from '../../../chart.module';
-import { ChartAxisLimitService } from '../../../services/chart-axis-limit.service';
+import { AreaChartComponent } from './area-chart.component';
+import { anything, instance, mock, reset, verify, when } from 'ts-mockito';
 import { ChartPlateService } from '../../services/chart-plate.service';
-import { Forger } from '@artstesh/forger';
+import { ChartAxisLimitService } from '../../../services/chart-axis-limit.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
 import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 import { ChartLimitEvent } from '../../../messages/events/chart-limit.event';
-import { should } from '@artstesh/it-should';
+import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { ChartModule } from '../../../chart.module';
+import { ChartUpdateCommand } from '../../../messages/commands/chart-update.command';
+import { BuildAreaChartExecutor } from '../../../messages/executors/build-area-chart.executor';
+import { AreaBuilderModel } from '../models/area-builder.model';
+import { ChartRenderedEvent } from '../../../messages/events/chart-rendered.event';
 
-describe('#chart-types LineChartComponent', () => {
-  let fixture: ComponentFixture<ChartLineComponent>;
+describe('AreaChartComponent', () => {
+  let fixture: ComponentFixture<AreaChartComponent>;
   const plateService = mock(ChartPlateService);
   const limitService = mock(ChartAxisLimitService);
   const mapService = mock(SettingsMapService);
   const postboy = mock(ChartPostboyService);
   let chartInitialized: Subject<ChartInitializedEvent>;
+  let chartRendered: Subject<ChartRenderedEvent>;
   let limitServiceChanged$: Subject<undefined>;
 
   beforeEach(async () => {
     limitServiceChanged$ = new Subject<undefined>();
     chartInitialized = new Subject<ChartInitializedEvent>();
+    chartRendered = new Subject<ChartRenderedEvent>();
     when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
+    when(postboy.subscribe(ChartRenderedEvent.ID)).thenReturn(chartRendered);
     when(postboy.subscribe(ChartLimitEvent.ID)).thenReturn(limitServiceChanged$);
-    return MockBuilder(ChartLineComponent, ChartModule)
+    when(postboy.execute<BuildAreaChartExecutor, AreaBuilderModel>(anything())).thenReturn({ bottom: {}, top: {} });
+    return MockBuilder(AreaChartComponent, ChartModule)
       .provide(MockProvider(ChartPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)))
       .provide(MockProvider(SettingsMapService, instance(mapService)))
@@ -37,7 +41,7 @@ describe('#chart-types LineChartComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = MockRender(ChartLineComponent);
+    fixture = MockRender(AreaChartComponent);
   });
 
   afterEach(() => {
@@ -53,12 +57,17 @@ describe('#chart-types LineChartComponent', () => {
   });
 
   it('should add line on chartInitialized', () => {
-    const dataset = Forger.create<number>()! as any; // a trick
-    when(mapService.lineDataset(anything(), anything())).thenReturn(dataset);
     //
     chartInitialized.next(new ChartInitializedEvent({} as any));
     //
-    const [ds] = capture(plateService.addDataset).last();
-    should().true(ds === dataset);
+    verify(plateService.addDataset(anything())).never();
+  });
+
+  it('should add line on chartInitialized', () => {
+    //
+    chartInitialized.next(new ChartInitializedEvent({} as any));
+    chartRendered.next(new ChartUpdateCommand());
+    //
+    verify(plateService.addDataset(anything())).twice();
   });
 });

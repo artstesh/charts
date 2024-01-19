@@ -19,16 +19,6 @@ export class ChartPlateService implements IPostboyDependingService {
     });
   }
 
-  private updateChart(force = false): void {
-    this.postboy.fire(new ChartUpdateCommand(force));
-  }
-
-  addDataset(dataset: ChartDataset): void {
-    if (!this.chart?.data) return;
-    this.chart.data.datasets.push(dataset);
-    this.updateChart();
-  }
-
   removeDataset(id: string, alsoDelete?: string): void {
     if (!this.chart?.data?.datasets?.length) return;
     const initialLength = this.chart.data.datasets.length;
@@ -38,6 +28,16 @@ export class ChartPlateService implements IPostboyDependingService {
     }
     if (this.chart.data.datasets.length !== initialLength) this.updateChart(true);
     else this.updateChart();
+  }
+
+  addDataset(dataset: ChartDataset): void {
+    if (!this.chart?.data || !dataset) return;
+    this.chart.data.datasets.push(dataset);
+    this.updateChart();
+  }
+
+  private updateChart(force = false): void {
+    this.postboy.fire(new ChartUpdateCommand(force));
   }
 
   public setScale(id: string, scale: ScaleOptionsByType): void {

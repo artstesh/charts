@@ -13,6 +13,7 @@ export class OrdinateAxisFactory {
       display: 'auto',
       grid: { display: settings.displayGrid },
       axis: ChartConstants.LeftAxisId,
+      offset: true,
       position: settings.right ? 'right' : 'left',
     } as ScaleOptionsByType<'linear'>;
   }
