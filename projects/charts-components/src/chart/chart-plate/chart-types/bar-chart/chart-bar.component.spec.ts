@@ -4,7 +4,7 @@ import { ComponentFixture } from '@angular/core/testing';
 
 import { ChartBarComponent } from './chart-bar.component';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
-import { anything, instance, mock, reset, verify, when } from 'ts-mockito';
+import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
 import { Forger } from '@artstesh/forger';
 import { ChartModule } from '../../../chart.module';
 import { ChartAxisLimitService } from '../../../services/chart-axis-limit.service';
@@ -14,6 +14,7 @@ import { SettingsMapService } from '../../../services/settings-map.service';
 import { ChartPostboyService } from '../../../services/chart-postboy.service';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 import { ChartLimitEvent } from '../../../messages/events/chart-limit.event';
+import { should } from '@artstesh/it-should';
 
 describe('#chart-types ChartBarComponent', () => {
   let fixture: ComponentFixture<ChartBarComponent>;
@@ -56,8 +57,9 @@ describe('#chart-types ChartBarComponent', () => {
     const dataset = Forger.create<number>()! as any; // a trick
     when(mapService.batDataset(anything(), anything())).thenReturn(dataset);
     //
-    chartInitialized.next();
+    chartInitialized.next(new ChartInitializedEvent({} as any));
     //
-    verify(plateService.addDataset(dataset)).once();
+    const [ds] = capture(plateService.addDataset).last();
+    should().true(ds === dataset);
   });
 });

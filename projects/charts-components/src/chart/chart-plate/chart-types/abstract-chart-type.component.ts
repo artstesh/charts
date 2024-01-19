@@ -8,12 +8,14 @@ import { ChartDataset } from 'chart.js';
 import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
 import { ChartPostboyService } from '../../services/chart-postboy.service';
 import { ChartLimitEvent } from '../../messages/events/chart-limit.event';
+import Chart from 'chart.js/auto';
 
 @Component({
   template: '',
 })
 export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>> implements OnInit, OnDestroy {
-  private subs: Subscription[] = [];
+  protected subs: Subscription[] = [];
+  protected chart?: Chart;
 
   protected constructor(
     protected postboy: ChartPostboyService,
@@ -33,27 +35,30 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
   ngOnInit(): void {
     if (!this._settings.color) this._settings.color = ColorCollector.getColor(this._settings.order);
     this.subs.push(
-      this.postboy
-        .subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)
-        .subscribe(() => this.service.addDataset(this.getDataset())),
+      this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {
+        this.chart = ev.chart;
+        this.getDataset().forEach((ds) => this.service.addDataset(ds));
+      }),
     );
     this.subs.push(this.postboy.subscribe<ChartLimitEvent>(ChartLimitEvent.ID).subscribe(() => this.rangeUpdated()));
+    this.initial();
   }
 
   ngOnDestroy(): void {
-    this.service.removeDataset(this._settings.id);
+    this.service.removeDataset(this._settings.id, this.alsoDelete());
     this.subs.forEach((s) => s.unsubscribe());
   }
 
   protected dataUpdated(): void {
     this.updateFilteredData();
-    this.service.removeDataset(this._settings.id);
-    this.service.addDataset(this.getDataset());
+    this.service.removeDataset(this._settings.id, this.alsoDelete());
+    this.getDataset().forEach((ds) => this.service.addDataset(ds));
   }
 
-  protected abstract getDataset(): ChartDataset<any, any>;
-
+  protected abstract getDataset(): ChartDataset<any, any>[];
+  protected alsoDelete = (): string | undefined => undefined;
   protected abstract updateFilteredData(): void;
+  protected initial = () => {};
 
   protected rangeUpdated(): void {
     this.dataUpdated();

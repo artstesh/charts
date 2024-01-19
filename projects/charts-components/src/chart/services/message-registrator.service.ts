@@ -10,6 +10,14 @@ import { ChartLimitEvent } from '../messages/events/chart-limit.event';
 import { FilterDatasetQuery } from '../messages/queries/filter-dataset.query';
 import { ChartAxisLimitService } from './chart-axis-limit.service';
 import { ChartDataModel } from '../models';
+import { GetGradientExecutor } from '../messages/executors/get-gradient.executor';
+import { GradientBuilder } from '../utils/gradient.builder';
+import { BuildAreaChartExecutor } from '../messages/executors/build-area-chart.executor';
+import { AreaChartFactory } from '../chart-plate/chart-types/area-chart/area-chart.factory';
+import { AreaBuilderModel } from '../chart-plate/chart-types/models/area-builder.model';
+import { AreaLegendFilterExecutor } from '../messages/executors/area-legend-filter.executor';
+import { AreaLegendFilter } from '../chart-plate/services/area-legend.filter';
+import { ChartRenderedEvent } from '../messages/events/chart-rendered.event';
 
 @Injectable()
 export class MessageRegistratorService extends PostboyAbstractRegistrator {
@@ -20,6 +28,7 @@ export class MessageRegistratorService extends PostboyAbstractRegistrator {
 
   protected _up(): void {
     this.registerReplay<ChartInitializedEvent>(ChartInitializedEvent.ID);
+    this.registerReplay<ChartRenderedEvent>(ChartRenderedEvent.ID);
     this.registerSubject<FilterDatasetQuery>(FilterDatasetQuery.ID);
     this.registerWithPipe<ChartUpdateCommand>(ChartUpdateCommand.ID, new Subject<ChartUpdateCommand>(), (s) =>
       s.pipe(auditTime(350)),
@@ -32,6 +41,15 @@ export class MessageRegistratorService extends PostboyAbstractRegistrator {
     );
     this.registerExecutor<FilterDatasetQuery, ChartDataModel[]>(FilterDatasetQuery.ID, (e) =>
       this.limit.examine(e.collection),
+    );
+    this.registerExecutor<GetGradientExecutor, CanvasGradient | null>(GetGradientExecutor.ID, (e) =>
+      GradientBuilder.build(e.chart, e.colors, e.direction),
+    );
+    this.registerExecutor<BuildAreaChartExecutor, AreaBuilderModel>(BuildAreaChartExecutor.ID, (e) =>
+      AreaChartFactory.build(e.settings, e.data, e.color),
+    );
+    this.registerExecutor<AreaLegendFilterExecutor, boolean>(AreaLegendFilterExecutor.ID, (e) =>
+      AreaLegendFilter.check(e.item),
     );
   }
 }

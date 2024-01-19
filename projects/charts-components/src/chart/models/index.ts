@@ -8,3 +8,5 @@ export * from './tick-date-display.format';
 export * from './chart-tooltip-get.model';
 export * from './radial-data.model';
 export * from './chart-limit-actor.enum';
+export * from './chart-area-data.model';
+export * from './direction';
