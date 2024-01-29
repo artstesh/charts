@@ -13,6 +13,7 @@ import { ChartBrushComponent } from './chart-brush/chart-brush.component';
 import { BrushSelectionAreaComponent } from './chart-brush/components/brush-selection-area/brush-selection-area.component';
 import { BrushKnobComponent } from './chart-brush/components/brush-selection-area/brush-knob/brush-knob.component';
 import { AreaChartComponent } from './chart-plate/chart-types/area-chart/area-chart.component';
+import { BubbleChartComponent } from './chart-plate/chart-types/bubble-chart/bubble-chart.component';
 
 @NgModule({
   imports: [CommonModule],
@@ -32,6 +33,7 @@ import { AreaChartComponent } from './chart-plate/chart-types/area-chart/area-ch
     BrushSelectionAreaComponent,
     BrushKnobComponent,
     AreaChartComponent,
+    BubbleChartComponent,
   ],
   exports: [
     ChartPlateComponent,
@@ -45,6 +47,7 @@ import { AreaChartComponent } from './chart-plate/chart-types/area-chart/area-ch
     DoughnutChartComponent,
     OrdinateAxisComponent,
     AreaChartComponent,
+    BubbleChartComponent,
   ],
 })
 export class ChartModule {}

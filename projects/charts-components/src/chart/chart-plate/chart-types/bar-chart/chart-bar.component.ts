@@ -17,8 +17,8 @@ export class ChartBarComponent extends AbstractChartTypeComponent<ChartBarSettin
   protected _settings: ChartBarSettings = new ChartBarSettings();
   private _dataFiltered!: ChartDataModel[];
 
-  constructor(postboy: ChartPostboyService, service: ChartPlateService, mapService: SettingsMapService) {
-    super(postboy, service, mapService);
+  constructor(postboy: ChartPostboyService, service: ChartPlateService, private mapService: SettingsMapService) {
+    super(postboy, service);
   }
 
   private _data!: ChartDataModel[];
