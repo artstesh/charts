@@ -18,6 +18,10 @@ import { AreaBuilderModel } from '../chart-plate/chart-types/models/area-builder
 import { AreaLegendFilterExecutor } from '../messages/executors/area-legend-filter.executor';
 import { AreaLegendFilter } from '../chart-plate/services/area-legend.filter';
 import { ChartRenderedEvent } from '../messages/events/chart-rendered.event';
+import { BuildBubbleChartExecutor } from '../messages/executors/build-bubble-chart.executor';
+import { BubbleChartFactory } from '../chart-plate/chart-types/bubble-chart/bubble-chart.factory';
+import { IChartDataset } from '../chart-plate/chart-types/models/i-chart-dataset';
+import { BubbleDataModel } from '../models/bubble-data.model';
 
 @Injectable()
 export class MessageRegistratorService extends PostboyAbstractRegistrator {
@@ -50,6 +54,10 @@ export class MessageRegistratorService extends PostboyAbstractRegistrator {
     );
     this.registerExecutor<AreaLegendFilterExecutor, boolean>(AreaLegendFilterExecutor.ID, (e) =>
       AreaLegendFilter.check(e.item),
+    );
+    this.registerExecutor<BuildBubbleChartExecutor, IChartDataset<'bubble', BubbleDataModel[]>>(
+      BuildBubbleChartExecutor.ID,
+      (e) => BubbleChartFactory.build(e.settings, e.data),
     );
   }
 }
