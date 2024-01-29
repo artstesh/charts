@@ -10,3 +10,4 @@ export * from './radial-data.model';
 export * from './chart-limit-actor.enum';
 export * from './chart-area-data.model';
 export * from './direction';
+export * from './bubble-data.model';
