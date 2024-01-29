@@ -1,13 +1,12 @@
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
-import { ChartLineSettings } from './chart-line.settings';
+import { BubbleChartSettings } from './bubble-chart.settings';
 
-describe('#chart-elements ChartLineSettings', () => {
-  let model: ChartLineSettings;
+describe('#chart-elements BubbleChartSettings', () => {
+  let model: BubbleChartSettings;
 
   beforeEach(() => {
-    model = new ChartLineSettings().copy(Forger.create<ChartLineSettings>()!);
-    model.fill = Forger.create<false | 'start' | 'end' | 'origin'>()!;
+    model = new BubbleChartSettings().copy(Forger.create<BubbleChartSettings>()!);
   });
 
   afterEach(() => {
@@ -15,48 +14,25 @@ describe('#chart-elements ChartLineSettings', () => {
   });
 
   it('ids are different', () => {
-    const settings1 = new ChartLineSettings();
-    const settings2 = new ChartLineSettings();
+    const settings1 = new BubbleChartSettings();
+    const settings2 = new BubbleChartSettings();
     //
     should().string(settings1.id).not.equals(settings2.id);
   });
 
   it('names are different', () => {
-    const settings1 = new ChartLineSettings();
-    const settings2 = new ChartLineSettings();
+    const settings1 = new BubbleChartSettings();
+    const settings2 = new BubbleChartSettings();
     //
     should().string(settings1.name).not.equals(settings2.name);
   });
 
-  it('fill is false by default', () => {
+  it('setBorderColor()', () => {
+    const color = Forger.create<string>()!;
     //
-    should().false(new ChartLineSettings().fill);
-  });
-
-  it('setPointRadius()', () => {
-    const radius = Forger.create<number>()!;
+    model = model.setBorderColor(color);
     //
-    model = model.setPointRadius(radius);
-    //
-    should()
-      .number(model.pointRadius as number)
-      .equals(radius);
-  });
-
-  it('setTension()', () => {
-    const radius = Forger.create<number>()!;
-    //
-    model = model.setTension(radius);
-    //
-    should().number(model.tension).equals(radius);
-  });
-
-  it('setFill()', () => {
-    const fill = Forger.create<false | 'start' | 'end' | 'origin'>()!;
-    //
-    model = model.setFill(fill);
-    //
-    should().true(model.fill === fill);
+    should().string(model.borderColor).equals(color);
   });
 
   it('setRight()', () => {
@@ -93,50 +69,42 @@ describe('#chart-elements ChartLineSettings', () => {
 
   describe('isSame()', () => {
     it('are same', () => {
-      const other = new ChartLineSettings().copy(model);
+      const other = new BubbleChartSettings().copy(model);
       //
       should().true(model.isSame(other));
     });
 
     it('different id', () => {
-      const other = new ChartLineSettings().copy(model);
+      const other = new BubbleChartSettings().copy(model);
       other.id = Forger.create<string>()!;
       //
       should().false(model.isSame(other));
     });
 
     it('different order', () => {
-      const other = new ChartLineSettings().copy(model);
+      const other = new BubbleChartSettings().copy(model);
       other.order = Forger.create<number>()!;
       //
       should().false(model.isSame(other));
     });
 
     it('different name', () => {
-      const other = new ChartLineSettings().copy(model);
+      const other = new BubbleChartSettings().copy(model);
       other.name = Forger.create<string>()!;
       //
       should().false(model.isSame(other));
     });
 
     it('different color', () => {
-      const other = new ChartLineSettings().copy(model);
+      const other = new BubbleChartSettings().copy(model);
       other.color = Forger.create<string>()!;
       //
       should().false(model.isSame(other));
     });
 
-    it('different pointRadius', () => {
-      const other = new ChartLineSettings().copy(model);
-      other.pointRadius = Forger.create<number>()!;
-      //
-      should().false(model.isSame(other));
-    });
-
-    it('different fill', () => {
-      const other = new ChartLineSettings().copy(model);
-      model.fill = false;
-      other.fill = Forger.create<'origin' | 'start' | 'end'>()!;
+    it('different borderColor', () => {
+      const other = new BubbleChartSettings().copy(model);
+      other.borderColor = Forger.create<string>()!;
       //
       should().false(model.isSame(other));
     });
@@ -144,7 +112,7 @@ describe('#chart-elements ChartLineSettings', () => {
 
   describe('copy()', () => {
     it('success', () => {
-      const result = new ChartLineSettings().copy(model);
+      const result = new BubbleChartSettings().copy(model);
       //
       should().objects(result, model).equal();
     });
