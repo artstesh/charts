@@ -3,7 +3,6 @@ import { AbstractChartTypeComponent } from '../abstract-chart-type.component';
 import { ChartAreaDataModel } from '../../../models';
 import { ChartPostboyService } from '../../../services/chart-postboy.service';
 import { ChartPlateService } from '../../services/chart-plate.service';
-import { SettingsMapService } from '../../../services/settings-map.service';
 import { FilterDatasetQuery } from '../../../messages/queries/filter-dataset.query';
 import { AreaChartSettings } from './area-chart.settings';
 import { BuildAreaChartExecutor } from '../../../messages/executors/build-area-chart.executor';
@@ -23,8 +22,8 @@ export class AreaChartComponent extends AbstractChartTypeComponent<AreaChartSett
   private _dataFiltered!: ChartAreaDataModel[];
   private allowed = false;
 
-  constructor(postboy: ChartPostboyService, service: ChartPlateService, mapService: SettingsMapService) {
-    super(postboy, service, mapService);
+  constructor(postboy: ChartPostboyService, service: ChartPlateService) {
+    super(postboy, service);
   }
 
   private _data!: ChartAreaDataModel[];
@@ -62,7 +61,7 @@ export class AreaChartComponent extends AbstractChartTypeComponent<AreaChartSett
         ),
       ),
     );
-    this.alsoDelete = () => content.bottom.id;
+    this.alsoDelete = () => content.bottom?.id;
     return [content.top, content.bottom];
   };
 }

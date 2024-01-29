@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { ChartTypeSettings } from './models/chart-type.settings';
 import { ColorCollector } from '../../services';
 import { ChartPlateService } from '../services/chart-plate.service';
-import { SettingsMapService } from '../../services/settings-map.service';
 import { ChartDataset } from 'chart.js';
 import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
 import { ChartPostboyService } from '../../services/chart-postboy.service';
@@ -17,11 +16,7 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
   protected subs: Subscription[] = [];
   protected chart?: Chart;
 
-  protected constructor(
-    protected postboy: ChartPostboyService,
-    protected service: ChartPlateService,
-    protected mapService: SettingsMapService,
-  ) {}
+  protected constructor(protected postboy: ChartPostboyService, protected service: ChartPlateService) {}
 
   protected abstract _settings: T;
 

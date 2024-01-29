@@ -18,8 +18,8 @@ export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSett
   protected _settings: ChartLineSettings = new ChartLineSettings();
   private _dataFiltered!: ChartDataModel[];
 
-  constructor(postboy: ChartPostboyService, service: ChartPlateService, mapService: SettingsMapService) {
-    super(postboy, service, mapService);
+  constructor(postboy: ChartPostboyService, service: ChartPlateService, private mapService: SettingsMapService) {
+    super(postboy, service);
   }
 
   private _data!: ChartDataModel[];
