@@ -55,6 +55,16 @@ describe('#chart-elements XTimelineAxisSettings', () => {
     });
   });
 
+  describe('setMaxRotation()', () => {
+    it('success', () => {
+      const expected = Forger.create<number>()!;
+      //
+      model = model.setMaxRotation(expected);
+      //
+      should().true(model.maxRotation === expected);
+    });
+  });
+
   describe('copy()', () => {
     it('success', () => {
       const other = XTimelineAxisSettings.copy(model);
@@ -77,7 +87,14 @@ describe('#chart-elements XTimelineAxisSettings', () => {
       should().false(model.isSame(other));
     });
 
-    it('different displayGrid', () => {
+    it('different maxRotation', () => {
+      const other = XTimelineAxisSettings.copy(model);
+      other.maxRotation = Forger.create<number>()!;
+      //
+      should().false(model.isSame(other));
+    });
+
+    it('different limits', () => {
       const other = XTimelineAxisSettings.copy(model);
       other.limits = Forger.create<[number, number]>()!;
       //
