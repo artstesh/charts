@@ -40,7 +40,7 @@ export class XTimelineAxisSettings {
     return result;
   }
 
-  public setMaxRotation(maxRotation: number| null): XTimelineAxisSettings {
+  public setMaxRotation(maxRotation: number | null): XTimelineAxisSettings {
     return XTimelineAxisSettings.copy({ ...this, maxRotation });
   }
 

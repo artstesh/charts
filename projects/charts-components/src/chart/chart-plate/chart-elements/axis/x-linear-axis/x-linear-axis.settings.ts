@@ -29,7 +29,7 @@ export class XLinearAxisSettings {
     return result;
   }
 
-  public setMaxRotation(maxRotation: number| null): XLinearAxisSettings {
+  public setMaxRotation(maxRotation: number | null): XLinearAxisSettings {
     return XLinearAxisSettings.copy({ ...this, maxRotation });
   }
 }
