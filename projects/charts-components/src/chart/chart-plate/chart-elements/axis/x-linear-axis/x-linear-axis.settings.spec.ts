@@ -6,9 +6,8 @@ describe('#chart-elements XLinearAxisSettings', () => {
   let model: XLinearAxisSettings;
 
   beforeEach(() => {
-    model = new XLinearAxisSettings();
+    model = XLinearAxisSettings.copy(Forger.create<XLinearAxisSettings>()!);
     model.limits = Forger.create<[number, number | null]>()!;
-    model.displayGrid = Forger.create<boolean>()!;
   });
 
   afterEach(() => {
@@ -25,14 +24,6 @@ describe('#chart-elements XLinearAxisSettings', () => {
     });
   });
 
-  describe('copy()', () => {
-    it('success', () => {
-      const other = XLinearAxisSettings.copy(model);
-      //
-      should().objects(model, other).equal();
-    });
-  });
-
   describe('setDisplayGrid()', () => {
     it('success', () => {
       const expected = Forger.create<boolean>()!;
@@ -43,11 +34,27 @@ describe('#chart-elements XLinearAxisSettings', () => {
     });
   });
 
+  describe('setMaxRotation()', () => {
+    it('success', () => {
+      const expected = Forger.create<number>()!;
+      //
+      model = model.setMaxRotation(expected);
+      //
+      should().true(model.maxRotation === expected);
+    });
+  });
+
+  describe('copy()', () => {
+    it('success', () => {
+      const other = XLinearAxisSettings.copy(model);
+      //
+      should().objects(model, other).equal();
+    });
+  });
+
   describe('isSame()', () => {
     it('are same', () => {
-      const other = new XLinearAxisSettings();
-      other.limits = [...model.limits];
-      other.displayGrid = model.displayGrid;
+      const other = XLinearAxisSettings.copy(model);
       //
       should().true(model.isSame(other));
     });
@@ -56,6 +63,13 @@ describe('#chart-elements XLinearAxisSettings', () => {
       const other = new XLinearAxisSettings();
       other.limits = [...model.limits];
       other.displayGrid = !model.displayGrid;
+      //
+      should().false(model.isSame(other));
+    });
+
+    it('different maxRotation', () => {
+      const other = XLinearAxisSettings.copy(model);
+      other.maxRotation = Forger.create<number>()!;
       //
       should().false(model.isSame(other));
     });

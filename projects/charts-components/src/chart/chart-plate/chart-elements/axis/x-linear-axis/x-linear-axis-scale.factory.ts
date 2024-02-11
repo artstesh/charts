@@ -10,6 +10,7 @@ export class XLinearAxisScaleFactory {
       min: settings.limits[0],
       max: settings.limits[1],
       offset: true,
+      ticks: { maxRotation: settings.maxRotation },
     } as ScaleOptionsByType<'linear'>;
   }
 }
