@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { BrushRegistratorService } from './services/brush-registrator.service';
 import { DestructibleComponent } from '../common/destructible.component';
+import { ChartBrushService } from './services/chart-brush.service';
 
 @Component({
   selector: 'art-chart-brush',
   templateUrl: './chart-brush.component.html',
   styleUrls: ['./chart-brush.component.scss'],
-  providers: [BrushRegistratorService],
+  providers: [BrushRegistratorService,ChartBrushService],
 })
 export class ChartBrushComponent extends DestructibleComponent implements OnInit {
   constructor(private registrator: BrushRegistratorService) {

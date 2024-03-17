@@ -47,6 +47,7 @@ import { BubbleChartComponent } from './chart-plate/chart-types/bubble-chart/bub
     DoughnutChartComponent,
     OrdinateAxisComponent,
     AreaChartComponent,
+    ChartBrushComponent,
     BubbleChartComponent,
   ],
 })
