@@ -101,6 +101,7 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
       this.selectedModel = ev.range;
       this.plate.nativeElement.style.left = ev.range.left + 'px';
       this.plate.nativeElement.style.width = ev.range.width + 'px';
+      this.detector.detectChanges();
       this.updateMainChart();
     });
   }
@@ -125,14 +126,14 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
   }
 
   private updateMainChartBalanced(start: number, end: number): void {
-    if (this.movingBalanceTimer != null) {
-      clearTimeout(this.movingBalanceTimer);
-    }
-    this.movingBalanceTimer = setTimeout(() => {
-      this.movingBalanceTimer = null;
-      (this.mainChart.options.scales![ChartConstants.BottomAxisId] as any).min = start;
-      (this.mainChart.options.scales![ChartConstants.BottomAxisId] as any).max = end;
-      this.mainChart.update();
-    }, this.movingBalancePause);
+    // if (this.movingBalanceTimer != null) {
+    //   clearTimeout(this.movingBalanceTimer);
+    // }
+    // this.movingBalanceTimer = setTimeout(() => {
+    //   this.movingBalanceTimer = null;
+    //   (this.mainChart.options.scales![ChartConstants.BottomAxisId] as any).min = start;
+    //   (this.mainChart.options.scales![ChartConstants.BottomAxisId] as any).max = end;
+    //   this.mainChart.update();
+    // }, this.movingBalancePause);
   }
 }

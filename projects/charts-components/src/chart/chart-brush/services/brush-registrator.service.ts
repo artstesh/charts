@@ -4,7 +4,7 @@ import { ChartPostboyService } from '../../services/chart-postboy.service';
 import { ChartBrushService } from './chart-brush.service';
 import { MoveBrushBorderCommand } from '../../messages/commands/move-brush-border.command';
 import { ReplaySubject } from 'rxjs';
-import { auditTime, distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { BrushAreaEvent } from '../messages/events/brush-area.event';
 import { ZoomAreaCommand } from '../messages/commands/zoom-area.command';
 import { MoveBrushCommand } from '../messages/commands/move-brush.command';
@@ -23,10 +23,7 @@ export class BrushRegistratorService extends PostboyAbstractRegistrator {
     this.registerSubject<WidthRestrictionsCommand>(WidthRestrictionsCommand.ID);
     this.registerSubject<MoveBrushCommand>(MoveBrushCommand.ID);
     this.registerWithPipe<BrushAreaEvent>(BrushAreaEvent.ID, new ReplaySubject<BrushAreaEvent>(1), (s) =>
-      s.pipe(
-        distinctUntilChanged((a, b) => a.range.left !== b.range.left || a.range.width !== b.range.width),
-        auditTime(350),
-      ),
+      s.pipe(distinctUntilChanged((a, b) => a.range.left === b.range.left && a.range.width === b.range.width)),
     );
   }
 }
