@@ -47,7 +47,7 @@ describe('#chart-elements ChartLegendComponent', () => {
     const expectedLegend = Forger.create<number>()! as any; // a trick to avoid huge obj creation
     when(mapService.chartLegend(anything(), anything())).thenReturn(expectedLegend);
     //
-    chartInitialized.next();
+    chartInitialized.next(new ChartInitializedEvent(null as any));
     fixture.detectChanges();
     //
     const [legend] = capture(plateService.setLegend).last();

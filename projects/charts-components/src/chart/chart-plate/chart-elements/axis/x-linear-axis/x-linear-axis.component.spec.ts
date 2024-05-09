@@ -52,7 +52,7 @@ describe('#chart-elements XLinearAxisComponent', () => {
     const expectedScale = Forger.create<number>()! as any; // a trick to avoid huge obj creation
     when(mapService.xLinearScale(anything())).thenReturn(expectedScale);
     //
-    chartInitialized.next();
+    chartInitialized.next(new ChartInitializedEvent(null as any));
     fixture.detectChanges();
     //
     const [id, scale] = capture(plateService.setScale).last();

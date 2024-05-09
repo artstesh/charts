@@ -48,7 +48,7 @@ describe('#chart-types DoughnutChartComponent', () => {
     const dataset = Forger.create<string>()! as any; // a trick
     when(factory.build(anything(), anything())).thenReturn(dataset);
     //
-    chartInitialized.next();
+    chartInitialized.next(new ChartInitializedEvent(null as any));
     //
     verify(plateService.addDataset(dataset)).once();
   });

@@ -48,7 +48,7 @@ describe('#chart-elements OrdinateAxisComponent', () => {
     const expectedScale = Forger.create<number>()!; // a trick to avoid huge obj creation
     when(factory.build(anything())).thenReturn(expectedScale as any);
     //
-    chartInitialized.next();
+    chartInitialized.next(new ChartInitializedEvent(null as any));
     fixture.detectChanges();
     //
     const [id, scale] = capture(plateService.setScale).last();

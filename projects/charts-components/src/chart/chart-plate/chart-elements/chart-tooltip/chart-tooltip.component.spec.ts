@@ -46,7 +46,7 @@ describe('#chart-elements XLinearAxisComponent', () => {
     const expectedTooltip = Forger.create<number>()!; // a trick to avoid huge obj creation
     when(mapService.tooltip(anything())).thenReturn(expectedTooltip as any);
     //
-    chartInitialized.next();
+    chartInitialized.next(new ChartInitializedEvent(null as any));
     fixture.detectChanges();
     //
     const [tooltip] = capture(plateService.setTooltip).last();
