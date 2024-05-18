@@ -22,6 +22,7 @@ import { BuildBubbleChartExecutor } from '../messages/executors/build-bubble-cha
 import { BubbleChartFactory } from '../chart-plate/chart-types/bubble-chart/bubble-chart.factory';
 import { IChartDataset } from '../chart-plate/chart-types/models/i-chart-dataset';
 import { BubbleDataModel } from '../models/bubble-data.model';
+import { ChartDataEvent } from '../messages/events/chart-data.event';
 
 @Injectable()
 export class MessageRegistratorService extends PostboyAbstractRegistrator {
@@ -34,6 +35,7 @@ export class MessageRegistratorService extends PostboyAbstractRegistrator {
     this.registerReplay<ChartInitializedEvent>(ChartInitializedEvent.ID);
     this.registerReplay<ChartRenderedEvent>(ChartRenderedEvent.ID);
     this.registerSubject<FilterDatasetQuery>(FilterDatasetQuery.ID);
+    this.registerSubject<ChartDataEvent>(ChartDataEvent.ID);
     this.registerWithPipe<ChartUpdateCommand>(ChartUpdateCommand.ID, new Subject<ChartUpdateCommand>(), (s) =>
       s.pipe(auditTime(350)),
     );

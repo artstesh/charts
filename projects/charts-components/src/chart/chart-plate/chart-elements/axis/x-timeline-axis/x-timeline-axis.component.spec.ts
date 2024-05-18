@@ -12,6 +12,7 @@ import { ChartConstants } from '../../../../models/chart-constants';
 import { ChartPostboyService } from '../../../../services/chart-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
+import { ChartLimitEvent } from '../../../../messages/events/chart-limit.event';
 
 describe('#chart-elements XTimelineAxisComponent', () => {
   let fixture: ComponentFixture<XTimelineAxisComponent>;
@@ -20,10 +21,13 @@ describe('#chart-elements XTimelineAxisComponent', () => {
   const mapService = mock(SettingsMapService);
   const postboy = mock(ChartPostboyService);
   let chartInitialized: Subject<ChartInitializedEvent>;
+  let limitEvent: Subject<ChartLimitEvent>;
 
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
+    limitEvent = new Subject<ChartLimitEvent>();
     when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
+    when(postboy.subscribe(ChartLimitEvent.ID)).thenReturn(limitEvent);
     return MockBuilder(XTimelineAxisComponent, ChartModule)
       .provide(MockProvider(ChartPostboyService, instance(postboy)))
       .provide(MockProvider(ChartAxisLimitService, instance(limitService)))

@@ -1,14 +1,15 @@
 import { ScaleOptionsByType } from 'chart.js';
 import { XTimelineAxisSettings } from './x-timeline-axis.settings';
+import { ChartAxisLimitsModel } from '../../../../models/chart-axis-limits.model';
 
 export class XTimelineAxisFactory {
-  public static build(settings: XTimelineAxisSettings): ScaleOptionsByType<'time'> {
+  public static build(settings: XTimelineAxisSettings, limits?: ChartAxisLimitsModel): ScaleOptionsByType<'time'> {
     return {
       type: 'time',
       display: 'auto',
       grid: { display: settings.displayGrid },
-      min: settings.limits[0],
-      max: settings.limits[1],
+      min: limits?.minX,
+      max: limits?.maxX,
       time: {
         unit: settings.dateUnit,
       },

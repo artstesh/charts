@@ -10,6 +10,7 @@ import { GetGradientExecutor } from '../../../messages/executors/get-gradient.ex
 import { first } from 'rxjs/operators';
 import { AreaBuilderModel } from '../models/area-builder.model';
 import { ChartRenderedEvent } from '../../../messages/events/chart-rendered.event';
+import { ChartDataEvent } from '../../../messages/events/chart-data.event';
 
 @Component({
   selector: 'art-area-chart',
@@ -30,6 +31,7 @@ export class AreaChartComponent extends AbstractChartTypeComponent<AreaChartSett
 
   @Input() set data(aw: ChartAreaDataModel[]) {
     this._data = aw;
+    this.postboy.fire(new ChartDataEvent(this._data));
     this.dataUpdated();
   }
 

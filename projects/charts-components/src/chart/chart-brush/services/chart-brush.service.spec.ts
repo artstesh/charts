@@ -10,18 +10,20 @@ import { MoveBrushCommand } from '../messages/commands/move-brush.command';
 import { BrushAreaEvent } from '../messages/events/brush-area.event';
 import { WidthRestrictionsCommand } from '../messages/commands/width-restrictions.command';
 import { should } from '@artstesh/it-should';
+import { ChartDataEvent } from '../../messages/events/chart-data.event';
 
 describe('ChartBrushService', () => {
   let service: ChartBrushService;
   const postboy = mock(ChartPostboyService);
   const maxWidth = 100;
   const minWidth = 10;
-  let area: BrushRangeModel = { left: 0, width: 0 };
+  let area: BrushRangeModel = { left: 0, width: 0, changed: false };
   let moveBorder$: Subject<MoveBrushBorderCommand>;
   let areaEvent$: Subject<BrushAreaEvent>;
   let zoomCommand$: Subject<ZoomAreaCommand>;
   let moveCommand$: Subject<MoveBrushCommand>;
   let widthRestrict$: Subject<WidthRestrictionsCommand>;
+  let dataChanged$: Subject<ChartDataEvent>;
 
   beforeEach(() => {
     moveBorder$ = new Subject<MoveBrushBorderCommand>();
@@ -29,11 +31,13 @@ describe('ChartBrushService', () => {
     zoomCommand$ = new Subject<ZoomAreaCommand>();
     moveCommand$ = new Subject<MoveBrushCommand>();
     widthRestrict$ = new Subject<WidthRestrictionsCommand>();
+    dataChanged$ = new Subject<ChartDataEvent>();
     when(postboy.subscribe(WidthRestrictionsCommand.ID)).thenReturn(widthRestrict$);
     when(postboy.subscribe(ZoomAreaCommand.ID)).thenReturn(zoomCommand$);
     when(postboy.subscribe(MoveBrushCommand.ID)).thenReturn(moveCommand$);
     when(postboy.subscribe(MoveBrushBorderCommand.ID)).thenReturn(moveBorder$);
     when(postboy.subscribe(BrushAreaEvent.ID)).thenReturn(areaEvent$);
+    when(postboy.subscribe(ChartDataEvent.ID)).thenReturn(dataChanged$);
     service = new ChartBrushService(instance(postboy));
     service.up();
   });

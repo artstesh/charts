@@ -7,12 +7,11 @@ import { BrushRangeModel } from '../../models/brush-range.model';
 import { DestructibleComponent } from '../../../common/destructible.component';
 import { Subscription } from 'rxjs';
 import { ChartLimitEvent } from '../../../messages/events/chart-limit.event';
-import { filter } from 'rxjs/operators';
-import { ChartLimitActor } from '../../../models';
 import { BrushAreaEvent } from '../../messages/events/brush-area.event';
 import { ZoomAreaCommand } from '../../messages/commands/zoom-area.command';
 import { MoveBrushCommand } from '../../messages/commands/move-brush.command';
 import { WidthRestrictionsCommand } from '../../messages/commands/width-restrictions.command';
+import { ChartAxisLimitsModel } from '../../../models/chart-axis-limits.model';
 
 @Component({
   selector: 'art-brush-selection-area',
@@ -27,7 +26,6 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
   readonly areaMinSize = 100;
   maxValue: number = 0;
   minValue: number = 0;
-  daysLength = 1;
   selectedModel?: BrushRangeModel;
   isDown = false;
   movingBalancePause = 10;
@@ -41,7 +39,6 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
   ngOnInit(): void {
     this.subs.push(this.observeParentChart());
     this.subs.push(this.observeSelectedArea());
-    this.subs.push(this.observeParentRange());
   }
 
   ngOnDestroy(): void {
@@ -69,15 +66,19 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
   }
 
   updateMainChart(): void {
+    let daysLength = 1;
+    const ticks = this.mainChart.scales[ChartConstants.BottomAxisId].getTicks();
+    if (!!ticks.length && ticks.length >= 2) daysLength = ticks[1].value - ticks[0].value;
     const chartRectangle = this.mainChart.canvas.getBoundingClientRect();
     const leftPoint = this.selectedModel!.left;
     const rightPoint = this.selectedModel!.left + this.selectedModel!.width;
-    const startIndex = Math.round((leftPoint / chartRectangle.width) * this.daysLength);
-    const endIndex = Math.round((rightPoint / chartRectangle.width) * this.daysLength);
+    const startIndex = Math.round((leftPoint / chartRectangle.width) * daysLength);
+    const endIndex = Math.round((rightPoint / chartRectangle.width) * daysLength);
     let startDate = this.maxValue + startIndex;
     let endDate = this.maxValue + endIndex;
-    if (startDate < this.maxValue) startDate = this.maxValue;
-    if (endDate > this.minValue) endDate = this.minValue;
+    if (startDate < this.minValue) startDate = this.minValue;
+    if (endDate > this.maxValue) endDate = this.maxValue;
+    console.log('sdfasfsadfDDDDDDDDDDDD');
     this.updateMainChartBalanced(startDate, endDate);
   }
 
@@ -98,42 +99,16 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
 
   private observeSelectedArea(): Subscription {
     return this.postboy.subscribe<BrushAreaEvent>(BrushAreaEvent.ID).subscribe((ev) => {
+      if (!this.plate) return;
       this.selectedModel = ev.range;
       this.plate.nativeElement.style.left = ev.range.left + 'px';
       this.plate.nativeElement.style.width = ev.range.width + 'px';
       this.detector.detectChanges();
-      this.updateMainChart();
+      if (ev.range.changed) this.updateMainChart();
     });
   }
 
-  private observeParentRange(): Subscription {
-    return this.postboy
-      .subscribe<ChartLimitEvent>(ChartLimitEvent.ID)
-      .pipe(filter((e) => e.actor !== ChartLimitActor.Brush))
-      .subscribe((ev) => {
-        if (
-          ev.limits?.maxX == null ||
-          ev.limits.minX == null ||
-          (ev.limits.maxX === this.maxValue && ev.limits.minX === this.minValue)
-        )
-          return;
-        this.maxValue = ev.limits.minX;
-        this.minValue = ev.limits.maxX;
-        const ticks = this.mainChart.scales[ChartConstants.BottomAxisId].getTicks();
-        if (!!ticks.length && ticks.length >= 2) this.daysLength = ticks[1].value - ticks[0].value;
-        this.resetAreaToDefault();
-      });
-  }
-
   private updateMainChartBalanced(start: number, end: number): void {
-    // if (this.movingBalanceTimer != null) {
-    //   clearTimeout(this.movingBalanceTimer);
-    // }
-    // this.movingBalanceTimer = setTimeout(() => {
-    //   this.movingBalanceTimer = null;
-    //   (this.mainChart.options.scales![ChartConstants.BottomAxisId] as any).min = start;
-    //   (this.mainChart.options.scales![ChartConstants.BottomAxisId] as any).max = end;
-    //   this.mainChart.update();
-    // }, this.movingBalancePause);
+    this.postboy.fire(new ChartLimitEvent(new ChartAxisLimitsModel(start, end)));
   }
 }
