@@ -6,7 +6,7 @@ export class ChartDataEvent extends PostboyGenericMessage {
   public get id(): string {
     return ChartDataEvent.ID;
   }
-  constructor(data: (ChartDataModel | ChartAreaDataModel)[]) {
+  constructor(public data: (ChartDataModel | ChartAreaDataModel)[]) {
     super();
   }
 }

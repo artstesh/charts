@@ -6,29 +6,32 @@ import { MoveBrushBorderCommand } from '../../messages/commands/move-brush-borde
 import { ZoomAreaCommand } from '../messages/commands/zoom-area.command';
 import { BrushAreaEvent } from '../messages/events/brush-area.event';
 import { MoveBrushCommand } from '../messages/commands/move-brush.command';
-import { WidthRestrictionsCommand } from '../messages/commands/width-restrictions.command';
-import { ChartDataEvent } from '../../messages/events/chart-data.event';
+import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
+import Chart from 'chart.js/auto';
 
 @Injectable()
 export class ChartBrushService implements IPostboyDependingService {
-  private selectedArea: BrushRangeModel = { left: 0, width: 0, changed: false };
-  private maxWidth = 0;
-  private minWidth = 0;
+  private selectedArea: BrushRangeModel = { left: 0, width: 0 };
+  private get maxWidth() {
+    return this.mainChart?.canvas.width ?? 0;
+  }
+  private minWidth = 100;
+  mainChart?: Chart;
 
   constructor(private postboy: ChartPostboyService) {}
 
   up(): void {
-    this.observeParentData();
+    this.observeParentChart();
     this.observeAreaEvent();
     this.observeMoveBorder();
     this.observeZoomArea();
     this.observeMoveCommand();
-    this.observeWidthRestrictions();
   }
 
-  observeParentData(): void {
-    this.postboy.subscribe<ChartDataEvent>(ChartDataEvent.ID).subscribe((ev) => {
-      this.updateArea({ left: 0, width: this.maxWidth, changed: false });
+  private observeParentChart() {
+    return this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {
+      this.mainChart = ev.chart;
+      this.selectedArea = { left: 0, width: ev.chart.width };
     });
   }
 
@@ -37,7 +40,6 @@ export class ChartBrushService implements IPostboyDependingService {
       const area = {
         left: this.selectedArea.left - ev.range / 2,
         width: this.selectedArea.width + ev.range,
-        changed: true,
       };
       if (area.width + area.left > this.maxWidth) area.width = this.maxWidth - area.left;
       this.updateArea(area);
@@ -47,14 +49,6 @@ export class ChartBrushService implements IPostboyDependingService {
   private observeAreaEvent(): void {
     this.postboy.subscribe<BrushAreaEvent>(BrushAreaEvent.ID).subscribe((ev) => {
       this.selectedArea = ev.range;
-    });
-  }
-
-  private observeWidthRestrictions(): void {
-    this.postboy.subscribe<WidthRestrictionsCommand>(WidthRestrictionsCommand.ID).subscribe((ev) => {
-      this.maxWidth = ev.max;
-      this.minWidth = ev.min;
-      this.updateArea({ left: 0, width: ev.max, changed: true });
     });
   }
 
@@ -68,8 +62,8 @@ export class ChartBrushService implements IPostboyDependingService {
     this.postboy.subscribe<MoveBrushBorderCommand>(MoveBrushBorderCommand.ID).subscribe((ev) => {
       const area =
         ev.side === 'right'
-          ? { ...this.selectedArea, width: this.selectedArea.width + ev.shift, changed: true }
-          : { width: this.selectedArea.width - ev.shift, left: this.selectedArea.left + ev.shift, changed: true };
+          ? { ...this.selectedArea, width: this.selectedArea.width + ev.shift }
+          : { width: this.selectedArea.width - ev.shift, left: this.selectedArea.left + ev.shift };
       if (area.left < 0) area.width += area.left;
       this.updateArea(area);
     });
@@ -80,8 +74,10 @@ export class ChartBrushService implements IPostboyDependingService {
   }
 
   private applyRulesToArea(area: BrushRangeModel): BrushRangeModel {
+    console.log(area);
     if (area.left < 0) area.left = 0;
     if (area.left + area.width > this.maxWidth || area.width < this.minWidth) return this.selectedArea;
+    console.log(area);
     return { ...area };
   }
 }

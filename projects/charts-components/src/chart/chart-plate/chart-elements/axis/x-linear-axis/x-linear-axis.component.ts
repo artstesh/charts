@@ -6,7 +6,6 @@ import { DestructibleComponent } from '../../../../common/destructible.component
 import { ChartConstants } from '../../../../models/chart-constants';
 import { ChartPostboyService } from '../../../../services/chart-postboy.service';
 import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
-import { ChartLimitEvent } from '../../../../messages/events/chart-limit.event';
 
 @Component({
   selector: 'art-x-linear-axis',
@@ -35,7 +34,6 @@ export class XLinearAxisComponent extends DestructibleComponent implements OnIni
     this.subs.push(
       this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe(() => this.setAxis()),
     );
-    this.subs.push(this.postboy.subscribe<ChartLimitEvent>(ChartLimitEvent.ID).subscribe(() => this.setAxis()));
   }
 
   setAxis(): void {

@@ -4,7 +4,6 @@ import { XLinearAxisComponent } from './x-linear-axis.component';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { ChartModule } from '../../../../chart.module';
 import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
-import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
 import { should } from '@artstesh/it-should';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
@@ -12,25 +11,19 @@ import { ChartConstants } from '../../../../models/chart-constants';
 import { ChartPostboyService } from '../../../../services/chart-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
-import { ChartLimitEvent } from '../../../../messages/events/chart-limit.event';
 
 describe('#chart-elements XLinearAxisComponent', () => {
   let fixture: ComponentFixture<XLinearAxisComponent>;
-  const limitService = mock(ChartAxisLimitService);
   const plateService = mock(ChartPlateService);
   const mapService = mock(SettingsMapService);
   const postboy = mock(ChartPostboyService);
   let chartInitialized: Subject<ChartInitializedEvent>;
-  let limitEvent: Subject<ChartLimitEvent>;
 
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
-    limitEvent = new Subject<ChartLimitEvent>();
     when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
-    when(postboy.subscribe(ChartLimitEvent.ID)).thenReturn(limitEvent);
     return MockBuilder(XLinearAxisComponent, ChartModule)
       .provide(MockProvider(ChartPostboyService, instance(postboy)))
-      .provide(MockProvider(ChartAxisLimitService, instance(limitService)))
       .provide(MockProvider(SettingsMapService, instance(mapService)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));
   });
@@ -41,7 +34,6 @@ describe('#chart-elements XLinearAxisComponent', () => {
   });
 
   afterEach(() => {
-    reset(limitService);
     reset(mapService);
     reset(postboy);
     reset(plateService);

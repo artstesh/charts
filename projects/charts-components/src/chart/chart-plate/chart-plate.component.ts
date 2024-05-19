@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { Subscription } from 'rxjs';
-import { ChartAxisLimitService } from '../services/chart-axis-limit.service';
 import { ChartPlateService } from './services/chart-plate.service';
 import { SettingsMapService } from '../services/settings-map.service';
 import { ChartPlateSettings } from './models/chart-plate.settings';
@@ -27,7 +26,7 @@ registerAdapter();
   selector: 'art-chart-plate',
   templateUrl: './chart-plate.component.html',
   styleUrls: ['./chart-plate.component.scss'],
-  providers: [ChartAxisLimitService, ChartPlateService, MessageRegistratorService, ChartPostboyService],
+  providers: [ChartPlateService, MessageRegistratorService, ChartPostboyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {

@@ -8,16 +8,16 @@ import { BrushSelectionAreaComponent } from './brush-selection-area.component';
 import { ChartBrushService } from '../../services/chart-brush.service';
 import { ChartModule } from '../../../chart.module';
 import { BrushAreaEvent } from '../../messages/events/brush-area.event';
-import { ChartLimitEvent } from '../../../messages/events/chart-limit.event';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
+import { ChartScrollEvent } from '../../../messages/events/chart-scroll.event';
 
 describe('ChartBrushSelectionAreaComponent', () => {
   let fixture: ComponentFixture<BrushSelectionAreaComponent>;
   const postboy = mock(ChartPostboyService);
   const brushService = mock(ChartBrushService);
   let SelectedArea$: ReplaySubject<BrushAreaEvent>;
-  let limitEvent$: Subject<ChartLimitEvent>;
   let chartEvent$: Subject<ChartInitializedEvent>;
+  let scrollEvent$: Subject<ChartScrollEvent>;
 
   beforeEach(async () => {
     return MockBuilder(BrushSelectionAreaComponent, ChartModule).provide(
@@ -27,11 +27,11 @@ describe('ChartBrushSelectionAreaComponent', () => {
 
   beforeEach(() => {
     chartEvent$ = new ReplaySubject<ChartInitializedEvent>(1);
+    scrollEvent$ = new ReplaySubject<ChartScrollEvent>(1);
     SelectedArea$ = new ReplaySubject<BrushAreaEvent>(1);
-    limitEvent$ = new Subject<ChartLimitEvent>();
     when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartEvent$);
     when(postboy.subscribe(BrushAreaEvent.ID)).thenReturn(SelectedArea$);
-    when(postboy.subscribe(ChartLimitEvent.ID)).thenReturn(limitEvent$);
+    when(postboy.subscribe(ChartScrollEvent.ID)).thenReturn(scrollEvent$);
     fixture = MockRender(BrushSelectionAreaComponent);
   });
 

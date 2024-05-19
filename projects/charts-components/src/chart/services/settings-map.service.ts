@@ -17,7 +17,6 @@ import { ChartTooltipFactory } from '../chart-plate/chart-elements/chart-tooltip
 import { ChartLineDatasetFactory } from '../chart-plate/chart-types/line-chart/chart-line-dataset.factory';
 import { ChartBarDatasetFactory } from '../chart-plate/chart-types/bar-chart/chart-bar-dataset.factory';
 import { ChartPostboyService } from './chart-postboy.service';
-import { ChartAxisLimitsModel } from '../models/chart-axis-limits.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,16 +26,16 @@ export class SettingsMapService {
     return ChartPlateFactory.build(settings, postboy);
   }
 
-  public xLinearScale(settings: XLinearAxisSettings, limits?: ChartAxisLimitsModel): ScaleOptionsByType<'linear'> {
-    return XLinearAxisScaleFactory.build(settings, limits);
+  public xLinearScale(settings: XLinearAxisSettings): ScaleOptionsByType<'linear'> {
+    return XLinearAxisScaleFactory.build(settings);
   }
 
   public tooltip(settings: ChartTooltipSettings): any {
     return ChartTooltipFactory.build(settings);
   }
 
-  public xTimelineScale(settings: XTimelineAxisSettings, limits?: ChartAxisLimitsModel): ScaleOptionsByType<'time'> {
-    return XTimelineAxisFactory.build(settings, limits);
+  public xTimelineScale(settings: XTimelineAxisSettings): ScaleOptionsByType<'time'> {
+    return XTimelineAxisFactory.build(settings);
   }
 
   public xCategoryScale(labels: string[]): ScaleOptionsByType<'category'> {

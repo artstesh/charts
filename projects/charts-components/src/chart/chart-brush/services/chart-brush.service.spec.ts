@@ -3,36 +3,35 @@ import { Forger } from '@artstesh/forger';
 import { BrushRangeModel } from '../models/brush-range.model';
 import { anyOfClass, instance, mock, reset, when } from 'ts-mockito';
 import { ChartPostboyService } from '../../services/chart-postboy.service';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { MoveBrushBorderCommand } from '../../messages/commands/move-brush-border.command';
 import { ZoomAreaCommand } from '../messages/commands/zoom-area.command';
 import { MoveBrushCommand } from '../messages/commands/move-brush.command';
 import { BrushAreaEvent } from '../messages/events/brush-area.event';
-import { WidthRestrictionsCommand } from '../messages/commands/width-restrictions.command';
 import { should } from '@artstesh/it-should';
 import { ChartDataEvent } from '../../messages/events/chart-data.event';
+import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
 
 describe('ChartBrushService', () => {
   let service: ChartBrushService;
   const postboy = mock(ChartPostboyService);
-  const maxWidth = 100;
-  const minWidth = 10;
-  let area: BrushRangeModel = { left: 0, width: 0, changed: false };
+  const maxWidth = 1000;
+  let area: BrushRangeModel;
   let moveBorder$: Subject<MoveBrushBorderCommand>;
   let areaEvent$: Subject<BrushAreaEvent>;
   let zoomCommand$: Subject<ZoomAreaCommand>;
   let moveCommand$: Subject<MoveBrushCommand>;
-  let widthRestrict$: Subject<WidthRestrictionsCommand>;
   let dataChanged$: Subject<ChartDataEvent>;
+  let chartEvent$: Subject<ChartInitializedEvent>;
 
   beforeEach(() => {
+    chartEvent$ = new ReplaySubject<ChartInitializedEvent>(1);
     moveBorder$ = new Subject<MoveBrushBorderCommand>();
     areaEvent$ = new Subject<BrushAreaEvent>();
     zoomCommand$ = new Subject<ZoomAreaCommand>();
     moveCommand$ = new Subject<MoveBrushCommand>();
-    widthRestrict$ = new Subject<WidthRestrictionsCommand>();
     dataChanged$ = new Subject<ChartDataEvent>();
-    when(postboy.subscribe(WidthRestrictionsCommand.ID)).thenReturn(widthRestrict$);
+    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartEvent$);
     when(postboy.subscribe(ZoomAreaCommand.ID)).thenReturn(zoomCommand$);
     when(postboy.subscribe(MoveBrushCommand.ID)).thenReturn(moveCommand$);
     when(postboy.subscribe(MoveBrushBorderCommand.ID)).thenReturn(moveBorder$);
@@ -43,13 +42,14 @@ describe('ChartBrushService', () => {
   });
 
   beforeEach(() => {
+    area = { left: 0, width: maxWidth };
     when(postboy.fire(anyOfClass(BrushAreaEvent))).thenCall((ev) => {
       areaEvent$.next(ev);
       area = (ev as BrushAreaEvent).range;
     });
-    widthRestrict$.next(new WidthRestrictionsCommand(maxWidth, minWidth));
+    chartEvent$.next(new ChartInitializedEvent({ canvas: { width: maxWidth } } as any));
+    areaEvent$.next(new BrushAreaEvent(area));
     areaEvent$.subscribe((a) => (area = a.range));
-    zoomCommand$.next(new ZoomAreaCommand(-50)); //set to half width
   });
 
   afterEach(() => {
@@ -62,9 +62,7 @@ describe('ChartBrushService', () => {
   });
 
   describe('full width', () => {
-    beforeEach(() => {
-      widthRestrict$.next(new WidthRestrictionsCommand(maxWidth, minWidth)); // reset to full width
-    });
+    beforeEach(() => {});
 
     it('zoomArea() ignore positive', () => {
       const shift = Forger.create<number>({ numberMin: 1, numberMax: 10 })!;
@@ -159,7 +157,6 @@ describe('ChartBrushService', () => {
 
   describe('half width on the right side', () => {
     beforeEach(() => {
-      widthRestrict$.next(new WidthRestrictionsCommand(maxWidth, minWidth)); // reset to full width
       zoomCommand$.next(new ZoomAreaCommand(-50)); //set to half width
       moveCommand$.next(new MoveBrushCommand(25)); // move to right
     });
@@ -246,7 +243,6 @@ describe('ChartBrushService', () => {
 
   describe('half width on the left side', () => {
     beforeEach(() => {
-      widthRestrict$.next(new WidthRestrictionsCommand(maxWidth, minWidth)); // reset to full width
       zoomCommand$.next(new ZoomAreaCommand(-50)); // set to half width
       moveCommand$.next(new MoveBrushCommand(-25)); // move to left
     });
@@ -333,7 +329,6 @@ describe('ChartBrushService', () => {
 
   describe('half width in the middle', () => {
     beforeEach(() => {
-      widthRestrict$.next(new WidthRestrictionsCommand(maxWidth, minWidth)); // reset to full width
       zoomCommand$.next(new ZoomAreaCommand(-50)); // set to half width
     });
 

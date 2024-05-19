@@ -5,7 +5,6 @@ import { ChartBarSettings } from './chart-bar.settings';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
 import { ChartPostboyService } from '../../../services/chart-postboy.service';
-import { FilterDatasetQuery } from '../../../messages/queries/filter-dataset.query';
 import { ChartDataEvent } from '../../../messages/events/chart-data.event';
 
 @Component({
@@ -16,7 +15,6 @@ import { ChartDataEvent } from '../../../messages/events/chart-data.event';
 })
 export class ChartBarComponent extends AbstractChartTypeComponent<ChartBarSettings> {
   protected _settings: ChartBarSettings = new ChartBarSettings();
-  private _dataFiltered!: ChartDataModel[];
 
   constructor(postboy: ChartPostboyService, service: ChartPlateService, private mapService: SettingsMapService) {
     super(postboy, service);
@@ -30,10 +28,5 @@ export class ChartBarComponent extends AbstractChartTypeComponent<ChartBarSettin
     this.dataUpdated();
   }
 
-  protected updateFilteredData(): void {
-    const query = new FilterDatasetQuery(this._data);
-    this._dataFiltered = this.postboy.execute(query);
-  }
-
-  protected getDataset = () => [this.mapService.batDataset(this._settings, this._dataFiltered)];
+  protected getDataset = () => [this.mapService.batDataset(this._settings, this._data)];
 }
