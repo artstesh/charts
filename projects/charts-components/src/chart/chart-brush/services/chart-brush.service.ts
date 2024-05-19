@@ -74,10 +74,8 @@ export class ChartBrushService implements IPostboyDependingService {
   }
 
   private applyRulesToArea(area: BrushRangeModel): BrushRangeModel {
-    console.log(area);
     if (area.left < 0) area.left = 0;
     if (area.left + area.width > this.maxWidth || area.width < this.minWidth) return this.selectedArea;
-    console.log(area);
     return { ...area };
   }
 }

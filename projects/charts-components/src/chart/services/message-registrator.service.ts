@@ -31,7 +31,7 @@ export class MessageRegistratorService extends PostboyAbstractRegistrator {
   protected _up(): void {
     this.registerReplay<ChartInitializedEvent>(ChartInitializedEvent.ID);
     this.registerReplay<ChartRenderedEvent>(ChartRenderedEvent.ID);
-    this.registerSubject<ChartDataEvent>(ChartDataEvent.ID);
+    this.registerReplay<ChartDataEvent>(ChartDataEvent.ID);
     this.registerSubject<ChartScrollEvent>(ChartScrollEvent.ID);
     this.registerWithPipe<ChartUpdateCommand>(ChartUpdateCommand.ID, new Subject<ChartUpdateCommand>(), (s) =>
       s.pipe(auditTime(350)),
