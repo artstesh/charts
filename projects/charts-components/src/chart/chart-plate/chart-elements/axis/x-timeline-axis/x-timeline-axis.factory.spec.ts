@@ -30,15 +30,6 @@ describe('#chart-elements XLinearAxisScaleFactory', () => {
     should().true(scale.ticks.maxRotation === settings.maxRotation);
   });
 
-  it('limits are defined', () => {
-    should()
-      .number(scale.min as number)
-      .equals(settings.limits[0]!);
-    should()
-      .number(scale.max as number)
-      .equals(settings.limits[1]!);
-  });
-
   it('sets ticks callback', () => {
     settings.dateFormat = (v: number, i: number) => `${v}-${i}`;
     const value = Forger.create<number>()!;

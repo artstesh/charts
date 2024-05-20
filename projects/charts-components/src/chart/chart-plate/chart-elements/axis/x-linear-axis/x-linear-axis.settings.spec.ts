@@ -7,21 +7,10 @@ describe('#chart-elements XLinearAxisSettings', () => {
 
   beforeEach(() => {
     model = XLinearAxisSettings.copy(Forger.create<XLinearAxisSettings>()!);
-    model.limits = Forger.create<[number, number | null]>()!;
   });
 
   afterEach(() => {
     expect().nothing();
-  });
-
-  describe('setLimits()', () => {
-    it('success', () => {
-      const expected = Forger.create<[number, number]>()!;
-      //
-      model = model.setLimits(expected);
-      //
-      should().array(model.limits).equal(expected);
-    });
   });
 
   describe('setDisplayGrid()', () => {
@@ -61,7 +50,6 @@ describe('#chart-elements XLinearAxisSettings', () => {
 
     it('different displayGrid', () => {
       const other = new XLinearAxisSettings();
-      other.limits = [...model.limits];
       other.displayGrid = !model.displayGrid;
       //
       should().false(model.isSame(other));
@@ -70,14 +58,6 @@ describe('#chart-elements XLinearAxisSettings', () => {
     it('different maxRotation', () => {
       const other = XLinearAxisSettings.copy(model);
       other.maxRotation = Forger.create<number>()!;
-      //
-      should().false(model.isSame(other));
-    });
-
-    it('different limits', () => {
-      const other = new XLinearAxisSettings();
-      other.limits = Forger.create<[number | null, number | null]>()!;
-      other.displayGrid = model.displayGrid;
       //
       should().false(model.isSame(other));
     });

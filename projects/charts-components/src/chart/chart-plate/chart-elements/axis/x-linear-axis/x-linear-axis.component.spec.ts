@@ -4,7 +4,6 @@ import { XLinearAxisComponent } from './x-linear-axis.component';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { ChartModule } from '../../../../chart.module';
 import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
-import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
 import { should } from '@artstesh/it-should';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
@@ -15,7 +14,6 @@ import { ChartInitializedEvent } from '../../../../messages/events/chart-initial
 
 describe('#chart-elements XLinearAxisComponent', () => {
   let fixture: ComponentFixture<XLinearAxisComponent>;
-  const limitService = mock(ChartAxisLimitService);
   const plateService = mock(ChartPlateService);
   const mapService = mock(SettingsMapService);
   const postboy = mock(ChartPostboyService);
@@ -26,7 +24,6 @@ describe('#chart-elements XLinearAxisComponent', () => {
     when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
     return MockBuilder(XLinearAxisComponent, ChartModule)
       .provide(MockProvider(ChartPostboyService, instance(postboy)))
-      .provide(MockProvider(ChartAxisLimitService, instance(limitService)))
       .provide(MockProvider(SettingsMapService, instance(mapService)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));
   });
@@ -37,7 +34,6 @@ describe('#chart-elements XLinearAxisComponent', () => {
   });
 
   afterEach(() => {
-    reset(limitService);
     reset(mapService);
     reset(postboy);
     reset(plateService);
