@@ -23,7 +23,6 @@ export class XTimelineAxisSettings {
     if (this.dateUnit !== model.dateUnit) return false;
     const date = new Date().getTime();
     return this.dateFormat(date, 0) === model.dateFormat(date, 0);
-
   }
 
   public setDisplayGrid(value: boolean): XTimelineAxisSettings {
