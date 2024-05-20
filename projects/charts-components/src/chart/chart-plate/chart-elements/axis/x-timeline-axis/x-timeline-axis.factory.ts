@@ -7,8 +7,6 @@ export class XTimelineAxisFactory {
       type: 'time',
       display: 'auto',
       grid: { display: settings.displayGrid },
-      min: settings.limits[0],
-      max: settings.limits[1],
       time: {
         unit: settings.dateUnit,
       },

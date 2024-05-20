@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { ChartAxisLimitService } from '../../../../services/chart-axis-limit.service';
 import { XLinearAxisSettings } from './x-linear-axis.settings';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
@@ -16,7 +15,6 @@ import { ChartInitializedEvent } from '../../../../messages/events/chart-initial
 })
 export class XLinearAxisComponent extends DestructibleComponent implements OnInit {
   constructor(
-    private limitService: ChartAxisLimitService,
     private postboy: ChartPostboyService,
     private service: ChartPlateService,
     private mapService: SettingsMapService,
@@ -29,7 +27,6 @@ export class XLinearAxisComponent extends DestructibleComponent implements OnIni
   @Input() set settings(value: XLinearAxisSettings | undefined) {
     if (!value || this._settings.isSame(value)) return;
     this._settings = value;
-    this.limitService.setHorizontalLimits(this._settings.limits[0], this._settings.limits[1]);
     this.setAxis();
   }
 
