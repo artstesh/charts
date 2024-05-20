@@ -7,13 +7,12 @@ export class XTimelineAxisFactory {
       type: 'time',
       display: 'auto',
       grid: { display: settings.displayGrid },
-      min: settings.limits[0],
-      max: settings.limits[1],
       time: {
         unit: settings.dateUnit,
       },
       ticks: {
         callback: (val: number, index: number) => settings.dateFormat(val, index),
+        maxRotation: settings.maxRotation,
       },
       offset: true,
     } as unknown as ScaleOptionsByType<'time'>;

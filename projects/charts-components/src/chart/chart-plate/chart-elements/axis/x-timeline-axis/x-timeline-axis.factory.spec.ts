@@ -26,13 +26,8 @@ describe('#chart-elements XLinearAxisScaleFactory', () => {
     should().true(scale.grid.display === settings.displayGrid);
   });
 
-  it('limits are defined', () => {
-    should()
-      .number(scale.min as number)
-      .equals(settings.limits[0]!);
-    should()
-      .number(scale.max as number)
-      .equals(settings.limits[1]!);
+  it('maxRotation success', () => {
+    should().true(scale.ticks.maxRotation === settings.maxRotation);
   });
 
   it('sets ticks callback', () => {

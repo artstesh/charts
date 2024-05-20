@@ -25,8 +25,7 @@ describe('#chart-elements XLinearAxisScaleFactory', () => {
     should().true(scale.grid.display === settings.displayGrid);
   });
 
-  it('limits() defined success', () => {
-    should().number(scale.min).equals(settings.limits[0]!);
-    should().number(scale.max).equals(settings.limits[1]!);
+  it('maxRotation success', () => {
+    should().true(scale.ticks.maxRotation === settings.maxRotation);
   });
 });
