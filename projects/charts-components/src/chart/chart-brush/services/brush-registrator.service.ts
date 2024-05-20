@@ -8,24 +8,25 @@ import { auditTime, distinctUntilChanged } from 'rxjs/operators';
 import { BrushAreaEvent } from '../messages/events/brush-area.event';
 import { ZoomAreaCommand } from '../messages/commands/zoom-area.command';
 import { MoveBrushCommand } from '../messages/commands/move-brush.command';
-import { WidthRestrictionsCommand } from '../messages/commands/width-restrictions.command';
+import { BrushParentService } from './brush-parent.service';
+import { ResetBrushCommand } from '../messages/commands/reset-brush.command';
 
 @Injectable()
 export class BrushRegistratorService extends PostboyAbstractRegistrator {
-  constructor(postboy: ChartPostboyService, general: ChartBrushService) {
+  constructor(postboy: ChartPostboyService, general: ChartBrushService, parent: BrushParentService) {
     super(postboy);
-    this.registerServices([general]);
+    this.registerServices([general, parent]);
   }
 
   protected _up(): void {
-    this.registerSubject<MoveBrushBorderCommand>(MoveBrushBorderCommand.ID);
-    this.registerSubject<ZoomAreaCommand>(ZoomAreaCommand.ID);
-    this.registerSubject<WidthRestrictionsCommand>(WidthRestrictionsCommand.ID);
-    this.registerSubject<MoveBrushCommand>(MoveBrushCommand.ID);
+    this.registerSubject(MoveBrushBorderCommand.ID);
+    this.registerSubject(ZoomAreaCommand.ID);
+    this.registerSubject(MoveBrushCommand.ID);
+    this.registerSubject(ResetBrushCommand.ID);
     this.registerWithPipe<BrushAreaEvent>(BrushAreaEvent.ID, new ReplaySubject<BrushAreaEvent>(1), (s) =>
       s.pipe(
-        distinctUntilChanged((a, b) => a.range.left !== b.range.left || a.range.width !== b.range.width),
-        auditTime(350),
+        distinctUntilChanged((a, b) => a.range.left === b.range.left && a.range.width === b.range.width),
+        auditTime(10),
       ),
     );
   }
