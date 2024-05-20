@@ -27,17 +27,10 @@ export class BrushChartCloneComponent extends DestructibleComponent implements O
   }
 
   private observeParentChart() {
-    this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {
-      console.log('KDJFKKKKKKKKKKKKKKKKKKKKKKKKK');
-    });
-    this.postboy.subscribe<ChartDataEvent>(ChartDataEvent.ID).subscribe((ev) => {
-      console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
-    });
     return combineLatest([
       this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID),
       this.postboy.subscribe<ChartDataEvent>(ChartDataEvent.ID).pipe(auditTime(100)),
     ]).subscribe(([init, data]) => {
-      console.log('KDJFKJDKJFKJ');
       if (!this.chart) this.initChart(init.chart);
       this.updateDataSets(init.chart);
       this.detector.detectChanges();
@@ -70,7 +63,6 @@ export class BrushChartCloneComponent extends DestructibleComponent implements O
           },
           legend: { display: false },
         },
-        events: [],
         maintainAspectRatio: false,
         scales: {
           [ChartConstants.BottomAxisId]: {
