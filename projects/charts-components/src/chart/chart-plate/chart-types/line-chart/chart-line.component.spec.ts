@@ -6,34 +6,27 @@ import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
 import { Subject } from 'rxjs';
 import { ChartModule } from '../../../chart.module';
-import { ChartAxisLimitService } from '../../../services/chart-axis-limit.service';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { Forger } from '@artstesh/forger';
 import { SettingsMapService } from '../../../services/settings-map.service';
 import { ChartPostboyService } from '../../../services/chart-postboy.service';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
-import { ChartLimitEvent } from '../../../messages/events/chart-limit.event';
 import { should } from '@artstesh/it-should';
 
 describe('#chart-types LineChartComponent', () => {
   let fixture: ComponentFixture<ChartLineComponent>;
   const plateService = mock(ChartPlateService);
-  const limitService = mock(ChartAxisLimitService);
   const mapService = mock(SettingsMapService);
   const postboy = mock(ChartPostboyService);
   let chartInitialized: Subject<ChartInitializedEvent>;
-  let limitServiceChanged$: Subject<undefined>;
 
   beforeEach(async () => {
-    limitServiceChanged$ = new Subject<undefined>();
     chartInitialized = new Subject<ChartInitializedEvent>();
     when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
-    when(postboy.subscribe(ChartLimitEvent.ID)).thenReturn(limitServiceChanged$);
     return MockBuilder(ChartLineComponent, ChartModule)
       .provide(MockProvider(ChartPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)))
-      .provide(MockProvider(SettingsMapService, instance(mapService)))
-      .provide(MockProvider(ChartAxisLimitService, instance(limitService)));
+      .provide(MockProvider(SettingsMapService, instance(mapService)));
   });
 
   beforeEach(() => {
@@ -44,7 +37,6 @@ describe('#chart-types LineChartComponent', () => {
     reset(mapService);
     reset(plateService);
     reset(postboy);
-    reset(limitService);
     expect().nothing();
   });
 

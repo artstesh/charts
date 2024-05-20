@@ -28,9 +28,4 @@ describe('#chart-elements XLinearAxisScaleFactory', () => {
   it('maxRotation success', () => {
     should().true(scale.ticks.maxRotation === settings.maxRotation);
   });
-
-  it('limits() defined success', () => {
-    should().number(scale.min).equals(settings.limits[0]!);
-    should().number(scale.max).equals(settings.limits[1]!);
-  });
 });

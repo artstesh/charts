@@ -6,7 +6,6 @@ import { ChartPlateService } from '../services/chart-plate.service';
 import { ChartDataset } from 'chart.js';
 import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
 import { ChartPostboyService } from '../../services/chart-postboy.service';
-import { ChartLimitEvent } from '../../messages/events/chart-limit.event';
 import Chart from 'chart.js/auto';
 
 @Component({
@@ -35,7 +34,6 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
         this.getDataset().forEach((ds) => this.service.addDataset(ds));
       }),
     );
-    this.subs.push(this.postboy.subscribe<ChartLimitEvent>(ChartLimitEvent.ID).subscribe(() => this.rangeUpdated()));
     this.initial();
   }
 
@@ -45,17 +43,11 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
   }
 
   protected dataUpdated(): void {
-    this.updateFilteredData();
     this.service.removeDataset(this._settings.id, this.alsoDelete());
     this.getDataset().forEach((ds) => this.service.addDataset(ds));
   }
 
   protected abstract getDataset(): ChartDataset<any, any>[];
   protected alsoDelete = (): string | undefined => undefined;
-  protected abstract updateFilteredData(): void;
   protected initial = () => {};
-
-  protected rangeUpdated(): void {
-    this.dataUpdated();
-  }
 }
