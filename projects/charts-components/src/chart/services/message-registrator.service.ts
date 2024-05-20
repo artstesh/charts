@@ -3,13 +3,9 @@ import { PostboyAbstractRegistrator } from '@artstesh/postboy';
 import { ChartPostboyService } from './chart-postboy.service';
 import { ChartInitializedEvent } from '../messages/events/chart-initialized.event';
 import { ChartPlateService } from '../chart-plate/services/chart-plate.service';
-import { auditTime, distinctUntilChanged } from 'rxjs/operators';
-import { ReplaySubject, Subject } from 'rxjs';
+import { auditTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { ChartUpdateCommand } from '../messages/commands/chart-update.command';
-import { ChartLimitEvent } from '../messages/events/chart-limit.event';
-import { FilterDatasetQuery } from '../messages/queries/filter-dataset.query';
-import { ChartAxisLimitService } from './chart-axis-limit.service';
-import { ChartDataModel } from '../models';
 import { GetGradientExecutor } from '../messages/executors/get-gradient.executor';
 import { GradientBuilder } from '../utils/gradient.builder';
 import { BuildAreaChartExecutor } from '../messages/executors/build-area-chart.executor';
@@ -22,29 +18,23 @@ import { BuildBubbleChartExecutor } from '../messages/executors/build-bubble-cha
 import { BubbleChartFactory } from '../chart-plate/chart-types/bubble-chart/bubble-chart.factory';
 import { IChartDataset } from '../chart-plate/chart-types/models/i-chart-dataset';
 import { BubbleDataModel } from '../models/bubble-data.model';
+import { ChartDataEvent } from '../messages/events/chart-data.event';
+import { ChartScrollEvent } from '../messages/events/chart-scroll.event';
 
 @Injectable()
 export class MessageRegistratorService extends PostboyAbstractRegistrator {
-  constructor(postboy: ChartPostboyService, general: ChartPlateService, private limit: ChartAxisLimitService) {
+  constructor(postboy: ChartPostboyService, general: ChartPlateService) {
     super(postboy);
-    this.registerServices([general, limit]);
+    this.registerServices([general]);
   }
 
   protected _up(): void {
     this.registerReplay<ChartInitializedEvent>(ChartInitializedEvent.ID);
     this.registerReplay<ChartRenderedEvent>(ChartRenderedEvent.ID);
-    this.registerSubject<FilterDatasetQuery>(FilterDatasetQuery.ID);
+    this.registerReplay<ChartDataEvent>(ChartDataEvent.ID);
+    this.registerSubject<ChartScrollEvent>(ChartScrollEvent.ID);
     this.registerWithPipe<ChartUpdateCommand>(ChartUpdateCommand.ID, new Subject<ChartUpdateCommand>(), (s) =>
       s.pipe(auditTime(350)),
-    );
-    this.registerWithPipe<ChartLimitEvent>(ChartLimitEvent.ID, new ReplaySubject<ChartLimitEvent>(1), (s) =>
-      s.pipe(
-        distinctUntilChanged((x, y) => x?.limits.isTheSame(y?.limits) ?? false),
-        auditTime(50),
-      ),
-    );
-    this.registerExecutor<FilterDatasetQuery, ChartDataModel[]>(FilterDatasetQuery.ID, (e) =>
-      this.limit.examine(e.collection),
     );
     this.registerExecutor<GetGradientExecutor, CanvasGradient | null>(GetGradientExecutor.ID, (e) =>
       GradientBuilder.build(e.chart, e.colors, e.direction),
