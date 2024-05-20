@@ -12,7 +12,6 @@ export class XLinearAxisSettings {
   public isSame(model: XLinearAxisSettings): boolean {
     if (this.displayGrid !== model.displayGrid) return false;
     return this.maxRotation === model.maxRotation;
-
   }
 
   public setDisplayGrid(value: boolean): XLinearAxisSettings {
@@ -21,7 +20,7 @@ export class XLinearAxisSettings {
     return result;
   }
 
-  public setMaxRotation(maxRotation: number| null): XLinearAxisSettings {
+  public setMaxRotation(maxRotation: number | null): XLinearAxisSettings {
     return XLinearAxisSettings.copy({ ...this, maxRotation });
   }
 }
