@@ -5,7 +5,7 @@ import { XTimelineAxisSettings } from './x-timeline-axis.settings';
 import { DestructibleComponent } from '../../../../common/destructible.component';
 import { ChartConstants } from '../../../../models/chart-constants';
 import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
-import { ChartPostboyService } from '../../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../../services/inner-postboy.service';
 
 @Component({
   selector: 'art-x-timeline-axis',
@@ -16,7 +16,7 @@ import { ChartPostboyService } from '../../../../services/chart-postboy.service'
 export class XTimelineAxisComponent extends DestructibleComponent implements OnInit {
   constructor(
     private service: ChartPlateService,
-    private postboy: ChartPostboyService,
+    private postboy: InnerPostboyService,
     private mapService: SettingsMapService,
   ) {
     super();

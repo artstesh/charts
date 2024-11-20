@@ -1,6 +1,6 @@
 import { BrushParentService } from './brush-parent.service';
 import { instance, mock, reset, when } from 'ts-mockito';
-import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../services/inner-postboy.service';
 import { Subject } from 'rxjs';
 import { ResetBrushCommand } from '../messages/commands/reset-brush.command';
 import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
@@ -9,7 +9,7 @@ import { BrushAreaEvent } from '../messages/events/brush-area.event';
 
 describe('BrushParentService', () => {
   let service: BrushParentService;
-  const postboy = mock(ChartPostboyService);
+  const postboy = mock(InnerPostboyService);
   let resetBrush$: Subject<ResetBrushCommand>;
   let chartInit$: Subject<ChartInitializedEvent>;
   let dataEvent$: Subject<ChartDataEvent>;
