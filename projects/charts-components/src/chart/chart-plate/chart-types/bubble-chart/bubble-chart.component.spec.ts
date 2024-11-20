@@ -3,7 +3,7 @@ import { ComponentFixture } from '@angular/core/testing';
 import { BubbleChartComponent } from './bubble-chart.component';
 import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
 import { ChartPlateService } from '../../services/chart-plate.service';
-import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
@@ -15,14 +15,14 @@ import { Forger } from '@artstesh/forger';
 describe('BubbleChartComponent', () => {
   let fixture: ComponentFixture<BubbleChartComponent>;
   const plateService = mock(ChartPlateService);
-  const postboy = mock(ChartPostboyService);
+  const postboy = mock(InnerPostboyService);
   let chartInitialized: Subject<ChartInitializedEvent>;
 
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
     when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
     return MockBuilder(BubbleChartComponent, ChartModule)
-      .provide(MockProvider(ChartPostboyService, instance(postboy)))
+      .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));
   });
 

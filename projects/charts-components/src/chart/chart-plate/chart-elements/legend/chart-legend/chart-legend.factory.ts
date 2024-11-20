@@ -1,10 +1,10 @@
 import { ChartData, LegendItem, LegendOptions } from 'chart.js';
 import { ChartLegendSettings } from './chart-legend.settings';
 import { AreaLegendFilterExecutor } from '../../../../messages/executors/area-legend-filter.executor';
-import { ChartPostboyService } from '../../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../../services/inner-postboy.service';
 
 export class ChartLegendFactory {
-  public static build(settings: ChartLegendSettings, postboy: ChartPostboyService): LegendOptions<any> {
+  public static build(settings: ChartLegendSettings, postboy: InnerPostboyService): LegendOptions<any> {
     return {
       display: true,
       position: settings.position,

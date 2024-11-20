@@ -1,12 +1,12 @@
 import { ChartConfiguration, ChartData, LegendItem } from 'chart.js';
 import { ChartPlateSettings } from './chart-plate.settings';
 import { ChartConstants } from '../../models/chart-constants';
-import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../services/inner-postboy.service';
 import { AreaLegendFilterExecutor } from '../../messages/executors/area-legend-filter.executor';
 import { ChartRenderedEvent } from '../../messages/events/chart-rendered.event';
 
 export class ChartPlateFactory {
-  public static build(settings: ChartPlateSettings, postboy: ChartPostboyService): ChartConfiguration {
+  public static build(settings: ChartPlateSettings, postboy: InnerPostboyService): ChartConfiguration {
     return {
       type: settings.type,
       data: {
