@@ -3,15 +3,15 @@ import { instance, mock, reset } from 'ts-mockito';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { ChartModule } from '../../../../chart.module';
 import { BrushKnobComponent } from './brush-knob.component';
-import { ChartPostboyService } from '../../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../../services/inner-postboy.service';
 import { should } from '@artstesh/it-should';
 
 describe('BrushKnobComponent', () => {
-  const postboy = mock(ChartPostboyService);
+  const postboy = mock(InnerPostboyService);
   let fixture: ComponentFixture<BrushKnobComponent>;
 
   beforeEach(async () => {
-    return MockBuilder(BrushKnobComponent, ChartModule).provide(MockProvider(ChartPostboyService, instance(postboy)));
+    return MockBuilder(BrushKnobComponent, ChartModule).provide(MockProvider(InnerPostboyService, instance(postboy)));
   });
 
   beforeEach(() => {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BrushRangeModel } from '../models/brush-range.model';
 import { IPostboyDependingService } from '@artstesh/postboy';
-import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../services/inner-postboy.service';
 import { MoveBrushBorderCommand } from '../../messages/commands/move-brush-border.command';
 import { ZoomAreaCommand } from '../messages/commands/zoom-area.command';
 import { BrushAreaEvent } from '../messages/events/brush-area.event';
@@ -18,7 +18,7 @@ export class ChartBrushService implements IPostboyDependingService {
   private minWidth = 100;
   mainChart?: Chart;
 
-  constructor(private postboy: ChartPostboyService) {}
+  constructor(private postboy: InnerPostboyService) {}
 
   up(): void {
     this.observeParentChart();

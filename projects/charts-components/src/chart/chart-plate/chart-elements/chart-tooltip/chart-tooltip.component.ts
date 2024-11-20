@@ -3,7 +3,7 @@ import { DestructibleComponent } from '../../../common/destructible.component';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
 import { ChartTooltipSettings } from './chart-tooltip.settings';
-import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 
 @Component({
@@ -15,7 +15,7 @@ import { ChartInitializedEvent } from '../../../messages/events/chart-initialize
 export class ChartTooltipComponent extends DestructibleComponent implements OnInit, OnDestroy {
   constructor(
     private service: ChartPlateService,
-    private postboy: ChartPostboyService,
+    private postboy: InnerPostboyService,
     private mapService: SettingsMapService,
   ) {
     super();

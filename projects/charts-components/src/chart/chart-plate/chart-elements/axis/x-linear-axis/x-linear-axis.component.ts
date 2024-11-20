@@ -4,7 +4,7 @@ import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
 import { DestructibleComponent } from '../../../../common/destructible.component';
 import { ChartConstants } from '../../../../models/chart-constants';
-import { ChartPostboyService } from '../../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../../services/inner-postboy.service';
 import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
 
 @Component({
@@ -15,7 +15,7 @@ import { ChartInitializedEvent } from '../../../../messages/events/chart-initial
 })
 export class XLinearAxisComponent extends DestructibleComponent implements OnInit {
   constructor(
-    private postboy: ChartPostboyService,
+    private postboy: InnerPostboyService,
     private service: ChartPlateService,
     private mapService: SettingsMapService,
   ) {

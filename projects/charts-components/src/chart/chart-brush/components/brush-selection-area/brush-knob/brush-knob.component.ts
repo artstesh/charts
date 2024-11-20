@@ -1,5 +1,5 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { ChartPostboyService } from '../../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../../services/inner-postboy.service';
 import { MoveBrushBorderCommand } from '../../../../messages/commands/move-brush-border.command';
 
 @Component({
@@ -12,7 +12,7 @@ export class BrushKnobComponent implements OnInit {
   isDown = false;
   private mouseDownPosition = 0;
 
-  constructor(private postboy: ChartPostboyService) {}
+  constructor(private postboy: InnerPostboyService) {}
 
   ngOnInit(): void {}
 

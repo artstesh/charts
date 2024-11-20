@@ -10,20 +10,20 @@ import { DoughnutChartComponent } from './doughnut-chart.component';
 import { DoughnutChartFactory } from './doughnut-chart.factory';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
-import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../services/inner-postboy.service';
 
 describe('#chart-types DoughnutChartComponent', () => {
   let fixture: ComponentFixture<DoughnutChartComponent>;
   const plateService = mock(ChartPlateService);
   const factory = mock(DoughnutChartFactory);
-  const postboy = mock(ChartPostboyService);
+  const postboy = mock(InnerPostboyService);
   let chartInitialized: Subject<ChartInitializedEvent>;
 
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
     when(postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
     return MockBuilder(DoughnutChartComponent, ChartModule)
-      .provide(MockProvider(ChartPostboyService, instance(postboy)))
+      .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)))
       .provide(MockProvider(DoughnutChartFactory, instance(factory)));
   });
