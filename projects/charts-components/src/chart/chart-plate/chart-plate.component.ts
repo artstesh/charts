@@ -31,16 +31,20 @@ registerAdapter();
   selector: 'art-chart-plate',
   templateUrl: './chart-plate.component.html',
   styleUrls: ['./chart-plate.component.scss'],
-  providers: [ChartPlateService, InnerMessageRegistrator, InnerPostboyService,
-    GraphVisibilityService,ExternalMessageRegistrator,
+  providers: [
+    ChartPlateService,
+    InnerMessageRegistrator,
+    InnerPostboyService,
+    GraphVisibilityService,
+    ExternalMessageRegistrator,
     {
       provide: ChartPostboyService,
       useFactory: () => {
-        const colorService = inject(ChartPostboyService,
-          InjectFlags.Optional | InjectFlags.SkipSelf);
+        const colorService = inject(ChartPostboyService, InjectFlags.Optional | InjectFlags.SkipSelf);
         return colorService || new ChartPostboyService();
-      }
-    }],
+      },
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
@@ -53,7 +57,7 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
     private postboy: InnerPostboyService,
     private innerRegistrator: InnerMessageRegistrator,
     private registrator: ExternalMessageRegistrator,
-    private mapService: SettingsMapService
+    private mapService: SettingsMapService,
   ) {
     Chart.register(ChartAreaType);
     this.innerRegistrator.up();
