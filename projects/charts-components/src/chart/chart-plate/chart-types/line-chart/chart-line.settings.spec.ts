@@ -107,7 +107,7 @@ describe('#chart-elements ChartLineSettings', () => {
 
     it('different order', () => {
       const other = new ChartLineSettings().copy(model);
-      other.order = Forger.create<number>()!;
+      other.order = Forger.create<number>({ numberMin: 0, numberMax: Number.MAX_VALUE })!;
       //
       should().false(model.isSame(other));
     });
@@ -128,7 +128,7 @@ describe('#chart-elements ChartLineSettings', () => {
 
     it('different pointRadius', () => {
       const other = new ChartLineSettings().copy(model);
-      other.pointRadius = Forger.create<number>()!;
+      other.pointRadius = Forger.create<number>({ numberMin: 0, numberMax: Number.MAX_VALUE })!;
       //
       should().false(model.isSame(other));
     });

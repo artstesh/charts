@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 import Chart from 'chart.js/auto';
 import { BrushRangeModel } from '../../models/brush-range.model';
@@ -25,7 +25,7 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
   isDown = false;
   private mouseDownPosition = 0;
 
-  constructor(private postboy: ChartPostboyService, private detector: ChangeDetectorRef) {
+  constructor(private postboy: InnerPostboyService, private detector: ChangeDetectorRef) {
     super();
   }
 

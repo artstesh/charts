@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PostboyAbstractRegistrator } from '@artstesh/postboy';
-import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../services/inner-postboy.service';
 import { ChartBrushService } from './chart-brush.service';
 import { MoveBrushBorderCommand } from '../../messages/commands/move-brush-border.command';
 import { ReplaySubject } from 'rxjs';
@@ -13,7 +13,7 @@ import { ResetBrushCommand } from '../messages/commands/reset-brush.command';
 
 @Injectable()
 export class BrushRegistratorService extends PostboyAbstractRegistrator {
-  constructor(postboy: ChartPostboyService, general: ChartBrushService, parent: BrushParentService) {
+  constructor(postboy: InnerPostboyService, general: ChartBrushService, parent: BrushParentService) {
     super(postboy);
     this.registerServices([general, parent]);
   }

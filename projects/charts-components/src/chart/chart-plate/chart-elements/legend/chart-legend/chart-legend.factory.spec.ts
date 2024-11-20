@@ -4,12 +4,12 @@ import { LegendOptions } from 'chart.js';
 import { ChartLegendFactory } from './chart-legend.factory';
 import { ChartLegendSettings } from './chart-legend.settings';
 import { instance, mock, reset } from 'ts-mockito';
-import { ChartPostboyService } from '../../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../../services/inner-postboy.service';
 
 describe('#chart-elements XLinearAxisScaleFactory', () => {
   let settings: ChartLegendSettings;
   let legend: LegendOptions<any>;
-  const postboy = mock(ChartPostboyService);
+  const postboy = mock(InnerPostboyService);
 
   beforeEach(() => {
     settings = new ChartLegendSettings();

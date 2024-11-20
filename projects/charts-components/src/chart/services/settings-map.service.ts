@@ -16,13 +16,13 @@ import { ChartTooltipSettings } from '../chart-plate/chart-elements/chart-toolti
 import { ChartTooltipFactory } from '../chart-plate/chart-elements/chart-tooltip/chart-tooltip.factory';
 import { ChartLineDatasetFactory } from '../chart-plate/chart-types/line-chart/chart-line-dataset.factory';
 import { ChartBarDatasetFactory } from '../chart-plate/chart-types/bar-chart/chart-bar-dataset.factory';
-import { ChartPostboyService } from './chart-postboy.service';
+import { InnerPostboyService } from './inner-postboy.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsMapService {
-  public chartPlateConfig(settings: ChartPlateSettings, postboy: ChartPostboyService): ChartConfiguration {
+  public chartPlateConfig(settings: ChartPlateSettings, postboy: InnerPostboyService): ChartConfiguration {
     return ChartPlateFactory.build(settings, postboy);
   }
 
@@ -53,7 +53,7 @@ export class SettingsMapService {
     return ChartBarDatasetFactory.build(settings, data);
   }
 
-  public chartLegend(settings: ChartLegendSettings, postboy: ChartPostboyService): LegendOptions<any> {
+  public chartLegend(settings: ChartLegendSettings, postboy: InnerPostboyService): LegendOptions<any> {
     return ChartLegendFactory.build(settings, postboy);
   }
 }
