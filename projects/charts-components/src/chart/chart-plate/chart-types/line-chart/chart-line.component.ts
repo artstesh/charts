@@ -5,7 +5,7 @@ import { ChartDataModel } from '../../../models';
 import { ChartLineSettings } from './chart-line.settings';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
-import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { ChartDataEvent } from '../../../messages/events/chart-data.event';
 
 @Component({
@@ -17,7 +17,7 @@ import { ChartDataEvent } from '../../../messages/events/chart-data.event';
 export class ChartLineComponent extends AbstractChartTypeComponent<ChartLineSettings> {
   protected _settings: ChartLineSettings = new ChartLineSettings();
 
-  constructor(postboy: ChartPostboyService, service: ChartPlateService, private mapService: SettingsMapService) {
+  constructor(postboy: InnerPostboyService, service: ChartPlateService, private mapService: SettingsMapService) {
     super(postboy, service);
   }
 

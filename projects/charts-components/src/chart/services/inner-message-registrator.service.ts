@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PostboyAbstractRegistrator } from '@artstesh/postboy';
-import { ChartPostboyService } from './chart-postboy.service';
+import { InnerPostboyService } from './inner-postboy.service';
 import { ChartInitializedEvent } from '../messages/events/chart-initialized.event';
 import { ChartPlateService } from '../chart-plate/services/chart-plate.service';
 import { auditTime } from 'rxjs/operators';
@@ -20,12 +20,14 @@ import { IChartDataset } from '../chart-plate/chart-types/models/i-chart-dataset
 import { BubbleDataModel } from '../models/bubble-data.model';
 import { ChartDataEvent } from '../messages/events/chart-data.event';
 import { ChartScrollEvent } from '../messages/events/chart-scroll.event';
+import { ToggleGraphVisibilityCommand } from '../messages/commands/toggle-graph-visibility.command';
+import { GraphVisibilityService } from '../chart-plate/services/graph-visibility.service';
 
 @Injectable()
-export class MessageRegistratorService extends PostboyAbstractRegistrator {
-  constructor(postboy: ChartPostboyService, general: ChartPlateService) {
+export class InnerMessageRegistrator extends PostboyAbstractRegistrator {
+  constructor(postboy: InnerPostboyService, general: ChartPlateService, vis: GraphVisibilityService) {
     super(postboy);
-    this.registerServices([general]);
+    this.registerServices([general, vis]);
   }
 
   protected _up(): void {
@@ -33,6 +35,7 @@ export class MessageRegistratorService extends PostboyAbstractRegistrator {
     this.registerReplay<ChartRenderedEvent>(ChartRenderedEvent.ID);
     this.registerReplay<ChartDataEvent>(ChartDataEvent.ID);
     this.registerSubject<ChartScrollEvent>(ChartScrollEvent.ID);
+    this.registerSubject<ToggleGraphVisibilityCommand>(ToggleGraphVisibilityCommand.ID);
     this.registerWithPipe<ChartUpdateCommand>(ChartUpdateCommand.ID, new Subject<ChartUpdateCommand>(), (s) =>
       s.pipe(auditTime(350)),
     );

@@ -10,20 +10,20 @@ import { OrdinateAxisComponent } from './ordinate-axis.component';
 import { OrdinateAxisFactory } from './ordinate-axis-factory.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
-import { ChartPostboyService } from '../../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../../services/inner-postboy.service';
 
 describe('#chart-elements OrdinateAxisComponent', () => {
   let fixture: ComponentFixture<OrdinateAxisComponent>;
   const plateService = mock(ChartPlateService);
   const factory = mock(OrdinateAxisFactory);
-  const postboy = mock(ChartPostboyService);
+  const postboy = mock(InnerPostboyService);
   let chartInitialized: Subject<ChartInitializedEvent>;
 
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
     when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
     return MockBuilder(OrdinateAxisComponent, ChartModule)
-      .provide(MockProvider(ChartPostboyService, instance(postboy)))
+      .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(OrdinateAxisFactory, instance(factory)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));
   });

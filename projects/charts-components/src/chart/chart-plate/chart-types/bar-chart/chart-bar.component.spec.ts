@@ -10,14 +10,14 @@ import { ChartModule } from '../../../chart.module';
 import { Subject } from 'rxjs';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
-import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 import { should } from '@artstesh/it-should';
 
 describe('#chart-types ChartBarComponent', () => {
   let fixture: ComponentFixture<ChartBarComponent>;
   const plateService = mock(ChartPlateService);
-  const postboy = mock(ChartPostboyService);
+  const postboy = mock(InnerPostboyService);
   let chartInitialized: Subject<ChartInitializedEvent>;
   const mapService = mock(SettingsMapService);
 
@@ -25,7 +25,7 @@ describe('#chart-types ChartBarComponent', () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
     when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
     return MockBuilder(ChartBarComponent, ChartModule)
-      .provide(MockProvider(ChartPostboyService, instance(postboy)))
+      .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)))
       .provide(MockProvider(SettingsMapService, instance(mapService)));
   });

@@ -1,29 +1,29 @@
 import { ComponentFixture } from '@angular/core/testing';
 
 import { BrushChartCloneComponent } from './brush-chart-clone.component';
-import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { MockBuilder, MockRender } from 'ng-mocks';
 import { ChartModule } from '../../../chart.module';
-import { instance, mock, reset, when } from 'ts-mockito';
-import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { should } from '@artstesh/it-should';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { ChartDataEvent } from '../../../messages/events/chart-data.event';
+import { PostboyServiceMock } from '@artstesh/postboy';
+import { ToggleGraphVisibilityCommand } from '../../../messages/commands/toggle-graph-visibility.command';
 
 describe('BrushChartCloneComponent', () => {
   let fixture: ComponentFixture<BrushChartCloneComponent>;
-  const postboy = mock(ChartPostboyService);
-  let chartEvent$: ReplaySubject<ChartInitializedEvent>;
-  let dataEvent$: ReplaySubject<ChartDataEvent>;
+  let postboy: PostboyServiceMock;
 
   beforeEach(async () => {
-    chartEvent$ = new ReplaySubject<ChartInitializedEvent>(1);
-    dataEvent$ = new ReplaySubject<ChartDataEvent>(1);
-    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartEvent$);
-    when(postboy.subscribe(ChartDataEvent.ID)).thenReturn(dataEvent$);
-    return MockBuilder(BrushChartCloneComponent, ChartModule).provide(
-      MockProvider(ChartPostboyService, instance(postboy)),
-    );
+    postboy = new PostboyServiceMock();
+    postboy.register(ChartInitializedEvent.ID, new ReplaySubject());
+    postboy.register(ToggleGraphVisibilityCommand.ID, new Subject());
+    postboy.register(ChartDataEvent.ID, new ReplaySubject());
+    return MockBuilder(BrushChartCloneComponent, ChartModule).provide({
+      provide: InnerPostboyService,
+      useValue: postboy,
+    });
   });
 
   beforeEach(() => {
@@ -31,7 +31,6 @@ describe('BrushChartCloneComponent', () => {
   });
 
   afterEach(() => {
-    reset(postboy);
     expect().nothing();
   });
 
