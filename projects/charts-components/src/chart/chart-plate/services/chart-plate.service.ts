@@ -4,14 +4,14 @@ import { ChartDataset, LegendOptions, ScaleOptionsByType } from 'chart.js';
 import { IChartDataset } from '../chart-types/models/i-chart-dataset';
 import { IPostboyDependingService } from '@artstesh/postboy';
 import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
-import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../services/inner-postboy.service';
 import { ChartUpdateCommand } from '../../messages/commands/chart-update.command';
 
 @Injectable()
 export class ChartPlateService implements IPostboyDependingService {
   private chart?: Chart;
 
-  constructor(private postboy: ChartPostboyService) {}
+  constructor(private postboy: InnerPostboyService) {}
 
   up(): void {
     this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {

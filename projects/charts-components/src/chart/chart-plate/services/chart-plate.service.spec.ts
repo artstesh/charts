@@ -4,7 +4,7 @@ import { ChartPlateService } from './chart-plate.service';
 import { should } from '@artstesh/it-should';
 import { Forger } from '@artstesh/forger';
 import { anything, instance, mock, reset, verify, when } from 'ts-mockito';
-import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../services/inner-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
 import { ChartUpdateCommand } from '../../messages/commands/chart-update.command';
@@ -13,7 +13,7 @@ describe('ChartPlateService', () => {
   let waitTime = 400;
   let service: ChartPlateService;
   let chart: any;
-  const postboy = mock(ChartPostboyService);
+  const postboy = mock(InnerPostboyService);
   let chartUpdate$: Subject<ChartUpdateCommand>;
   let chartInitialized: Subject<ChartInitializedEvent>;
 

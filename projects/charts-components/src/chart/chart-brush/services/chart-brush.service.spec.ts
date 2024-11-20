@@ -2,7 +2,7 @@ import { ChartBrushService } from './chart-brush.service';
 import { Forger } from '@artstesh/forger';
 import { BrushRangeModel } from '../models/brush-range.model';
 import { anyOfClass, instance, mock, reset, when } from 'ts-mockito';
-import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../services/inner-postboy.service';
 import { ReplaySubject, Subject } from 'rxjs';
 import { MoveBrushBorderCommand } from '../../messages/commands/move-brush-border.command';
 import { ZoomAreaCommand } from '../messages/commands/zoom-area.command';
@@ -14,7 +14,7 @@ import { ChartInitializedEvent } from '../../messages/events/chart-initialized.e
 
 describe('ChartBrushService', () => {
   let service: ChartBrushService;
-  const postboy = mock(ChartPostboyService);
+  const postboy = mock(InnerPostboyService);
   const maxWidth = 1000;
   let area: BrushRangeModel;
   let moveBorder$: Subject<MoveBrushBorderCommand>;

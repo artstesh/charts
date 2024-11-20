@@ -5,7 +5,7 @@ import { ColorCollector } from '../../services';
 import { ChartPlateService } from '../services/chart-plate.service';
 import { ChartDataset } from 'chart.js';
 import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
-import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../services/inner-postboy.service';
 import Chart from 'chart.js/auto';
 
 @Component({
@@ -15,7 +15,7 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
   protected subs: Subscription[] = [];
   protected chart?: Chart;
 
-  protected constructor(protected postboy: ChartPostboyService, protected service: ChartPlateService) {}
+  protected constructor(protected postboy: InnerPostboyService, protected service: ChartPlateService) {}
 
   protected abstract _settings: T;
 

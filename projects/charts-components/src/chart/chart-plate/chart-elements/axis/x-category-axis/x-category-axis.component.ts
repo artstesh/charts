@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@a
 import { Subscription } from 'rxjs';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
-import { ChartPostboyService } from '../../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../../services/inner-postboy.service';
 import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
 
 @Component({
@@ -17,7 +17,7 @@ export class XCategoryAxisComponent implements OnInit, OnDestroy {
 
   constructor(
     private service: ChartPlateService,
-    private postboy: ChartPostboyService,
+    private postboy: InnerPostboyService,
     private mapService: SettingsMapService,
   ) {}
 

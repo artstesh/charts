@@ -3,7 +3,7 @@ import { AreaChartComponent } from './area-chart.component';
 import { anything, instance, mock, reset, verify, when } from 'ts-mockito';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
-import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
@@ -17,7 +17,7 @@ describe('AreaChartComponent', () => {
   let fixture: ComponentFixture<AreaChartComponent>;
   const plateService = mock(ChartPlateService);
   const mapService = mock(SettingsMapService);
-  const postboy = mock(ChartPostboyService);
+  const postboy = mock(InnerPostboyService);
   let chartInitialized: Subject<ChartInitializedEvent>;
   let chartRendered: Subject<ChartRenderedEvent>;
 
@@ -28,7 +28,7 @@ describe('AreaChartComponent', () => {
     when(postboy.subscribe(ChartRenderedEvent.ID)).thenReturn(chartRendered);
     when(postboy.execute<BuildAreaChartExecutor, AreaBuilderModel>(anything())).thenReturn({ bottom: {}, top: {} });
     return MockBuilder(AreaChartComponent, ChartModule)
-      .provide(MockProvider(ChartPostboyService, instance(postboy)))
+      .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)))
       .provide(MockProvider(SettingsMapService, instance(mapService)));
   });
