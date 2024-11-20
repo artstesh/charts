@@ -5,7 +5,7 @@ import { ChartConstants } from '../../../../models/chart-constants';
 import { OrdinateAxisFactory } from './ordinate-axis-factory.service';
 import { OrdinateAxisSettings } from './ordinate-axis.settings';
 import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
-import { ChartPostboyService } from '../../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../../services/inner-postboy.service';
 
 @Component({
   selector: 'art-ordinate-axis',
@@ -18,7 +18,7 @@ export class OrdinateAxisComponent extends DestructibleComponent implements OnIn
 
   constructor(
     private service: ChartPlateService,
-    private postboy: ChartPostboyService,
+    private postboy: InnerPostboyService,
     private mapService: OrdinateAxisFactory,
   ) {
     super();

@@ -8,7 +8,7 @@ import { should } from '@artstesh/it-should';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
 import { ChartConstants } from '../../../../models/chart-constants';
-import { ChartPostboyService } from '../../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../../services/inner-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../../messages/events/chart-initialized.event';
 
@@ -16,14 +16,14 @@ describe('#chart-elements XLinearAxisComponent', () => {
   let fixture: ComponentFixture<XLinearAxisComponent>;
   const plateService = mock(ChartPlateService);
   const mapService = mock(SettingsMapService);
-  const postboy = mock(ChartPostboyService);
+  const postboy = mock(InnerPostboyService);
   let chartInitialized: Subject<ChartInitializedEvent>;
 
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
     when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
     return MockBuilder(XLinearAxisComponent, ChartModule)
-      .provide(MockProvider(ChartPostboyService, instance(postboy)))
+      .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(SettingsMapService, instance(mapService)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));
   });

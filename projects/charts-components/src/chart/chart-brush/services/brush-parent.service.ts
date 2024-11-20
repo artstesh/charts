@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IPostboyDependingService } from '@artstesh/postboy';
-import { ChartPostboyService } from '../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../services/inner-postboy.service';
 import { ChartDataEvent } from '../../messages/events/chart-data.event';
 import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
 import Chart from 'chart.js/auto';
@@ -15,7 +15,7 @@ export class BrushParentService implements IPostboyDependingService {
   maxValue?: number;
   mainChart?: Chart;
 
-  constructor(private postboy: ChartPostboyService) {}
+  constructor(private postboy: InnerPostboyService) {}
 
   up(): void {
     this.observeParentChart();

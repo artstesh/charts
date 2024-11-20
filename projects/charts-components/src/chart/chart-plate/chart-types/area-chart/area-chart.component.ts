@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AbstractChartTypeComponent } from '../abstract-chart-type.component';
 import { ChartAreaDataModel } from '../../../models';
-import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { AreaChartSettings } from './area-chart.settings';
 import { BuildAreaChartExecutor } from '../../../messages/executors/build-area-chart.executor';
@@ -21,7 +21,7 @@ export class AreaChartComponent extends AbstractChartTypeComponent<AreaChartSett
   protected _settings: AreaChartSettings = new AreaChartSettings();
   private allowed = false;
 
-  constructor(postboy: ChartPostboyService, service: ChartPlateService) {
+  constructor(postboy: InnerPostboyService, service: ChartPlateService) {
     super(postboy, service);
   }
 

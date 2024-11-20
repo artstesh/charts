@@ -1,12 +1,13 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { DestructibleComponent } from '../../../common/destructible.component';
-import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import { ChartDataEvent } from '../../../messages/events/chart-data.event';
 import { ChartConstants } from '../../../models/chart-constants';
 import { auditTime } from 'rxjs/operators';
+import { ToggleGraphVisibilityCommand } from '../../../messages/commands/toggle-graph-visibility.command';
 
 @Component({
   selector: 'art-brush-chart-clone',
@@ -17,29 +18,38 @@ export class BrushChartCloneComponent extends DestructibleComponent implements O
   @ViewChild('chartClone')
   chartRef!: ElementRef;
   chart?: Chart;
+  parentChart?: Chart;
 
-  constructor(private postboy: ChartPostboyService, private detector: ChangeDetectorRef) {
+  constructor(private postboy: InnerPostboyService, private detector: ChangeDetectorRef) {
     super();
   }
 
   ngOnInit(): void {
     this.subs.push(this.observeParentChart());
+    this.subs.push(this.observeOtherParentChanges());
   }
 
-  private observeParentChart() {
+  private observeParentChart(): Subscription {
     return combineLatest([
       this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID),
-      this.postboy.subscribe<ChartDataEvent>(ChartDataEvent.ID).pipe(auditTime(100)),
-    ]).subscribe(([init, data]) => {
+      this.postboy.subscribe(ChartDataEvent.ID).pipe(auditTime(100)),
+    ]).subscribe(([init, _]) => {
       if (!this.chart) this.initChart(init.chart);
-      this.updateDataSets(init.chart);
+      this.updateDataSets();
       this.detector.detectChanges();
     });
   }
 
-  private updateDataSets(parent: Chart): void {
-    if (!this.chart) return;
-    this.chart.data.datasets = [...parent.data.datasets];
+  private observeOtherParentChanges(): Subscription {
+    return this.postboy
+      .subscribe<ToggleGraphVisibilityCommand>(ToggleGraphVisibilityCommand.ID)
+      .pipe(auditTime(100))
+      .subscribe(() => this.updateDataSets());
+  }
+
+  private updateDataSets(): void {
+    if (!this.chart || !this.parentChart) return;
+    this.chart.data.datasets = [...this.parentChart.data.datasets];
     this.chart.update();
     //an ugly way to get rid of all additional axes through two updates
     Object.keys(this.chart.scales)
@@ -49,6 +59,7 @@ export class BrushChartCloneComponent extends DestructibleComponent implements O
   }
 
   private initChart(parent: Chart): void {
+    this.parentChart = parent;
     this.chart = new Chart(this.chartRef.nativeElement, {
       type: 'line',
       data: {

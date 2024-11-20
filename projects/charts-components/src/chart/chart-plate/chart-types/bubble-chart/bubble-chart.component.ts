@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AbstractChartTypeComponent } from '../abstract-chart-type.component';
-import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { BubbleChartSettings } from './bubble-chart.settings';
 import { BuildBubbleChartExecutor } from '../../../messages/executors/build-bubble-chart.executor';
@@ -15,7 +15,7 @@ import { BubbleDataModel } from '../../../models';
 export class BubbleChartComponent extends AbstractChartTypeComponent<BubbleChartSettings> {
   protected _settings: BubbleChartSettings = new BubbleChartSettings();
 
-  constructor(postboy: ChartPostboyService, service: ChartPlateService) {
+  constructor(postboy: InnerPostboyService, service: ChartPlateService) {
     super(postboy, service);
   }
 

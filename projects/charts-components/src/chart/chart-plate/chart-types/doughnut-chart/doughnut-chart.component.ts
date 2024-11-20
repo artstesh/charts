@@ -4,7 +4,7 @@ import { ChartPlateService } from '../../services/chart-plate.service';
 import { DoughnutChartSettings } from './doughnut-chart.settings';
 import { DestructibleComponent } from '../../../common/destructible.component';
 import { DoughnutChartFactory } from './doughnut-chart.factory';
-import { ChartPostboyService } from '../../../services/chart-postboy.service';
+import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 
 @Component({
@@ -16,7 +16,7 @@ import { ChartInitializedEvent } from '../../../messages/events/chart-initialize
 export class DoughnutChartComponent extends DestructibleComponent implements OnInit {
   constructor(
     private service: ChartPlateService,
-    private postboy: ChartPostboyService,
+    private postboy: InnerPostboyService,
     private factory: DoughnutChartFactory,
   ) {
     super();
