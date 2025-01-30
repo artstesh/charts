@@ -26,12 +26,12 @@ export class BrushParentService implements IPostboyDependingService {
 
   private observeResetBrush() {
     this.postboy
-      .subscribe<ResetBrushCommand>(ResetBrushCommand.ID)
+      .sub<ResetBrushCommand>(ResetBrushCommand)
       .subscribe(() => this.postboy.fire(new BrushAreaEvent({ left: 0, width: this.mainChart?.canvas.width ?? 0 })));
   }
 
   private observeParentChart() {
-    return this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {
+    return this.postboy.sub(ChartInitializedEvent).subscribe((ev) => {
       this.mainChart = ev.chart;
       this.mainChart.canvas.addEventListener('wheel', (ev) => this.onMouseScroll(ev, ev.deltaY < 0 ? 'up' : 'down'));
       const obs = new ResizeObserver(() => this.postboy.fire(new ResetBrushCommand()));
@@ -40,7 +40,7 @@ export class BrushParentService implements IPostboyDependingService {
   }
 
   observeParentData(): void {
-    this.postboy.subscribe<ChartDataEvent>(ChartDataEvent.ID).subscribe((ev) => {
+    this.postboy.sub(ChartDataEvent).subscribe((ev) => {
       if (!ev.data?.length) return;
       let min = ev.data[0].x;
       let max = ev.data[ev.data.length - 1].x;
@@ -50,7 +50,7 @@ export class BrushParentService implements IPostboyDependingService {
   }
 
   private observeSelectedArea(): void {
-    this.postboy.subscribe<BrushAreaEvent>(BrushAreaEvent.ID).subscribe((ev) => {
+    this.postboy.sub(BrushAreaEvent).subscribe((ev) => {
       if (!this.mainChart || this.minValue == null || this.maxValue == null) return;
       const range = this.maxValue - this.minValue;
       let xAxis = this.mainChart.options.scales![ChartConstants.BottomAxisId] as any;

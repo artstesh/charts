@@ -31,12 +31,12 @@ describe('ChartBrushService', () => {
     zoomCommand$ = new Subject<ZoomAreaCommand>();
     moveCommand$ = new Subject<MoveBrushCommand>();
     dataChanged$ = new Subject<ChartDataEvent>();
-    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartEvent$);
-    when(postboy.subscribe(ZoomAreaCommand.ID)).thenReturn(zoomCommand$);
-    when(postboy.subscribe(MoveBrushCommand.ID)).thenReturn(moveCommand$);
-    when(postboy.subscribe(MoveBrushBorderCommand.ID)).thenReturn(moveBorder$);
-    when(postboy.subscribe(BrushAreaEvent.ID)).thenReturn(areaEvent$);
-    when(postboy.subscribe(ChartDataEvent.ID)).thenReturn(dataChanged$);
+    when(postboy.sub(ChartInitializedEvent)).thenReturn(chartEvent$);
+    when(postboy.sub(ZoomAreaCommand)).thenReturn(zoomCommand$);
+    when(postboy.sub(MoveBrushCommand)).thenReturn(moveCommand$);
+    when(postboy.sub(MoveBrushBorderCommand)).thenReturn(moveBorder$);
+    when(postboy.sub(BrushAreaEvent)).thenReturn(areaEvent$);
+    when(postboy.sub(ChartDataEvent)).thenReturn(dataChanged$);
     service = new ChartBrushService(instance(postboy));
     service.up();
   });
