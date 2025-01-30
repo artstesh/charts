@@ -20,10 +20,10 @@ describe('BrushParentService', () => {
     chartInit$ = new Subject<ChartInitializedEvent>();
     dataEvent$ = new Subject<ChartDataEvent>();
     areaEvent$ = new Subject<BrushAreaEvent>();
-    when(postboy.subscribe(ResetBrushCommand.ID)).thenReturn(resetBrush$);
-    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInit$);
-    when(postboy.subscribe(ChartDataEvent.ID)).thenReturn(dataEvent$);
-    when(postboy.subscribe(BrushAreaEvent.ID)).thenReturn(areaEvent$);
+    when(postboy.sub(ResetBrushCommand)).thenReturn(resetBrush$);
+    when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInit$);
+    when(postboy.sub(ChartDataEvent)).thenReturn(dataEvent$);
+    when(postboy.sub(BrushAreaEvent)).thenReturn(areaEvent$);
     service = new BrushParentService(instance(postboy));
     service.up();
   });

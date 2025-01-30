@@ -9,8 +9,4 @@ export class BuildBubbleChartExecutor extends PostboyExecutor<IChartDataset<'bub
   constructor(public settings: BubbleChartSettings, public data: BubbleDataModel[]) {
     super();
   }
-
-  public get id(): string {
-    return BuildBubbleChartExecutor.ID;
-  }
 }

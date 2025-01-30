@@ -6,8 +6,4 @@ export class ZoomAreaCommand extends PostboyGenericMessage {
   constructor(public range: number) {
     super();
   }
-
-  public get id(): string {
-    return ZoomAreaCommand.ID;
-  }
 }

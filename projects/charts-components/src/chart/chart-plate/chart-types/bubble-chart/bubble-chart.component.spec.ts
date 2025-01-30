@@ -8,7 +8,6 @@ import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { ChartModule } from '../../../chart.module';
-import { BuildBubbleChartExecutor } from '../../../messages/executors/build-bubble-chart.executor';
 import { should } from '@artstesh/it-should';
 import { Forger } from '@artstesh/forger';
 
@@ -20,7 +19,7 @@ describe('BubbleChartComponent', () => {
 
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
-    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
+    when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized);
     return MockBuilder(BubbleChartComponent, ChartModule)
       .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));
@@ -42,7 +41,7 @@ describe('BubbleChartComponent', () => {
 
   it('should add line on chartInitialized', () => {
     const dataset = Forger.create<number>()! as any; // a trick
-    when(postboy.execute<BuildBubbleChartExecutor, any>(anything())).thenReturn(dataset);
+    when(postboy.exec<any>(anything())).thenReturn(dataset);
     //
     chartInitialized.next(new ChartInitializedEvent({} as any));
     //

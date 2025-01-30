@@ -37,7 +37,7 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
 
   private observeParentScroll() {
     return this.postboy
-      .subscribe<ChartScrollEvent>(ChartScrollEvent.ID)
+      .sub(ChartScrollEvent)
       .subscribe((ev) =>
         this.postboy.fire(new ZoomAreaCommand(ev.direction === 'down' ? this.scrollRange : -this.scrollRange)),
       );
@@ -62,14 +62,14 @@ export class BrushSelectionAreaComponent extends DestructibleComponent implement
   }
 
   private observeParentChart() {
-    return this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {
+    return this.postboy.sub<ChartInitializedEvent>(ChartInitializedEvent).subscribe((ev) => {
       this.mainChart = ev.chart;
       this.detector.detectChanges();
     });
   }
 
   private observeSelectedArea(): Subscription {
-    return this.postboy.subscribe<BrushAreaEvent>(BrushAreaEvent.ID).subscribe((ev) => {
+    return this.postboy.sub(BrushAreaEvent).subscribe((ev) => {
       if (!this.plate) return;
       this.selectedModel = ev.range;
       this.plate.nativeElement.style.left = ev.range.left + 'px';

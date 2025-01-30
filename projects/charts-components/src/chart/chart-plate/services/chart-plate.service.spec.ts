@@ -3,33 +3,32 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { ChartPlateService } from './chart-plate.service';
 import { should } from '@artstesh/it-should';
 import { Forger } from '@artstesh/forger';
-import { anything, instance, mock, reset, verify, when } from 'ts-mockito';
-import { InnerPostboyService } from '../../services/inner-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
 import { ChartUpdateCommand } from '../../messages/commands/chart-update.command';
+import { PostboyServiceMock } from '@artstesh/postboy';
 
 describe('ChartPlateService', () => {
   let waitTime = 400;
   let service: ChartPlateService;
   let chart: any;
-  const postboy = mock(InnerPostboyService);
+  const postboy = new PostboyServiceMock();
   let chartUpdate$: Subject<ChartUpdateCommand>;
   let chartInitialized: Subject<ChartInitializedEvent>;
 
   beforeEach(() => {
-    service = new ChartPlateService(instance(postboy));
+    service = new ChartPlateService(postboy);
     chartInitialized = new Subject<ChartInitializedEvent>();
     chartUpdate$ = new Subject<ChartUpdateCommand>();
-    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
-    when(postboy.subscribe(ChartUpdateCommand.ID)).thenReturn(chartUpdate$);
+    postboy.record(ChartUpdateCommand, chartUpdate$);
+    postboy.record(ChartInitializedEvent, chartInitialized);
     chart = {};
     service.up();
     chartInitialized.next(new ChartInitializedEvent(chart));
   });
 
   afterEach(() => {
-    reset(postboy);
+    postboy.reset();
     expect().nothing();
   });
 
@@ -49,7 +48,7 @@ describe('ChartPlateService', () => {
         service.addDataset([] as any);
         tick(waitTime);
         //
-        verify(postboy.fire<ChartUpdateCommand>(anything())).never();
+        postboy.fired(ChartUpdateCommand.ID, 0);
       }));
 
       it('success', fakeAsync(() => {
@@ -57,7 +56,7 @@ describe('ChartPlateService', () => {
         service.addDataset([] as any);
         tick(waitTime);
         //
-        verify(postboy.fire<ChartUpdateCommand>(anything())).once();
+        postboy.fired(ChartUpdateCommand.ID, 1);
       }));
 
       it('dataset is correct', () => {
@@ -82,7 +81,7 @@ describe('ChartPlateService', () => {
         service.removeDataset(id);
         tick(waitTime);
         //
-        verify(postboy.fire<ChartUpdateCommand>(anything())).never();
+        postboy.fired(ChartUpdateCommand.ID, 0);
       }));
 
       it('removed successfully', fakeAsync(() => {
@@ -92,7 +91,7 @@ describe('ChartPlateService', () => {
         tick(waitTime);
         //
         should().array(chart.data.datasets).empty();
-        verify(postboy.fire<ChartUpdateCommand>(anything())).once();
+        postboy.fired(ChartUpdateCommand.ID, 1);
       }));
 
       it('alsoDelete removed successfully', fakeAsync(() => {
@@ -123,7 +122,7 @@ describe('ChartPlateService', () => {
         service.setScale(id, scale);
         tick(waitTime);
         //
-        verify(postboy.fire<ChartUpdateCommand>(anything())).never();
+        postboy.fired(ChartUpdateCommand.ID, 0);
       }));
 
       it('successfully updates', fakeAsync(() => {
@@ -132,7 +131,7 @@ describe('ChartPlateService', () => {
         service.setScale(id, scale);
         tick(waitTime);
         //
-        verify(postboy.fire<ChartUpdateCommand>(anything())).once();
+        postboy.fired(ChartUpdateCommand.ID, 1);
       }));
 
       it('sets successfully', fakeAsync(() => {
@@ -152,7 +151,7 @@ describe('ChartPlateService', () => {
         service.resetScale(id);
         tick(waitTime);
         //
-        verify(postboy.fire<ChartUpdateCommand>(anything())).never();
+        postboy.fired(ChartUpdateCommand.ID, 0);
       }));
 
       it('successfully updates', fakeAsync(() => {
@@ -161,7 +160,7 @@ describe('ChartPlateService', () => {
         service.resetScale(id);
         tick(waitTime);
         //
-        verify(postboy.fire<ChartUpdateCommand>(anything())).once();
+        postboy.fired(ChartUpdateCommand.ID, 1);
       }));
 
       it('clears successfully', fakeAsync(() => {
@@ -191,7 +190,7 @@ describe('ChartPlateService', () => {
         service.setLegend(legend);
         tick(waitTime);
         //
-        verify(postboy.fire<ChartUpdateCommand>(anything())).never();
+        postboy.fired(ChartUpdateCommand.ID, 0);
       }));
 
       it('successfully updates', fakeAsync(() => {
@@ -201,7 +200,7 @@ describe('ChartPlateService', () => {
         service.setLegend(legend);
         tick(waitTime);
         //
-        verify(postboy.fire<ChartUpdateCommand>(anything())).once();
+        postboy.fired(ChartUpdateCommand.ID, 1);
       }));
 
       it('sets successfully', fakeAsync(() => {
@@ -223,7 +222,7 @@ describe('ChartPlateService', () => {
       service.setLabels(labels);
       tick(waitTime);
       //
-      verify(postboy.fire<ChartUpdateCommand>(anything())).never();
+      postboy.fired(ChartUpdateCommand.ID, 0);
     }));
 
     it('successfully updates', fakeAsync(() => {
@@ -233,7 +232,7 @@ describe('ChartPlateService', () => {
       service.setLabels(labels);
       tick(waitTime);
       //
-      verify(postboy.fire<ChartUpdateCommand>(anything())).once();
+      postboy.fired(ChartUpdateCommand.ID, 1);
     }));
 
     it('sets successfully', fakeAsync(() => {

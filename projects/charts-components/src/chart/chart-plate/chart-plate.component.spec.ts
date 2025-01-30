@@ -20,8 +20,8 @@ describe('ChartPlateComponent', () => {
   beforeEach(async () => {
     chartInitialized$ = new Subject<ChartInitializedEvent>();
     chartUpdate$ = new Subject<ChartUpdateCommand>();
-    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized$);
-    when(postboy.subscribe(ChartUpdateCommand.ID)).thenReturn(chartUpdate$);
+    when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized$);
+    when(postboy.sub(ChartUpdateCommand)).thenReturn(chartUpdate$);
     return MockBuilder(ChartPlateComponent, ChartModule)
       .provide(MockProvider(SettingsMapService, instance(mapService)))
       .provide(MockProvider(InnerPostboyService, instance(postboy)));
