@@ -6,8 +6,4 @@ export class MoveBrushBorderCommand extends PostboyGenericMessage {
   constructor(public shift: number, public side: 'left' | 'right') {
     super();
   }
-
-  public get id(): string {
-    return MoveBrushBorderCommand.ID;
-  }
 }

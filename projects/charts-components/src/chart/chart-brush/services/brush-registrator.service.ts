@@ -19,11 +19,11 @@ export class BrushRegistratorService extends PostboyAbstractRegistrator {
   }
 
   protected _up(): void {
-    this.registerSubject(MoveBrushBorderCommand.ID);
-    this.registerSubject(ZoomAreaCommand.ID);
-    this.registerSubject(MoveBrushCommand.ID);
-    this.registerSubject(ResetBrushCommand.ID);
-    this.registerWithPipe<BrushAreaEvent>(BrushAreaEvent.ID, new ReplaySubject<BrushAreaEvent>(1), (s) =>
+    this.recordSubject(MoveBrushBorderCommand);
+    this.recordSubject(ZoomAreaCommand);
+    this.recordSubject(MoveBrushCommand);
+    this.recordSubject(ResetBrushCommand);
+    this.recordWithPipe(BrushAreaEvent, new ReplaySubject<BrushAreaEvent>(1), (s) =>
       s.pipe(
         distinctUntilChanged((a, b) => a.range.left === b.range.left && a.range.width === b.range.width),
         auditTime(10),

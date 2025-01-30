@@ -7,8 +7,4 @@ export class AreaLegendFilterExecutor extends PostboyExecutor<boolean> {
   constructor(public item: LegendItem) {
     super();
   }
-
-  public get id(): string {
-    return AreaLegendFilterExecutor.ID;
-  }
 }
