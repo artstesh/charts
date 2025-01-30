@@ -24,11 +24,11 @@ export class ChartLineDatasetFactory {
       xAxisID: ChartConstants.BottomAxisId,
       yAxisID: settings.yLeft ? ChartConstants.LeftAxisId : ChartConstants.RightAxisId,
       segment: settings.segments
-      ? {
-        borderColor: ctx => skipped(ctx, settings.color) || down(ctx, settings.color),
-        borderDash: ctx => skipped(ctx, settings.segments)
-      }
-      : undefined
+        ? {
+            borderColor: (ctx) => skipped(ctx, settings.color) || down(ctx, settings.color),
+            borderDash: (ctx) => skipped(ctx, settings.segments),
+          }
+        : undefined,
     } as IChartDataset<'line', ChartDataModel[]>;
   }
 }
