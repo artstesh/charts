@@ -13,9 +13,7 @@ export class ExternalMessageRegistrator extends PostboyAbstractRegistrator {
 
   protected _up(): void {
     if (!this.postboy) return;
-    this.registerSubject<ToggleGraphVisibilityCommand>(ToggleGraphVisibilityCommand.ID);
-    this.postboy
-      .subscribe<ToggleGraphVisibilityCommand>(ToggleGraphVisibilityCommand.ID)
-      .subscribe((c) => this.innerPostboy.fire(c));
+    this.recordSubject(ToggleGraphVisibilityCommand);
+    this.postboy.sub(ToggleGraphVisibilityCommand).subscribe((c) => this.innerPostboy.fire(c));
   }
 }

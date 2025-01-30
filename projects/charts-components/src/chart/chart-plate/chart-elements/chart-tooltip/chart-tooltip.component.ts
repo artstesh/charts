@@ -30,9 +30,7 @@ export class ChartTooltipComponent extends DestructibleComponent implements OnIn
   }
 
   ngOnInit(): void {
-    this.subs.push(
-      this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe(() => this.setTooltip()),
-    );
+    this.subs.push(this.postboy.sub(ChartInitializedEvent).subscribe(() => this.setTooltip()));
   }
 
   onDestroy = () => {

@@ -14,7 +14,7 @@ export class ChartPlateService implements IPostboyDependingService {
   constructor(private postboy: InnerPostboyService) {}
 
   up(): void {
-    this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {
+    this.postboy.sub(ChartInitializedEvent).subscribe((ev) => {
       this.chart = ev.chart;
     });
   }

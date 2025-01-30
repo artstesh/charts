@@ -30,9 +30,7 @@ export class XCategoryAxisComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subs.push(
-      this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe(() => this.setAxis()),
-    );
+    this.subs.push(this.postboy.sub(ChartInitializedEvent).subscribe(() => this.setAxis()));
   }
 
   setAxis(): void {

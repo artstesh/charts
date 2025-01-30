@@ -8,8 +8,4 @@ export class GetGradientExecutor extends PostboyExecutor<CanvasGradient | null> 
   constructor(public chart: Chart | null, public colors: string[], public direction: Direction) {
     super();
   }
-
-  public get id(): string {
-    return GetGradientExecutor.ID;
-  }
 }

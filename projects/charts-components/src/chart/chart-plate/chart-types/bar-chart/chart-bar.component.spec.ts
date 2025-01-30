@@ -23,7 +23,7 @@ describe('#chart-types ChartBarComponent', () => {
 
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
-    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
+    when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized);
     return MockBuilder(ChartBarComponent, ChartModule)
       .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)))

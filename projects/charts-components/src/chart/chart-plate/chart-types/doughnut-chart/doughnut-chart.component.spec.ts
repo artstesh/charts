@@ -21,7 +21,7 @@ describe('#chart-types DoughnutChartComponent', () => {
 
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
-    when(postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
+    when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized);
     return MockBuilder(DoughnutChartComponent, ChartModule)
       .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)))
