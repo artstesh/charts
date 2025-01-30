@@ -23,7 +23,6 @@ export class XTimelineAxisSettings {
     if (this.dateUnit !== model.dateUnit) return false;
     const date = new Date().getTime();
     return this.dateFormat(date, 0) === model.dateFormat(date, 0);
-
   }
 
   public setDisplayGrid(value: boolean): XTimelineAxisSettings {
@@ -38,7 +37,7 @@ export class XTimelineAxisSettings {
     return result;
   }
 
-  public setMaxRotation(maxRotation: number| null): XTimelineAxisSettings {
+  public setMaxRotation(maxRotation: number | null): XTimelineAxisSettings {
     return XTimelineAxisSettings.copy({ ...this, maxRotation });
   }
 

@@ -33,6 +33,11 @@ describe('#chart-elements ChartLineSettings', () => {
     should().false(new ChartLineSettings().fill);
   });
 
+  it('borderWidth is undefined by default', () => {
+    //
+    should().false(new ChartLineSettings().borderWidth);
+  });
+
   it('setPointRadius()', () => {
     const radius = Forger.create<number>()!;
     //
@@ -41,6 +46,16 @@ describe('#chart-elements ChartLineSettings', () => {
     should()
       .number(model.pointRadius as number)
       .equals(radius);
+  });
+
+  it('setBorderWidth()', () => {
+    const width = Forger.create<number>()!;
+    //
+    model = model.setBorderWidth(width);
+    //
+    should()
+      .number(model.borderWidth as number)
+      .equals(width);
   });
 
   it('setTension()', () => {
@@ -57,6 +72,22 @@ describe('#chart-elements ChartLineSettings', () => {
     model = model.setFill(fill);
     //
     should().true(model.fill === fill);
+  });
+
+  it('setSegments()', () => {
+    const segments = Forger.create<[number, number]>()!;
+    //
+    model = model.setSegments(segments);
+    //
+    should().array(model.segments).equal(segments);
+  });
+
+  it('setBorderDash()', () => {
+    const borderDash = Forger.create<[number, number]>()!;
+    //
+    model = model.setBorderDash(borderDash);
+    //
+    should().array(model.borderDash).equal(borderDash);
   });
 
   it('setRight()', () => {
@@ -112,6 +143,20 @@ describe('#chart-elements ChartLineSettings', () => {
       should().false(model.isSame(other));
     });
 
+    it('different segments', () => {
+      const other = new ChartLineSettings().copy(model);
+      other.segments = Forger.create<[number, number]>({ numberMin: 0, numberMax: Number.MAX_VALUE })!;
+      //
+      should().false(model.isSame(other));
+    });
+
+    it('different borderDash', () => {
+      const other = new ChartLineSettings().copy(model);
+      other.borderDash = Forger.create<[number, number]>({ numberMin: 0, numberMax: Number.MAX_VALUE })!;
+      //
+      should().false(model.isSame(other));
+    });
+
     it('different name', () => {
       const other = new ChartLineSettings().copy(model);
       other.name = Forger.create<string>()!;
@@ -129,6 +174,13 @@ describe('#chart-elements ChartLineSettings', () => {
     it('different pointRadius', () => {
       const other = new ChartLineSettings().copy(model);
       other.pointRadius = Forger.create<number>({ numberMin: 0, numberMax: Number.MAX_VALUE })!;
+      //
+      should().false(model.isSame(other));
+    });
+
+    it('different borderWidth', () => {
+      const other = new ChartLineSettings().copy(model);
+      other.borderWidth = Forger.create<number>({ numberMin: 0, numberMax: Number.MAX_VALUE })!;
       //
       should().false(model.isSame(other));
     });
