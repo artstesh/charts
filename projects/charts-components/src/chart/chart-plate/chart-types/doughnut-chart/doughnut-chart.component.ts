@@ -38,9 +38,7 @@ export class DoughnutChartComponent extends DestructibleComponent implements OnI
   }
 
   ngOnInit(): void {
-    this.subs.push(
-      this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe(() => this.dataUpdated()),
-    );
+    this.subs.push(this.postboy.sub(ChartInitializedEvent).subscribe(() => this.dataUpdated()));
   }
 
   onDestroy = () => {

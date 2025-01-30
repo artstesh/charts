@@ -20,7 +20,7 @@ describe('#chart-elements ChartLegendComponent', () => {
 
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
-    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
+    when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized);
     return MockBuilder(ChartLegendComponent, ChartModule)
       .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(SettingsMapService, instance(mapService)))

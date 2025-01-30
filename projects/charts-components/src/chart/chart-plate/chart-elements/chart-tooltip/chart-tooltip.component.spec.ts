@@ -20,7 +20,7 @@ describe('#chart-elements XLinearAxisComponent', () => {
 
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
-    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartInitialized);
+    when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized);
     return MockBuilder(ChartTooltipComponent, ChartModule)
       .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(SettingsMapService, instance(mapService)))

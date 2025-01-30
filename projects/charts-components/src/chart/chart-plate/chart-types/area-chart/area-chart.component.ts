@@ -36,7 +36,7 @@ export class AreaChartComponent extends AbstractChartTypeComponent<AreaChartSett
   protected initial = () => {
     this.subs.push(
       this.postboy
-        .subscribe<ChartRenderedEvent>(ChartRenderedEvent.ID)
+        .sub<ChartRenderedEvent>(ChartRenderedEvent)
         .pipe(first())
         .subscribe((ev) => {
           this.allowed = true;
@@ -47,13 +47,11 @@ export class AreaChartComponent extends AbstractChartTypeComponent<AreaChartSett
 
   protected getDataset = () => {
     if (!this.chart || !this.allowed) return [];
-    let content = this.postboy.execute<BuildAreaChartExecutor, AreaBuilderModel>(
+    let content = this.postboy.exec<AreaBuilderModel>(
       new BuildAreaChartExecutor(
         this._settings,
         this._data,
-        this.postboy.execute(
-          new GetGradientExecutor(this.chart ?? null, this._settings.colors, this._settings.direction),
-        ),
+        this.postboy.exec(new GetGradientExecutor(this.chart ?? null, this._settings.colors, this._settings.direction)),
       ),
     );
     this.alsoDelete = () => content.bottom?.id;
