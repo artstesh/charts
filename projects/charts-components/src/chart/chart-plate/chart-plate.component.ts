@@ -75,7 +75,7 @@ export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subs.push(
-      this.postboy.subscribe<ChartUpdateCommand>(ChartUpdateCommand.ID).subscribe((ev) => this.updateChart(ev.force)),
+      this.postboy.sub(ChartUpdateCommand).subscribe((ev) => this.updateChart(ev.force)),
     );
   }
 

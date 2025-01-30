@@ -67,6 +67,30 @@ describe('#chart-types ChartLineDatasetFactory', () => {
       .equals(settings.pointRadius as number);
   });
 
+  it('segment is defined', () => {
+    should().true(scale.segment);
+  });
+
+  it('segment is undefined by default', () => {
+    settings.segments = undefined;
+    //
+    scale = ChartLineDatasetFactory.build(settings, data);
+    //
+    should().false(scale.segment);
+  });
+
+  it('borderDash is correct', () => {
+    should()
+      .array(scale.borderDash as number[])
+      .equal(settings.borderDash);
+  });
+
+  it('borderWidth is correct', () => {
+    should()
+      .number(scale.borderWidth as number)
+      .equals(settings.borderWidth as number);
+  });
+
   it('left yAxisID is correct', () => {
     settings.yLeft = true;
     scale = ChartLineDatasetFactory.build(settings, data);

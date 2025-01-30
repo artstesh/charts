@@ -26,5 +26,5 @@ export class BubbleChartComponent extends AbstractChartTypeComponent<BubbleChart
     this.dataUpdated();
   }
 
-  protected getDataset = () => [this.postboy.execute(new BuildBubbleChartExecutor(this._settings, this._data))];
+  protected getDataset = () => [this.postboy.exec(new BuildBubbleChartExecutor(this._settings, this._data))];
 }

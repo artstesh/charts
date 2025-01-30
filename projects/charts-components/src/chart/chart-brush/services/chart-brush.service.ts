@@ -29,14 +29,14 @@ export class ChartBrushService implements IPostboyDependingService {
   }
 
   private observeParentChart() {
-    return this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {
+    return this.postboy.sub<ChartInitializedEvent>(ChartInitializedEvent).subscribe((ev) => {
       this.mainChart = ev.chart;
       this.selectedArea = { left: 0, width: ev.chart.width };
     });
   }
 
   observeZoomArea(): void {
-    this.postboy.subscribe<ZoomAreaCommand>(ZoomAreaCommand.ID).subscribe((ev) => {
+    this.postboy.sub<ZoomAreaCommand>(ZoomAreaCommand).subscribe((ev) => {
       const area = {
         left: this.selectedArea.left - ev.range / 2,
         width: this.selectedArea.width + ev.range,
@@ -47,19 +47,19 @@ export class ChartBrushService implements IPostboyDependingService {
   }
 
   private observeAreaEvent(): void {
-    this.postboy.subscribe<BrushAreaEvent>(BrushAreaEvent.ID).subscribe((ev) => {
+    this.postboy.sub(BrushAreaEvent).subscribe((ev) => {
       this.selectedArea = ev.range;
     });
   }
 
   private observeMoveCommand(): void {
-    this.postboy.subscribe<MoveBrushCommand>(MoveBrushCommand.ID).subscribe((ev) => {
+    this.postboy.sub(MoveBrushCommand).subscribe((ev) => {
       this.updateArea({ ...this.selectedArea, left: this.selectedArea.left + ev.shift });
     });
   }
 
   private observeMoveBorder(): void {
-    this.postboy.subscribe<MoveBrushBorderCommand>(MoveBrushBorderCommand.ID).subscribe((ev) => {
+    this.postboy.sub(MoveBrushBorderCommand).subscribe((ev) => {
       const area =
         ev.side === 'right'
           ? { ...this.selectedArea, width: this.selectedArea.width + ev.shift }

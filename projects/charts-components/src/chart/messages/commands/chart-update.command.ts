@@ -6,8 +6,4 @@ export class ChartUpdateCommand extends PostboyGenericMessage {
   constructor(public force = false) {
     super();
   }
-
-  public get id(): string {
-    return ChartUpdateCommand.ID;
-  }
 }

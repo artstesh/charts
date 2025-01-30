@@ -7,8 +7,4 @@ export class ChartInitializedEvent extends PostboyGenericMessage {
   constructor(public chart: Chart) {
     super();
   }
-
-  public get id(): string {
-    return ChartInitializedEvent.ID;
-  }
 }

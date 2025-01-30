@@ -17,9 +17,9 @@ describe('BrushChartCloneComponent', () => {
 
   beforeEach(async () => {
     postboy = new PostboyServiceMock();
-    postboy.register(ChartInitializedEvent.ID, new ReplaySubject());
-    postboy.register(ToggleGraphVisibilityCommand.ID, new Subject());
-    postboy.register(ChartDataEvent.ID, new ReplaySubject());
+    postboy.record(ChartInitializedEvent, new ReplaySubject());
+    postboy.record(ToggleGraphVisibilityCommand, new Subject());
+    postboy.record(ChartDataEvent, new ReplaySubject());
     return MockBuilder(BrushChartCloneComponent, ChartModule).provide({
       provide: InnerPostboyService,
       useValue: postboy,
