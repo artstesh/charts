@@ -9,8 +9,4 @@ export class BuildAreaChartExecutor extends PostboyExecutor<AreaBuilderModel> {
   constructor(public settings: AreaChartSettings, public data: ChartAreaDataModel[], public color: CanvasGradient) {
     super();
   }
-
-  public get id(): string {
-    return BuildAreaChartExecutor.ID;
-  }
 }

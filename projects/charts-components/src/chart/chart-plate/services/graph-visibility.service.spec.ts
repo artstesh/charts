@@ -14,9 +14,9 @@ describe('GraphVisibilityService', () => {
 
   beforeEach(() => {
     postboy = new PostboyServiceMock();
-    postboy.register(ChartInitializedEvent.ID, new ReplaySubject());
-    postboy.register(ChartUpdateCommand.ID, new ReplaySubject());
-    postboy.register(ToggleGraphVisibilityCommand.ID, new Subject());
+    postboy.record(ChartInitializedEvent, new ReplaySubject());
+    postboy.record(ChartUpdateCommand, new ReplaySubject());
+    postboy.record(ToggleGraphVisibilityCommand, new Subject());
     service = new GraphVisibilityService(postboy);
     chart = {};
     service.up();

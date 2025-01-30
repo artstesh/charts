@@ -14,12 +14,10 @@ export class GraphVisibilityService implements IPostboyDependingService {
   constructor(private postboy: InnerPostboyService) {}
 
   up(): void {
-    this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {
+    this.postboy.sub(ChartInitializedEvent).subscribe((ev) => {
       this.chart = ev.chart;
     });
-    this.postboy
-      .subscribe<ToggleGraphVisibilityCommand>(ToggleGraphVisibilityCommand.ID)
-      .subscribe((cmd) => this.toggle(cmd));
+    this.postboy.sub(ToggleGraphVisibilityCommand).subscribe((cmd) => this.toggle(cmd));
   }
 
   private toggle(cmd: ToggleGraphVisibilityCommand): void {

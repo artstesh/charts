@@ -29,7 +29,7 @@ export abstract class AbstractChartTypeComponent<T extends ChartTypeSettings<T>>
   ngOnInit(): void {
     if (!this._settings.color) this._settings.color = ColorCollector.getColor(this._settings.order);
     this.subs.push(
-      this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe((ev) => {
+      this.postboy.sub(ChartInitializedEvent).subscribe((ev) => {
         this.chart = ev.chart;
         this.getDataset().forEach((ds) => this.service.addDataset(ds));
       }),

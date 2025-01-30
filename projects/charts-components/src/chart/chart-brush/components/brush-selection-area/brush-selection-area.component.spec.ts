@@ -29,9 +29,9 @@ describe('ChartBrushSelectionAreaComponent', () => {
     chartEvent$ = new ReplaySubject<ChartInitializedEvent>(1);
     scrollEvent$ = new ReplaySubject<ChartScrollEvent>(1);
     SelectedArea$ = new ReplaySubject<BrushAreaEvent>(1);
-    when(postboy.subscribe(ChartInitializedEvent.ID)).thenReturn(chartEvent$);
-    when(postboy.subscribe(BrushAreaEvent.ID)).thenReturn(SelectedArea$);
-    when(postboy.subscribe(ChartScrollEvent.ID)).thenReturn(scrollEvent$);
+    when(postboy.sub(ChartInitializedEvent)).thenReturn(chartEvent$);
+    when(postboy.sub(BrushAreaEvent)).thenReturn(SelectedArea$);
+    when(postboy.sub(ChartScrollEvent)).thenReturn(scrollEvent$);
     fixture = MockRender(BrushSelectionAreaComponent);
   });
 

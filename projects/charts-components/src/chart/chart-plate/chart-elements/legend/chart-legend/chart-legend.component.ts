@@ -30,9 +30,7 @@ export class ChartLegendComponent extends DestructibleComponent implements OnIni
   }
 
   ngOnInit(): void {
-    this.subs.push(
-      this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID).subscribe(() => this.setLegend()),
-    );
+    this.subs.push(this.postboy.sub(ChartInitializedEvent).subscribe(() => this.setLegend()));
   }
 
   setLegend(): void {

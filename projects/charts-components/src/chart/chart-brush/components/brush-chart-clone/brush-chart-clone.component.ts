@@ -31,8 +31,8 @@ export class BrushChartCloneComponent extends DestructibleComponent implements O
 
   private observeParentChart(): Subscription {
     return combineLatest([
-      this.postboy.subscribe<ChartInitializedEvent>(ChartInitializedEvent.ID),
-      this.postboy.subscribe(ChartDataEvent.ID).pipe(auditTime(100)),
+      this.postboy.sub(ChartInitializedEvent),
+      this.postboy.sub(ChartDataEvent).pipe(auditTime(100)),
     ]).subscribe(([init, _]) => {
       if (!this.chart) this.initChart(init.chart);
       this.updateDataSets();
@@ -42,7 +42,7 @@ export class BrushChartCloneComponent extends DestructibleComponent implements O
 
   private observeOtherParentChanges(): Subscription {
     return this.postboy
-      .subscribe<ToggleGraphVisibilityCommand>(ToggleGraphVisibilityCommand.ID)
+      .sub(ToggleGraphVisibilityCommand)
       .pipe(auditTime(100))
       .subscribe(() => this.updateDataSets());
   }

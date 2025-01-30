@@ -7,8 +7,4 @@ export class BrushAreaEvent extends PostboyGenericMessage {
   constructor(public range: BrushRangeModel) {
     super();
   }
-
-  public get id(): string {
-    return BrushAreaEvent.ID;
-  }
 }
