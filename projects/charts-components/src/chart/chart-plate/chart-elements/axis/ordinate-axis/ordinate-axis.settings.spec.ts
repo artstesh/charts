@@ -2,6 +2,7 @@ import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
 import { OrdinateAxisSettings } from './ordinate-axis.settings';
 import { ChartConstants } from '../../../../models/chart-constants';
+import { AxisTitleSettings } from '../models/axis-title.settings';
 
 describe('#chart-elements OrdinateAxisSettings', () => {
   let model: OrdinateAxisSettings;
@@ -20,6 +21,14 @@ describe('#chart-elements OrdinateAxisSettings', () => {
     model = model.setDisplayGrid(expected);
     //
     should().true(model.displayGrid === expected);
+  });
+
+  it('setTitleSettings()', () => {
+    const expected = Forger.create<AxisTitleSettings>()!;
+    //
+    model = model.setTitleSettings(expected);
+    //
+    should().true(model.titleSettings === expected);
   });
 
   it('setRight()', () => {
@@ -60,6 +69,13 @@ describe('#chart-elements OrdinateAxisSettings', () => {
     it('different displayGrid', () => {
       const other = OrdinateAxisSettings.copy(model);
       other.displayGrid = !model.displayGrid;
+      //
+      should().false(model.isSame(other));
+    });
+
+    it('different titleSettings', () => {
+      const other = OrdinateAxisSettings.copy(model);
+      other.titleSettings = Forger.create<AxisTitleSettings>()!;
       //
       should().false(model.isSame(other));
     });
