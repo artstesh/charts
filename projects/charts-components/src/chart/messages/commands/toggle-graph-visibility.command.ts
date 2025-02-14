@@ -1,4 +1,4 @@
-import { PostboyGenericMessage } from '@artstesh/postboy';
+import { PostboyGenericMessage } from "@artstesh/postboy";
 
 /**
  * Represents a command to toggle the visibility of an element of a chart.
