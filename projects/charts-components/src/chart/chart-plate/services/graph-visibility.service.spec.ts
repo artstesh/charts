@@ -24,6 +24,7 @@ describe('GraphVisibilityService', () => {
   });
 
   afterEach(() => {
+    postboy.reset();
     expect().nothing();
   });
 
@@ -37,7 +38,7 @@ describe('GraphVisibilityService', () => {
       //
       postboy.fire(new ToggleGraphVisibilityCommand(Forger.create<string>()!));
       //
-      should().false(postboy.fired(ChartUpdateCommand.ID));
+      should().true(postboy.fired(ChartUpdateCommand.ID, 0));
     });
 
     it('do nothing if no datasets', () => {
@@ -45,7 +46,7 @@ describe('GraphVisibilityService', () => {
       //
       postboy.fire(new ToggleGraphVisibilityCommand(Forger.create<string>()!));
       //
-      should().false(postboy.fired(ChartUpdateCommand.ID));
+      should().true(postboy.fired(ChartUpdateCommand.ID, 0));
     });
 
     it('do nothing if no dataset', () => {
@@ -53,7 +54,7 @@ describe('GraphVisibilityService', () => {
       //
       postboy.fire(new ToggleGraphVisibilityCommand(Forger.create<string>()!));
       //
-      should().false(postboy.fired(ChartUpdateCommand.ID));
+      should().true(postboy.fired(ChartUpdateCommand.ID, 0));
     });
 
     it('update chart', () => {
