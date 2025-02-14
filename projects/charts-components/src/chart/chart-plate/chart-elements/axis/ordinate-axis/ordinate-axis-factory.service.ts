@@ -15,6 +15,20 @@ export class OrdinateAxisFactory {
       axis: ChartConstants.LeftAxisId,
       offset: true,
       position: settings.right ? 'right' : 'left',
+      title: settings.titleSettings
+        ? {
+            display: true,
+            text: settings.titleSettings.text,
+            align: settings.titleSettings.align,
+            font: settings.titleSettings.font,
+            color: settings.titleSettings.color,
+            padding: {
+              y: settings.titleSettings.paddingY,
+              top: settings.titleSettings.paddingTop,
+              bottom: settings.titleSettings.paddingBottom,
+            },
+          }
+        : undefined,
     } as ScaleOptionsByType<'linear'>;
   }
 }
