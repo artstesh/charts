@@ -8,7 +8,7 @@ import { should } from '@artstesh/it-should';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 import { ReplaySubject, Subject } from 'rxjs';
 import { ChartDataEvent } from '../../../messages/events/chart-data.event';
-import { PostboyServiceMock } from '@artstesh/postboy';
+import { PostboyServiceMock } from '@artstesh/postboy-testing';
 import { ToggleGraphVisibilityCommand } from '../../../messages/commands/toggle-graph-visibility.command';
 
 describe('BrushChartCloneComponent', () => {

@@ -4,7 +4,7 @@ import { ChartUpdateCommand } from '../../messages/commands/chart-update.command
 import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
 import { Forger } from '@artstesh/forger';
 import { ToggleGraphVisibilityCommand } from '../../messages/commands/toggle-graph-visibility.command';
-import { PostboyServiceMock } from '@artstesh/postboy';
+import { PostboyServiceMock } from '@artstesh/postboy-testing';
 import { should } from '@artstesh/it-should';
 
 describe('GraphVisibilityService', () => {

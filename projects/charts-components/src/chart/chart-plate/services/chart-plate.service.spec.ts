@@ -6,7 +6,7 @@ import { Forger } from '@artstesh/forger';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
 import { ChartUpdateCommand } from '../../messages/commands/chart-update.command';
-import { PostboyServiceMock } from '@artstesh/postboy';
+import { PostboyServiceMock } from '@artstesh/postboy-testing';
 
 describe('ChartPlateService', () => {
   let waitTime = 400;
