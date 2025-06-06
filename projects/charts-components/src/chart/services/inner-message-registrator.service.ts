@@ -19,6 +19,8 @@ import { ChartDataEvent } from '../messages/events/chart-data.event';
 import { ChartScrollEvent } from '../messages/events/chart-scroll.event';
 import { ToggleGraphVisibilityCommand } from '../messages/commands/toggle-graph-visibility.command';
 import { GraphVisibilityService } from '../chart-plate/services/graph-visibility.service';
+import { BuildScatterChartExecutor } from '../messages/executors/build-scatter-chart.executor';
+import { ScatterChartFactory } from '../chart-plate/chart-types/scatter-chart/scatter-chart.factory';
 
 @Injectable()
 export class InnerMessageRegistrator extends PostboyAbstractRegistrator {
@@ -38,5 +40,6 @@ export class InnerMessageRegistrator extends PostboyAbstractRegistrator {
     this.recordExecutor(BuildAreaChartExecutor, (e) => AreaChartFactory.build(e.settings, e.data, e.color));
     this.recordExecutor(AreaLegendFilterExecutor, (e) => AreaLegendFilter.check(e.item));
     this.recordExecutor(BuildBubbleChartExecutor, (e) => BubbleChartFactory.build(e.settings, e.data));
+    this.recordExecutor(BuildScatterChartExecutor, (e) => ScatterChartFactory.build(e.settings, e.data));
   }
 }
