@@ -15,12 +15,14 @@ import { BrushKnobComponent } from './chart-brush/components/brush-selection-are
 import { AreaChartComponent } from './chart-plate/chart-types/area-chart/area-chart.component';
 import { BubbleChartComponent } from './chart-plate/chart-types/bubble-chart/bubble-chart.component';
 import { BrushChartCloneComponent } from './chart-brush/components/brush-chart-clone/brush-chart-clone.component';
+import { ScatterChartComponent } from './chart-plate/chart-types/scatter-chart/scatter-chart.component';
 
 @NgModule({
   imports: [CommonModule],
   declarations: [
     ChartPlateComponent,
     ChartLineComponent,
+    ScatterChartComponent,
     ChartBarComponent,
     XLinearAxisComponent,
     ChartLegendComponent,
@@ -40,6 +42,7 @@ import { BrushChartCloneComponent } from './chart-brush/components/brush-chart-c
   exports: [
     ChartPlateComponent,
     ChartLineComponent,
+    ScatterChartComponent,
     ChartBarComponent,
     XLinearAxisComponent,
     ChartLegendComponent,
