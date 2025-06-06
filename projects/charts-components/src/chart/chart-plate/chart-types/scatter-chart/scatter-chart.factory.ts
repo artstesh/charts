@@ -31,7 +31,7 @@ export class ScatterChartFactory {
       pointStyle: settings.pointStyle,
       backgroundColor: settings.color,
       pointRadius: settings.pointRadius,
-      pointRotation: settings.pointRotation
+      pointRotation: settings.pointRotation,
     } as IChartDataset<'scatter', BubbleDataModel[]>;
   }
 }
