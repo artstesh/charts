@@ -46,7 +46,7 @@ export class SettingsMapService {
     return ChartLineDatasetFactory.build(settings, data);
   }
 
-  public batDataset(
+  public barDataset(
     settings: ChartBarSettings,
     data: (ChartDataModel | number | null | undefined)[],
   ): IChartDataset<any, ChartDataModel[]> {
