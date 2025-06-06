@@ -28,5 +28,5 @@ export class ChartBarComponent extends AbstractChartTypeComponent<ChartBarSettin
     this.dataUpdated();
   }
 
-  protected getDataset = () => [this.mapService.batDataset(this._settings, this._data)];
+  protected getDataset = () => [this.mapService.barDataset(this._settings, this._data)];
 }
