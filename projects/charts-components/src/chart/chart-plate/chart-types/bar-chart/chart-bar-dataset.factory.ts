@@ -17,6 +17,7 @@ export class ChartBarDatasetFactory {
       label: settings.name,
       order: settings.order,
       type: 'bar',
+      indexAxis: settings.indexAxis,
       xAxisID: ChartConstants.BottomAxisId,
       yAxisID: settings.yLeft ? ChartConstants.LeftAxisId : ChartConstants.RightAxisId,
     } as IChartDataset<'bar', ChartDataModel[]>;
