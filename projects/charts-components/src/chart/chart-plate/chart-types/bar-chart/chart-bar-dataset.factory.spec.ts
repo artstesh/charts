@@ -61,6 +61,10 @@ describe('#chart-types ChartLineDatasetFactory', () => {
       .equals(settings.thickness!);
   });
 
+  it('indexAxis is correct', () => {
+    should().string(scale.indexAxis).equals(settings.indexAxis!);
+  });
+
   it('left yAxisID is correct', () => {
     settings.yLeft = true;
     scale = ChartBarDatasetFactory.build(settings, data);

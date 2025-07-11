@@ -28,6 +28,14 @@ describe('#chart-elements ChartBarSettings', () => {
     should().number(model.thickness).equals(thickness);
   });
 
+  it('setIndexAxis()', () => {
+    const indexAxis = Forger.create<'x' | 'y'>()!;
+    //
+    model = model.setIndexAxis(indexAxis);
+    //
+    should().string(model.indexAxis).equals(indexAxis);
+  });
+
   it('setRight()', () => {
     const expected = Forger.create<boolean>()!;
     //
@@ -98,6 +106,13 @@ describe('#chart-elements ChartBarSettings', () => {
     it('different thickness', () => {
       const other = new ChartBarSettings().copy(model);
       other.thickness = Forger.create<number>()!;
+      //
+      should().false(model.isSame(other));
+    });
+
+    it('different indexAxis', () => {
+      const other = new ChartBarSettings().copy(model);
+      other.indexAxis = model.indexAxis === 'x' ? 'y' : 'x';
       //
       should().false(model.isSame(other));
     });
