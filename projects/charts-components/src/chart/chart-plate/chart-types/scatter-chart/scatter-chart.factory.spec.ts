@@ -63,11 +63,15 @@ describe('#chart-types ScatterChartFactory', () => {
   });
 
   it('order is correct', () => {
-    should().number(scale.pointRadius as number).equals(settings.pointRadius);
+    should()
+      .number(scale.pointRadius as number)
+      .equals(settings.pointRadius);
   });
 
   it('pointRotation is correct', () => {
-    should().number(scale.pointRotation as number).equals(settings.pointRotation!);
+    should()
+      .number(scale.pointRotation as number)
+      .equals(settings.pointRotation!);
   });
 
   it('left yAxisID is correct', () => {
