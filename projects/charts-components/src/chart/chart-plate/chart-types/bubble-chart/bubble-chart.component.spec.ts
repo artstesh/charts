@@ -7,7 +7,7 @@ import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
-import { ChartModule } from '../../../chart.module';
+
 import { should } from '@artstesh/it-should';
 import { Forger } from '@artstesh/forger';
 
@@ -20,7 +20,7 @@ describe('BubbleChartComponent', () => {
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
     when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized);
-    return MockBuilder(BubbleChartComponent, ChartModule)
+    return MockBuilder(BubbleChartComponent)
       .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));
   });

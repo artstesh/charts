@@ -2,9 +2,9 @@
   "name": "charts-components",
   "version": "0.0.2",
   "peerDependencies": {
-    "@angular/common": "^17.0.0",
-    "@angular/core": "^17.0.0",
-    "chart.js": "^4.4.0",
+    "@angular/common": "^18.0.0",
+    "@angular/core": "^18.0.0",
+    "chart.js": "^4.3.2",
     "chartjs-plugin-datalabels": "^2.2.0",
     "@artstesh/postboy": "^3.0.2",
     "rxjs": "^7.0.0",

@@ -3,7 +3,6 @@
  */
 
 export * from './models/index';
-export * from './chart.module';
 export * from './services/index';
 export * from './messages/external-index';
 export * from './chart-plate/index';

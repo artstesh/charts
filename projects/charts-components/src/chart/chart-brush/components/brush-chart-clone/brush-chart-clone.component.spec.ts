@@ -2,7 +2,7 @@ import { ComponentFixture } from '@angular/core/testing';
 
 import { BrushChartCloneComponent } from './brush-chart-clone.component';
 import { MockBuilder, MockRender } from 'ng-mocks';
-import { ChartModule } from '../../../chart.module';
+
 import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { should } from '@artstesh/it-should';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
@@ -20,7 +20,7 @@ describe('BrushChartCloneComponent', () => {
     postboy.record(ChartInitializedEvent, new ReplaySubject());
     postboy.record(ToggleGraphVisibilityCommand, new Subject());
     postboy.record(ChartDataEvent, new ReplaySubject());
-    return MockBuilder(BrushChartCloneComponent, ChartModule).provide({
+    return MockBuilder(BrushChartCloneComponent).provide({
       provide: InnerPostboyService,
       useValue: postboy,
     });
