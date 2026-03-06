@@ -6,7 +6,7 @@ import { should } from '@artstesh/it-should';
 import { ChartTooltipComponent } from './chart-tooltip.component';
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
-import { ChartModule } from '../../../chart.module';
+
 import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
@@ -21,7 +21,7 @@ describe('#chart-elements XLinearAxisComponent', () => {
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
     when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized);
-    return MockBuilder(ChartTooltipComponent, ChartModule)
+    return MockBuilder(ChartTooltipComponent)
       .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(SettingsMapService, instance(mapService)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));

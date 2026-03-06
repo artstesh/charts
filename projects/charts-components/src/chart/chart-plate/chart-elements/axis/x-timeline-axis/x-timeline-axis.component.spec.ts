@@ -1,7 +1,7 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { Forger } from '@artstesh/forger';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
-import { ChartModule } from '../../../../chart.module';
+
 import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
 import { should } from '@artstesh/it-should';
 import { ChartPlateService } from '../../../services/chart-plate.service';
@@ -22,7 +22,7 @@ describe('#chart-elements XTimelineAxisComponent', () => {
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
     when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized);
-    return MockBuilder(XTimelineAxisComponent, ChartModule)
+    return MockBuilder(XTimelineAxisComponent)
       .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(SettingsMapService, instance(mapService)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));

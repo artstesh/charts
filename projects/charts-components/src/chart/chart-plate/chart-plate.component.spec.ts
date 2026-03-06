@@ -3,16 +3,17 @@ import { MockBuilder, MockProvider, MockRender, ngMocks } from 'ng-mocks';
 import { instance, mock, reset, when } from 'ts-mockito';
 import { should } from '@artstesh/it-should';
 import { ChartPlateComponent } from './chart-plate.component';
-import { ChartModule } from '../chart.module';
+
 import { SettingsMapService } from '../services/settings-map.service';
 import { InnerPostboyService } from '../services/inner-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../messages/events/chart-initialized.event';
 import { ChartUpdateCommand } from '../messages/commands/chart-update.command';
+import { PostboyServiceMock } from '@artstesh/postboy-testing';
 
 describe('ChartPlateComponent', () => {
   let fixture: ComponentFixture<ChartPlateComponent>;
-  const postboy = mock(InnerPostboyService);
+  const postboy = new PostboyServiceMock();
   let chartInitialized$: Subject<ChartInitializedEvent>;
   let chartUpdate$: Subject<ChartUpdateCommand>;
   const mapService = mock(SettingsMapService);
@@ -20,11 +21,11 @@ describe('ChartPlateComponent', () => {
   beforeEach(async () => {
     chartInitialized$ = new Subject<ChartInitializedEvent>();
     chartUpdate$ = new Subject<ChartUpdateCommand>();
-    when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized$);
-    when(postboy.sub(ChartUpdateCommand)).thenReturn(chartUpdate$);
-    return MockBuilder(ChartPlateComponent, ChartModule)
+    postboy.record(ChartInitializedEvent, chartInitialized$);
+    postboy.record(ChartUpdateCommand, chartUpdate$);
+    return MockBuilder(ChartPlateComponent)
       .provide(MockProvider(SettingsMapService, instance(mapService)))
-      .provide(MockProvider(InnerPostboyService, instance(postboy)));
+      .mock(InnerPostboyService, postboy);
   });
 
   beforeEach(() => {
@@ -33,7 +34,7 @@ describe('ChartPlateComponent', () => {
   });
 
   afterEach(() => {
-    reset(postboy);
+    postboy.reset();
     reset(mapService);
     expect().nothing();
   });
