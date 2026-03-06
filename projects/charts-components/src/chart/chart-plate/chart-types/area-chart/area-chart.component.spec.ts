@@ -7,7 +7,7 @@ import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
-import { ChartModule } from '../../../chart.module';
+
 import { ChartUpdateCommand } from '../../../messages/commands/chart-update.command';
 import { AreaBuilderModel } from '../models/area-builder.model';
 import { ChartRenderedEvent } from '../../../messages/events/chart-rendered.event';
@@ -26,7 +26,7 @@ describe('AreaChartComponent', () => {
     when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized);
     when(postboy.sub(ChartRenderedEvent)).thenReturn(chartRendered);
     when(postboy.exec<AreaBuilderModel>(anything())).thenReturn({ bottom: {}, top: {} });
-    return MockBuilder(AreaChartComponent, ChartModule)
+    return MockBuilder(AreaChartComponent)
       .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)))
       .provide(MockProvider(SettingsMapService, instance(mapService)));

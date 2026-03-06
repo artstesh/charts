@@ -5,7 +5,7 @@ import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
-import { ChartModule } from '../../../../chart.module';
+
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
 import { InnerPostboyService } from '../../../../services/inner-postboy.service';
@@ -22,7 +22,7 @@ describe('#chart-elements XCategoryAxisComponent', () => {
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
     when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized);
-    return MockBuilder(XCategoryAxisComponent, ChartModule)
+    return MockBuilder(XCategoryAxisComponent)
       .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(SettingsMapService, instance(mapService)))
       .provide(MockProvider(ChartPlateService, instance(plateService)));

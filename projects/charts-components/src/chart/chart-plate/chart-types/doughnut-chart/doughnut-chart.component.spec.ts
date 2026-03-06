@@ -3,7 +3,7 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { anything, instance, mock, reset, verify, when } from 'ts-mockito';
-import { ChartModule } from '../../../chart.module';
+
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { Forger } from '@artstesh/forger';
 import { DoughnutChartComponent } from './doughnut-chart.component';
@@ -22,7 +22,7 @@ describe('#chart-types DoughnutChartComponent', () => {
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
     when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized);
-    return MockBuilder(DoughnutChartComponent, ChartModule)
+    return MockBuilder(DoughnutChartComponent)
       .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)))
       .provide(MockProvider(DoughnutChartFactory, instance(factory)));

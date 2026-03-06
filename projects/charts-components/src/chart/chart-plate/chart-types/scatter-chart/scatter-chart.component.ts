@@ -13,6 +13,7 @@ import { ChartDataEvent } from '../../../messages/events/chart-data.event';
  */
 @Component({
   selector: 'art-scatter-chart',
+  standalone: true,
   template: '',
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,

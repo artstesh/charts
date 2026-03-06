@@ -4,7 +4,7 @@ import { ComponentFixture } from '@angular/core/testing';
 import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
 import { instance, mock, reset, when } from 'ts-mockito';
 import { Subject } from 'rxjs';
-import { ChartModule } from '../../../chart.module';
+
 import { ChartPlateService } from '../../services/chart-plate.service';
 import { SettingsMapService } from '../../../services/settings-map.service';
 import { InnerPostboyService } from '../../../services/inner-postboy.service';
@@ -21,7 +21,7 @@ describe('#chart-types ScatterChartComponent', () => {
   beforeEach(async () => {
     chartInitialized = new Subject<ChartInitializedEvent>();
     when(postboy.sub(ChartInitializedEvent)).thenReturn(chartInitialized);
-    return MockBuilder(ScatterChartComponent, ChartModule)
+    return MockBuilder(ScatterChartComponent)
       .provide(MockProvider(InnerPostboyService, instance(postboy)))
       .provide(MockProvider(ChartPlateService, instance(plateService)))
       .provide(MockProvider(SettingsMapService, instance(mapService)));

@@ -2,13 +2,13 @@
   "name": "charts-components",
   "version": "0.0.2",
   "peerDependencies": {
-    "@angular/common": "^17.0.0",
-    "@angular/core": "^17.0.0",
-    "chart.js": "^4.4.0",
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "chart.js": "^4.3.2",
     "chartjs-plugin-datalabels": "^2.2.0",
     "@artstesh/postboy": "^3.0.2",
     "rxjs": "^7.0.0",
-    "zone.js": "~0.14.0"
+    "zone.js": "~0.15.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
