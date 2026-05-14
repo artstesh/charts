@@ -9,23 +9,22 @@ import { InnerPostboyService } from '../services/inner-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../messages/events/chart-initialized.event';
 import { ChartUpdateCommand } from '../messages/commands/chart-update.command';
-import { PostboyServiceMock } from '@artstesh/postboy-testing';
+import { PostboyServiceMock, PostboyWorld } from '@artstesh/postboy-testing';
 
 describe('ChartPlateComponent', () => {
   let fixture: ComponentFixture<ChartPlateComponent>;
-  const postboy = new PostboyServiceMock();
   let chartInitialized$: Subject<ChartInitializedEvent>;
   let chartUpdate$: Subject<ChartUpdateCommand>;
   const mapService = mock(SettingsMapService);
+  let world: PostboyWorld;
 
-  beforeEach(async () => {
+  beforeEach(() => {
+    world = new PostboyWorld();
     chartInitialized$ = new Subject<ChartInitializedEvent>();
     chartUpdate$ = new Subject<ChartUpdateCommand>();
-    postboy.record(ChartInitializedEvent, chartInitialized$);
-    postboy.record(ChartUpdateCommand, chartUpdate$);
     return MockBuilder(ChartPlateComponent)
       .provide(MockProvider(SettingsMapService, instance(mapService)))
-      .mock(InnerPostboyService, postboy);
+      .mock(InnerPostboyService, world.postboy);
   });
 
   beforeEach(() => {
@@ -34,7 +33,7 @@ describe('ChartPlateComponent', () => {
   });
 
   afterEach(() => {
-    postboy.reset();
+    world.dispose();
     reset(mapService);
     expect().nothing();
   });
