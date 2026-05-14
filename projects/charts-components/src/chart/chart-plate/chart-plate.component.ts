@@ -6,7 +6,8 @@ import {
   inject,
   Input,
   OnDestroy,
-  OnInit, ProviderToken,
+  OnInit,
+  ProviderToken,
   ViewChild,
 } from '@angular/core';
 import Chart from 'chart.js/auto';
@@ -68,7 +69,7 @@ registerAdapter();
     {
       provide: ChartPostboyService,
       useFactory: () => {
-        const colorService = inject(ChartPostboyService, {optional: true, skipSelf: true});
+        const colorService = inject(ChartPostboyService, { optional: true, skipSelf: true });
         return colorService || new ChartPostboyService();
       },
     },
