@@ -20,9 +20,7 @@ describe('ChartBrushSelectionAreaComponent', () => {
   let scrollEvent$: Subject<ChartScrollEvent>;
 
   beforeEach(async () => {
-    return MockBuilder(BrushSelectionAreaComponent).provide(
-      MockProvider(InnerPostboyService, instance(postboy)),
-    );
+    return MockBuilder(BrushSelectionAreaComponent).provide(MockProvider(InnerPostboyService, instance(postboy)));
   });
 
   beforeEach(() => {
