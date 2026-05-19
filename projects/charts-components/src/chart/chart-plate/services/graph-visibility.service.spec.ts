@@ -1,30 +1,26 @@
 import { GraphVisibilityService } from './graph-visibility.service';
-import { ReplaySubject, Subject } from 'rxjs';
 import { ChartUpdateCommand } from '../../messages/commands/chart-update.command';
 import { ChartInitializedEvent } from '../../messages/events/chart-initialized.event';
 import { Forger } from '@artstesh/forger';
 import { ToggleGraphVisibilityCommand } from '../../messages/commands/toggle-graph-visibility.command';
-import { PostboyServiceMock } from '@artstesh/postboy';
 import { should } from '@artstesh/it-should';
+import { PostboyWorld } from '@artstesh/postboy-testing';
 
 describe('GraphVisibilityService', () => {
   let service: GraphVisibilityService;
   let chart: any;
-  let postboy: PostboyServiceMock;
+  let world: PostboyWorld;
 
   beforeEach(() => {
-    postboy = new PostboyServiceMock();
-    postboy.record(ChartInitializedEvent, new ReplaySubject());
-    postboy.record(ChartUpdateCommand, new ReplaySubject());
-    postboy.record(ToggleGraphVisibilityCommand, new Subject());
-    service = new GraphVisibilityService(postboy);
+    world = new PostboyWorld();
+    service = new GraphVisibilityService(world.postboy);
     chart = {};
+    world.given.event(new ChartInitializedEvent(chart));
     service.up();
-    postboy.fire(new ChartInitializedEvent(chart));
   });
 
   afterEach(() => {
-    postboy.reset();
+    world.dispose();
     expect().nothing();
   });
 
@@ -36,34 +32,34 @@ describe('GraphVisibilityService', () => {
     it('do nothing if no data', () => {
       chart.data = undefined;
       //
-      postboy.fire(new ToggleGraphVisibilityCommand(Forger.create<string>()!));
+      world.postboy.fire(new ToggleGraphVisibilityCommand(Forger.create<string>()!));
       //
-      should().true(postboy.fired(ChartUpdateCommand.ID, 0));
+      world.then.notFired(ChartUpdateCommand);
     });
 
     it('do nothing if no datasets', () => {
       chart.data = {};
       //
-      postboy.fire(new ToggleGraphVisibilityCommand(Forger.create<string>()!));
+      world.postboy.fire(new ToggleGraphVisibilityCommand(Forger.create<string>()!));
       //
-      should().true(postboy.fired(ChartUpdateCommand.ID, 0));
+      world.then.notFired(ChartUpdateCommand);
     });
 
     it('do nothing if no dataset', () => {
       chart.data = { datasets: [{ id: Forger.create<string>()! }] };
       //
-      postboy.fire(new ToggleGraphVisibilityCommand(Forger.create<string>()!));
+      world.postboy.fire(new ToggleGraphVisibilityCommand(Forger.create<string>()!));
       //
-      should().true(postboy.fired(ChartUpdateCommand.ID, 0));
+      world.then.notFired(ChartUpdateCommand);
     });
 
     it('update chart', () => {
       const graphId = Forger.create<string>()!;
       chart.data = { datasets: [{ id: graphId }] };
       //
-      postboy.fire(new ToggleGraphVisibilityCommand(graphId));
+      world.postboy.fire(new ToggleGraphVisibilityCommand(graphId));
       //
-      should().true(postboy.fired(ChartUpdateCommand.ID, 1));
+      world.then.fired(ChartUpdateCommand).once();
     });
 
     it('set visibility', () => {
@@ -71,7 +67,7 @@ describe('GraphVisibilityService', () => {
       const visible = Forger.create<boolean>()!;
       chart.data = { datasets: [{ id: graphId }] };
       //
-      postboy.fire(new ToggleGraphVisibilityCommand(graphId, visible));
+      world.postboy.fire(new ToggleGraphVisibilityCommand(graphId, visible));
       //
       should().true(chart.data.datasets[0].hidden === !visible);
     });
