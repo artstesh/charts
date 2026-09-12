@@ -35,7 +35,16 @@
     "type": "git",
     "url": "git+https://github.com/artstesh/charts.git"
   },
-  "dependencies": {
+  "peerDependencies": {
+    "@angular/common": "^17.1.0",
+    "@angular/compiler": "^17.1.0",
+    "@angular/core": "^17.1.0",
+    "chart.js": "^4.4.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
+    "rxjs": "^7.0.0",
+    "@artstesh/postboy": "^3.3.0"
+  },
+  "devDependencies": {
     "@angular/common": "^17.1.0",
     "@angular/compiler": "^17.1.0",
     "@angular/core": "^17.1.0",
@@ -44,11 +53,9 @@
     "rxjs": "^7.0.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.0",
-    "@artstesh/postboy": "^3.0.2"
-  },
-  "devDependencies": {
+    "@artstesh/postboy": "^3.3.0",
     "@angular-builders/custom-webpack": "^17.0.0",
-    "@artstesh/postboy-testing": "^1.1.1",
+    "@artstesh/postboy-testing": "^3.3.0",
     "@angular/forms": "^17.1.0",
     "@angular-devkit/build-angular": "^17.3.6",
     "@angular-eslint/builder": "^17.0.0",
