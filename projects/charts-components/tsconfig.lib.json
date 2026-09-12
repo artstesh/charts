@@ -21,15 +21,9 @@
     "**/*.spec.ts"
   ],
   "paths": {
-    "@root/*": [
-      "./*"
-    ],
-    "@themes/*": [
-      "src/chart/themes/*"
-    ],
-    "@chart-plate/*": [
-      "chart/chart-plate/*"
-    ],
+    "./@root/*": ["./*"],
+    "./@themes/*": ["./src/chart/themes/*"],
+    "./@chart-plate/*": ["./chart/chart-plate/*"],
     "paths": {
       "@angular/*": [
         "./node_modules/@angular/*"
