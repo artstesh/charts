@@ -119,7 +119,7 @@ export class AreaChartComponent extends AbstractChartTypeComponent<AreaChartSett
       new BuildAreaChartExecutor(
         this._settings,
         this._data,
-        this.postboy.exec(new GetGradientExecutor(this.chart ?? null, this._settings.colors, this._settings.direction)),
+        this.postboy.exec(new GetGradientExecutor(this.chart ?? null, this._settings.colors, this._settings.direction))!,
       ),
     );
     this.alsoDelete = () => content.bottom?.id;

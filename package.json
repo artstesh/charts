@@ -35,18 +35,26 @@
     "type": "git",
     "url": "git+https://github.com/artstesh/charts.git"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@angular/common": "^18.0.0",
     "@angular/compiler": "^18.0.0",
     "@angular/core": "^18.0.0",
-    "@artstesh/postboy": "^3.0.2",
+    "@artstesh/postboy": "^3.3.0",
     "chart.js": "^4.3.2",
     "chartjs-plugin-datalabels": "^2.2.0",
-    "rxjs": "^7.0.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.14.0"
+    "rxjs": "^7.0.0"
   },
   "devDependencies": {
+    "@angular/common": "^18.0.0",
+    "@angular/compiler": "^18.0.0",
+    "@angular/core": "^18.0.0",
+    "@artstesh/postboy": "^3.3.0",
+    "chart.js": "^4.3.2",
+    "chartjs-plugin-datalabels": "^2.2.0",
+    "@artstesh/postboy-testing": "^3.3.0",
+    "rxjs": "^7.0.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.0",
     "@angular-builders/custom-webpack": "^18.0.0",
     "@angular-devkit/build-angular": "^18.0.0",
     "@angular-eslint/builder": "^18.0.0",
@@ -58,7 +66,6 @@
     "@angular/compiler-cli": "^18.0.0",
     "@angular/forms": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
-    "@artstesh/postboy-testing": "^1.1.1",
     "@artstesh/forger": "^2.0.0",
     "@artstesh/it-should": "^2.0.0",
     "@types/chart.js": "^4.0.1",
