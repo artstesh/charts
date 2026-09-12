@@ -20,7 +20,7 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "project": "projects/charts-components/ng-package.json"
           },
@@ -37,7 +37,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["projects/**/*.ts", "projects/**/*.component.html"]
+            "lintFilePatterns": [
+              "projects/**/*.ts",
+              "projects/**/*.component.html"
+            ]
           }
         },
         "test": {
@@ -48,7 +51,7 @@
             "karmaConfig": "projects/charts-components/karma.conf.js",
             "codeCoverage": true,
             "customWebpackConfig": {
-              "path": "./node_modules/@artstesh/forger/lib/webpack.config.js"
+              "path": "./webpack-test.config.js"
             }
           }
         }
