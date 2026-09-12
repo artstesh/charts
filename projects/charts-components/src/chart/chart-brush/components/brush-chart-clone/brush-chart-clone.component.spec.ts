@@ -5,24 +5,17 @@ import { MockBuilder, MockRender } from 'ng-mocks';
 import { ChartModule } from '../../../chart.module';
 import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { should } from '@artstesh/it-should';
-import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
-import { ReplaySubject, Subject } from 'rxjs';
-import { ChartDataEvent } from '../../../messages/events/chart-data.event';
-import { PostboyServiceMock } from '@artstesh/postboy';
-import { ToggleGraphVisibilityCommand } from '../../../messages/commands/toggle-graph-visibility.command';
+import { PostboyWorld } from '@artstesh/postboy-testing';
 
 describe('BrushChartCloneComponent', () => {
   let fixture: ComponentFixture<BrushChartCloneComponent>;
-  let postboy: PostboyServiceMock;
+  let world: PostboyWorld;
 
   beforeEach(async () => {
-    postboy = new PostboyServiceMock();
-    postboy.record(ChartInitializedEvent, new ReplaySubject());
-    postboy.record(ToggleGraphVisibilityCommand, new Subject());
-    postboy.record(ChartDataEvent, new ReplaySubject());
+    world = new PostboyWorld();
     return MockBuilder(BrushChartCloneComponent, ChartModule).provide({
       provide: InnerPostboyService,
-      useValue: postboy,
+      useValue: world.postboy,
     });
   });
 
@@ -31,6 +24,7 @@ describe('BrushChartCloneComponent', () => {
   });
 
   afterEach(() => {
+    world.dispose();
     expect().nothing();
   });
 
