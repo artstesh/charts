@@ -1,5 +1,6 @@
 import { Chart, ChartTypeRegistry, TooltipModel, TooltipOptions } from 'chart.js';
-import { _DeepPartialObject } from 'chart.js/dist/types/utils';
+type DeepPartial<T> = T extends Function ? T : { [P in keyof T]?: DeepPartial<T[P]> };
+type DeepPartialObject<T> = { [P in keyof T]?: DeepPartial<T[P]> };
 import { ChartTooltipGetModel } from '../../../models';
 import { ChartTooltipSettings } from './chart-tooltip.settings';
 import { IChartDataset } from '../../chart-types/models/i-chart-dataset';
@@ -7,7 +8,7 @@ import { IChartDataset } from '../../chart-types/models/i-chart-dataset';
 export class ChartTooltipFactory {
   public static build(
     settings: ChartTooltipSettings,
-  ): _DeepPartialObject<TooltipOptions<keyof ChartTypeRegistry>> | undefined {
+  ): DeepPartialObject<TooltipOptions<keyof ChartTypeRegistry>> | undefined {
     return {
       position: 'nearest',
       enabled: false,

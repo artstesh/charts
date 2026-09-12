@@ -1,4 +1,4 @@
-import { Align, FontSpec, ScriptableAndScriptableOptions, ScriptableCartesianScaleContext } from 'chart.js/dist/types';
+import { Align, FontSpec, ScriptableAndScriptableOptions, ScriptableCartesianScaleContext } from 'chart.js';
 
 export interface AxisTitleSettings {
   /** If true, displays the axis title. */

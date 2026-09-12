@@ -1,13 +1,13 @@
 import { ComponentFixture } from '@angular/core/testing';
 
 import { BrushChartCloneComponent } from './brush-chart-clone.component';
-import { MockBuilder, MockRender } from 'ng-mocks';
+import { MockBuilder, MockRender, MockedComponentFixture } from 'ng-mocks';
 import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { should } from '@artstesh/it-should';
 import { PostboyWorld } from '@artstesh/postboy-testing';
 
 describe('BrushChartCloneComponent', () => {
-  let fixture: ComponentFixture<BrushChartCloneComponent>;
+  let fixture: MockedComponentFixture<BrushChartCloneComponent>;
   let world: PostboyWorld;
 
   beforeEach(async () => {

@@ -1,6 +1,6 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { Forger } from '@artstesh/forger';
-import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { MockBuilder, MockProvider, MockRender, MockedComponentFixture } from 'ng-mocks';
 
 import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
 import { should } from '@artstesh/it-should';
@@ -13,7 +13,7 @@ import { ChartInitializedEvent } from '../../../../messages/events/chart-initial
 import { InnerPostboyService } from '../../../../services/inner-postboy.service';
 
 describe('#chart-elements OrdinateAxisComponent', () => {
-  let fixture: ComponentFixture<OrdinateAxisComponent>;
+  let fixture: MockedComponentFixture<OrdinateAxisComponent>;
   const plateService = mock(ChartPlateService);
   const factory = mock(OrdinateAxisFactory);
   const postboy = mock(InnerPostboyService);

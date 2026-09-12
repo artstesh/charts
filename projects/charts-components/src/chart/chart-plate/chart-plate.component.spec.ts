@@ -1,5 +1,5 @@
 import { ComponentFixture } from '@angular/core/testing';
-import { MockBuilder, MockProvider, MockRender, ngMocks } from 'ng-mocks';
+import { MockBuilder, MockProvider, MockRender, MockedComponentFixture, ngMocks } from 'ng-mocks';
 import { instance, mock, reset, when } from 'ts-mockito';
 import { should } from '@artstesh/it-should';
 import { ChartPlateComponent } from './chart-plate.component';
@@ -12,7 +12,7 @@ import { ChartUpdateCommand } from '../messages/commands/chart-update.command';
 import { PostboyServiceMock, PostboyWorld } from '@artstesh/postboy-testing';
 
 describe('ChartPlateComponent', () => {
-  let fixture: ComponentFixture<ChartPlateComponent>;
+  let fixture: MockedComponentFixture<ChartPlateComponent>;
   let chartInitialized$: Subject<ChartInitializedEvent>;
   let chartUpdate$: Subject<ChartUpdateCommand>;
   const mapService = mock(SettingsMapService);

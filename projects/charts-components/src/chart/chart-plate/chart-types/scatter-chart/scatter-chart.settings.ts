@@ -1,5 +1,5 @@
 import { ChartTypeSettings } from '../models/chart-type.settings';
-import { PointStyle } from 'chart.js/dist/types';
+import { PointStyle } from 'chart.js';
 
 export class ScatterChartSettings extends ChartTypeSettings<ScatterChartSettings> {
   pointStyle?:

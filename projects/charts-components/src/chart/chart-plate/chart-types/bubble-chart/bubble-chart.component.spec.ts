@@ -6,13 +6,13 @@ import { ChartPlateService } from '../../services/chart-plate.service';
 import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
-import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { MockBuilder, MockProvider, MockRender, MockedComponentFixture } from 'ng-mocks';
 
 import { should } from '@artstesh/it-should';
 import { Forger } from '@artstesh/forger';
 
 describe('BubbleChartComponent', () => {
-  let fixture: ComponentFixture<BubbleChartComponent>;
+  let fixture: MockedComponentFixture<BubbleChartComponent>;
   const plateService = mock(ChartPlateService);
   const postboy = mock(InnerPostboyService);
   let chartInitialized: Subject<ChartInitializedEvent>;

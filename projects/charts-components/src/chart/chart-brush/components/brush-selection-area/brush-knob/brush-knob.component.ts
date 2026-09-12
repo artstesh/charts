@@ -72,7 +72,7 @@ export class BrushKnobComponent implements OnInit {
    */
   @HostListener('document:mouseup', ['$event'])
   @HostListener('document:touchend', ['$event'])
-  mouseup() {
+  mouseup(_event?: MouseEvent | TouchEvent) {
     this.isDown = false;
   }
 
@@ -83,7 +83,7 @@ export class BrushKnobComponent implements OnInit {
    * @return {void} No value is returned by this method.
    */
   @HostListener('document:mouseleave', ['$event'])
-  mouseleave() {
+  mouseleave(_event?: MouseEvent) {
     this.isDown = false;
   }
 

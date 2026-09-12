@@ -1,6 +1,6 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { Forger } from '@artstesh/forger';
-import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { MockBuilder, MockProvider, MockRender, MockedComponentFixture } from 'ng-mocks';
 import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
 import { should } from '@artstesh/it-should';
 import { ChartTooltipComponent } from './chart-tooltip.component';
@@ -12,7 +12,7 @@ import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
 
 describe('#chart-elements XLinearAxisComponent', () => {
-  let fixture: ComponentFixture<ChartTooltipComponent>;
+  let fixture: MockedComponentFixture<ChartTooltipComponent>;
   const plateService = mock(ChartPlateService);
   const mapService = mock(SettingsMapService);
   const postboy = mock(InnerPostboyService);
