@@ -11,7 +11,7 @@ export class ChartLegendFactory {
       align: settings.align,
       labels: {
         filter(item: LegendItem, data: ChartData): boolean {
-          return postboy.execute(new AreaLegendFilterExecutor(item));
+          return postboy.exec(new AreaLegendFilterExecutor(item));
         },
       },
     } as LegendOptions<any>;
