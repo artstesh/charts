@@ -6,7 +6,11 @@ import { AreaBuilderModel } from '../../chart-plate/chart-types/models/area-buil
 export class BuildAreaChartExecutor extends PostboyExecutor<AreaBuilderModel> {
   public static readonly ID = '69b3ffbf-8683-4914-af1d-68f0a6af5e97';
 
-  constructor(public settings: AreaChartSettings, public data: ChartAreaDataModel[], public color: CanvasGradient|null) {
+  constructor(
+    public settings: AreaChartSettings,
+    public data: ChartAreaDataModel[],
+    public color: CanvasGradient | null,
+  ) {
     super();
   }
 }
