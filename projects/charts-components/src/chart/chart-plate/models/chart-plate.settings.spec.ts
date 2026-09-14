@@ -38,7 +38,7 @@ describe('ChartPlateSettings', () => {
 
     it('different interactionMode', () => {
       const other = new ChartPlateSettings().copy(model);
-      other.interactionMode = Forger.create<'x' | 'y'>()!;
+      other.interactionMode = model.interactionMode === 'x' ? 'y' : 'x';
       //
       should().false(model.isSame(other));
     });
