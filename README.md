@@ -14,7 +14,7 @@ This project is licensed under the MIT License
 
 ## Support status
 
-This line is **archived**: its Angular major (2) left Angular's support window
+This line is **archived**: its Angular major (13) left Angular's support window
 (May 2023), so it receives no features, fixes, ports, or releases. The published npm
 versions stay available:
 
