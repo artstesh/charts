@@ -11,3 +11,16 @@ It's just the first, initial version of the library, that gonna become much more
 ### License
 
 This project is licensed under the MIT License
+
+## Support status
+
+This line is **archived**: its Angular major (1) left Angular's support window
+(November 2022), so it receives no features, fixes, ports, or releases. The published npm
+versions stay available:
+
+```
+npm install @artstesh/charts@1
+```
+
+npm serves this line under the `v1-latest` dist-tag. The actively maintained lines are
+the newest ones in this repository; see the charts documentation for the support policy.
