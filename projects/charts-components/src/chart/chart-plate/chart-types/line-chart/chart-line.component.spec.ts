@@ -2,7 +2,7 @@
 
 import { ComponentFixture } from '@angular/core/testing';
 import { ChartLineComponent } from './chart-line.component';
-import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { MockBuilder, MockProvider, MockRender, MockedComponentFixture } from 'ng-mocks';
 import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
 import { Subject } from 'rxjs';
 
@@ -14,7 +14,7 @@ import { ChartInitializedEvent } from '../../../messages/events/chart-initialize
 import { should } from '@artstesh/it-should';
 
 describe('#chart-types LineChartComponent', () => {
-  let fixture: ComponentFixture<ChartLineComponent>;
+  let fixture: MockedComponentFixture<ChartLineComponent>;
   const plateService = mock(ChartPlateService);
   const mapService = mock(SettingsMapService);
   const postboy = mock(InnerPostboyService);

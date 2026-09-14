@@ -1,7 +1,7 @@
 // noinspection JSVoidFunctionReturnValueUsed
 
 import { ComponentFixture } from '@angular/core/testing';
-import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { MockBuilder, MockProvider, MockRender, MockedComponentFixture } from 'ng-mocks';
 import { anything, instance, mock, reset, verify, when } from 'ts-mockito';
 
 import { ChartPlateService } from '../../services/chart-plate.service';
@@ -13,7 +13,7 @@ import { ChartInitializedEvent } from '../../../messages/events/chart-initialize
 import { InnerPostboyService } from '../../../services/inner-postboy.service';
 
 describe('#chart-types DoughnutChartComponent', () => {
-  let fixture: ComponentFixture<DoughnutChartComponent>;
+  let fixture: MockedComponentFixture<DoughnutChartComponent>;
   const plateService = mock(ChartPlateService);
   const factory = mock(DoughnutChartFactory);
   const postboy = mock(InnerPostboyService);

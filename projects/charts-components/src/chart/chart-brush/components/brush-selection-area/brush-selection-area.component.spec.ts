@@ -1,7 +1,7 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { instance, mock, reset, when } from 'ts-mockito';
 import { ReplaySubject, Subject } from 'rxjs';
-import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { MockBuilder, MockProvider, MockRender, MockedComponentFixture } from 'ng-mocks';
 import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { should } from '@artstesh/it-should';
 import { BrushSelectionAreaComponent } from './brush-selection-area.component';
@@ -12,7 +12,7 @@ import { ChartInitializedEvent } from '../../../messages/events/chart-initialize
 import { ChartScrollEvent } from '../../../messages/events/chart-scroll.event';
 
 describe('ChartBrushSelectionAreaComponent', () => {
-  let fixture: ComponentFixture<BrushSelectionAreaComponent>;
+  let fixture: MockedComponentFixture<BrushSelectionAreaComponent>;
   const postboy = mock(InnerPostboyService);
   const brushService = mock(ChartBrushService);
   let SelectedArea$: ReplaySubject<BrushAreaEvent>;

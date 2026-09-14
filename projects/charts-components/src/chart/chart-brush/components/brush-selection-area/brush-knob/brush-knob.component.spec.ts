@@ -1,6 +1,6 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { instance, mock, reset } from 'ts-mockito';
-import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { MockBuilder, MockProvider, MockRender, MockedComponentFixture } from 'ng-mocks';
 
 import { BrushKnobComponent } from './brush-knob.component';
 import { InnerPostboyService } from '../../../../services/inner-postboy.service';
@@ -8,7 +8,7 @@ import { should } from '@artstesh/it-should';
 
 describe('BrushKnobComponent', () => {
   const postboy = mock(InnerPostboyService);
-  let fixture: ComponentFixture<BrushKnobComponent>;
+  let fixture: MockedComponentFixture<BrushKnobComponent>;
 
   beforeEach(async () => {
     return MockBuilder(BrushKnobComponent).provide(MockProvider(InnerPostboyService, instance(postboy)));

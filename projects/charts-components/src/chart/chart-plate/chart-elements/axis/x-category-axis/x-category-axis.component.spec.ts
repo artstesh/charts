@@ -4,7 +4,7 @@ import { XCategoryAxisComponent } from './x-category-axis.component';
 import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
 import { ChartPlateService } from '../../../services/chart-plate.service';
 import { SettingsMapService } from '../../../../services/settings-map.service';
-import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { MockBuilder, MockProvider, MockRender, MockedComponentFixture } from 'ng-mocks';
 
 import { Forger } from '@artstesh/forger';
 import { should } from '@artstesh/it-should';
@@ -13,7 +13,7 @@ import { ChartInitializedEvent } from '../../../../messages/events/chart-initial
 import { Subject } from 'rxjs';
 
 describe('#chart-elements XCategoryAxisComponent', () => {
-  let fixture: ComponentFixture<XCategoryAxisComponent>;
+  let fixture: MockedComponentFixture<XCategoryAxisComponent>;
   const plateService = mock(ChartPlateService);
   const mapService = mock(SettingsMapService);
   const postboy = mock(InnerPostboyService);

@@ -3,7 +3,7 @@
 import { ComponentFixture } from '@angular/core/testing';
 
 import { ChartBarComponent } from './chart-bar.component';
-import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { MockBuilder, MockProvider, MockRender, MockedComponentFixture } from 'ng-mocks';
 import { anything, capture, instance, mock, reset, when } from 'ts-mockito';
 import { Forger } from '@artstesh/forger';
 
@@ -15,7 +15,7 @@ import { ChartInitializedEvent } from '../../../messages/events/chart-initialize
 import { should } from '@artstesh/it-should';
 
 describe('#chart-types ChartBarComponent', () => {
-  let fixture: ComponentFixture<ChartBarComponent>;
+  let fixture: MockedComponentFixture<ChartBarComponent>;
   const plateService = mock(ChartPlateService);
   const postboy = mock(InnerPostboyService);
   let chartInitialized: Subject<ChartInitializedEvent>;

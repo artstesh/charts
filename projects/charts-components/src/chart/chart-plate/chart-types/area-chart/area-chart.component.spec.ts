@@ -6,14 +6,14 @@ import { SettingsMapService } from '../../../services/settings-map.service';
 import { InnerPostboyService } from '../../../services/inner-postboy.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../../../messages/events/chart-initialized.event';
-import { MockBuilder, MockProvider, MockRender } from 'ng-mocks';
+import { MockBuilder, MockProvider, MockRender, MockedComponentFixture } from 'ng-mocks';
 
 import { ChartUpdateCommand } from '../../../messages/commands/chart-update.command';
 import { AreaBuilderModel } from '../models/area-builder.model';
 import { ChartRenderedEvent } from '../../../messages/events/chart-rendered.event';
 
 describe('AreaChartComponent', () => {
-  let fixture: ComponentFixture<AreaChartComponent>;
+  let fixture: MockedComponentFixture<AreaChartComponent>;
   const plateService = mock(ChartPlateService);
   const mapService = mock(SettingsMapService);
   const postboy = mock(InnerPostboyService);
