@@ -79,6 +79,13 @@ registerAdapter();
 export class ChartPlateComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('chart')
   chartRef!: ElementRef;
+
+  /**
+   * The underlying Chart.js instance. It is created in ngAfterViewInit and is
+   * undefined until then; the same instance is also reachable through the
+   * component-scoped {@link ChartPlateService} (its `chart` getter), which can be
+   * obtained with `@ViewChild(ChartPlateComponent, { read: ChartPlateService })`.
+   */
   chart!: Chart;
   private subs: Subscription[] = [];
 
