@@ -3,9 +3,11 @@ import { MockBuilder, MockProvider, MockRender, MockedComponentFixture, ngMocks 
 import { instance, mock, reset, when } from 'ts-mockito';
 import { should } from '@artstesh/it-should';
 import { ChartPlateComponent } from './chart-plate.component';
+import { ChartPlateService } from './services/chart-plate.service';
 
 import { SettingsMapService } from '../services/settings-map.service';
 import { InnerPostboyService } from '../services/inner-postboy.service';
+import { InnerMessageRegistrator } from '../services/inner-message-registrator.service';
 import { Subject } from 'rxjs';
 import { ChartInitializedEvent } from '../messages/events/chart-initialized.event';
 import { ChartUpdateCommand } from '../messages/commands/chart-update.command';
@@ -24,6 +26,8 @@ describe('ChartPlateComponent', () => {
     chartUpdate$ = new Subject<ChartUpdateCommand>();
     return MockBuilder(ChartPlateComponent)
       .provide(MockProvider(SettingsMapService, instance(mapService)))
+      .keep(ChartPlateService)
+      .keep(InnerMessageRegistrator)
       .mock(InnerPostboyService, world.postboy);
   });
 
@@ -49,6 +53,16 @@ describe('ChartPlateComponent', () => {
 
     it('canvas is shown', () => {
       should().array(ngMocks.findAll('[data-test=chart-plate]')).length(1);
+    });
+  });
+
+  describe('chart exposure', () => {
+    it('component and plate service share the same chart instance', () => {
+      const service = fixture.point.injector.get(ChartPlateService);
+      const component = fixture.point.componentInstance;
+      //
+      should().true(!!component.chart);
+      should().true(service.chart === component.chart);
     });
   });
 });
