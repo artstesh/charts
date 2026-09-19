@@ -1,4 +1,5 @@
 export * from './chart-plate.component';
+export * from './services/chart-plate.service';
 export * from './models/chart-plate.settings';
 export * from './chart-types/abstract-chart-type.component';
 export * from './chart-elements/chart-tooltip/chart-tooltip.settings';

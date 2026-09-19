@@ -29,6 +29,59 @@ describe('ChartPlateService', () => {
     expect(service).toBeTruthy();
   });
 
+  describe('chart', () => {
+    it('nothing before the chart is initialized', () => {
+      const isolated = new PostboyWorld();
+      const fresh = new ChartPlateService(isolated.postboy);
+      //
+      fresh.up();
+      //
+      should().false(fresh.chart);
+      isolated.dispose();
+    });
+
+    it('returns the initialized chart', () => {
+      //
+      should().true(service.chart === chart);
+    });
+  });
+
+  describe('toBase64Image()', () => {
+    it('nothing if no chart', () => {
+      const isolated = new PostboyWorld();
+      const fresh = new ChartPlateService(isolated.postboy);
+      //
+      fresh.up();
+      //
+      should().false(fresh.toBase64Image());
+      isolated.dispose();
+    });
+
+    it('delegates to the chart with default parameters', () => {
+      const expected = Forger.create<string>()!;
+      chart.toBase64Image = (type: string, quality: number) => {
+        should().string(type).equals('image/png');
+        should().number(quality).equals(1);
+        return expected;
+      };
+      //
+      should().string(service.toBase64Image()!).equals(expected);
+    });
+
+    it('passes type and quality', () => {
+      const expected = Forger.create<string>()!;
+      const type = Forger.create<string>()!;
+      const quality = Forger.create<number>()!;
+      chart.toBase64Image = (t: string, q: number) => {
+        should().string(t).equals(type);
+        should().number(q).equals(quality);
+        return expected;
+      };
+      //
+      should().string(service.toBase64Image(type, quality)!).equals(expected);
+    });
+  });
+
   describe('datasets', () => {
     beforeEach(() => {
       chart.data = { datasets: [] };
